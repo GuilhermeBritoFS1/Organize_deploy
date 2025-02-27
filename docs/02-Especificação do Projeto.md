@@ -112,10 +112,6 @@ De acordo com o PMBoK v6 as dez áreas que constituem os pilares para gerenciar 
 
 ![Gráfico](img/Cronograma.png)
 
-### Gráfico de Gantt
-
-![Gráfico de Gantt](img/Gantt.png)
-
 ## Gerenciamento de Equipe
 
 O gerenciamento adequado de tarefas contribuirá para que o projeto alcance altos níveis de produtividade. Por isso, é fundamental que ocorra a gestão de tarefas e de pessoas, de modo que os times envolvidos no projeto possam ser facilmente gerenciados. 
