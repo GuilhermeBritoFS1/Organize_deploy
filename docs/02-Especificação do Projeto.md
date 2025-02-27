@@ -111,6 +111,9 @@ De acordo com o PMBoK v6 as dez áreas que constituem os pilares para gerenciar 
 ## Gerenciamento de Tempo
 
 ![Gráfico](img/Cronograma.png)
+
+### Gráfico de Gantt
+
 ![Gráfico de Gantt](img/Gantt.png)
 
 ## Gerenciamento de Equipe
