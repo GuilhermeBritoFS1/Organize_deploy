@@ -98,7 +98,7 @@ A aplicação será utilizada por diferentes perfis de usuários, cada um com ca
 
 ## Mapa de Stakeholders:
 
-![Mapa de Stakeholders](img/img_doc01/Mapa%20de%20Stakeholders%20-%20OrgaNize.png)
+![Mapa de Stakeholders](img/img_doc01/MapaStakeholders_OrgaNize.png)
 
 <!-- > **Links Úteis**:
 >
