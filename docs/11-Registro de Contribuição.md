@@ -1,7 +1,5 @@
 # Documentação do Projeto de Trabalho em Equipe
 
-Este é um exemplo de documento para a documentação das etapas e contribuição de cada membro. É importante salientar que todos os membros devem participar ativamente em todas as etapas e, nas etapas de desenvolvimento é impressindível que todos tenham atividades de desenvolvimento. <strong>Este arquivo deve refletir a execução das tarefas de cada aluno por etapa e estar em consonância com as ferramentas de gestão de tempo utilizadas pelo grupo, contando principalmente o tempo de início e termino de cada tarefa.</strong>
-
 ## Visão Geral
 
 Este documento detalha as etapas e responsabilidades do trabalho em equipe para o desenvolvimento de um projeto. O projeto está dividido em cinco etapas principais, cada uma com suas respectivas tarefas e prazos. Cada membro da equipe é responsável por completar as tarefas atribuídas e colaborar com os demais para garantir o sucesso do projeto.
@@ -17,15 +15,16 @@ Coletar e documentar todos os requisitos necessários para o desenvolvimento do 
 - **Reunião com stakeholders**: Realizar reuniões com as partes interessadas para entender as necessidades e expectativas.
 - **Levantamento de requisitos**: Documentar os requisitos funcionais e não funcionais do projeto.
 - **Análise de viabilidade**: Avaliar a viabilidade técnica e econômica do projeto.
-
+- **Metodologia**: Definir abordagem e metodos a serem aplicados no projeto.
+- **Arquitetura**: Definir um esboço a ser seguido para a arquitetura.
+  
 ### Responsáveis
 
-- **Analista de Requisitos**: Nome do analista
-- **Gerente de Projeto**: Nome do gerente
+- **Equipe de pesquisa e desenvolvimento**: Bernardo Marra,Guilherme Brito,Helbert Benício,Jefferson Wagner e Jonatas Brum
 
 ### Prazo
 
-- **Data de conclusão**: YYYY-MM-DD
+- **Data de conclusão**: 2025-03-02
 
 ---
 
