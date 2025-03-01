@@ -1,7 +1,7 @@
 
 # Metodologia
 
-<span style="color:red">Pré-requisitos: <a href="2-Especificação do Projeto.md"> Documentação de Especificação</a></span>
+
 
 A metodologia contempla as ferramentas utilizadas pela manutenção dos recursos e demais recursos quanto à organização do tempo e execução das tarefas do projeto.
 A estrutura de ambientes é essencial para garantir um fluxo organizado e seguro de desenvolvimento, testes e produção. 
@@ -70,7 +70,7 @@ Para gerenciar e distribuir as tarefas do projeto, a equipe está utilizando um 
   O quadro kanban do grupo no GitHub pode ser visualizado no link (https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2025-1-e4-proj-infra-t3-pmv-ads-2025-1-e4-proj-organize/blob/main/docs/img/Cronogramaequipe.png) e é apresentado, no estado atual, na Figura abaixo:
 <br>
 
-<div align="center"><img src="https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2025-1-e4-proj-infra-t3-pmv-ads-2025-1-e4-proj-organize/blob/main/docs/img/Cronogramaequipe.png" width="300" title="Kanban"></div>
+<div align="center"><img src="https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2025-1-e4-proj-infra-t3-pmv-ads-2025-1-e4-proj-organize/blob/main/docs/img/Cronogramaequipe.png" title="Kanban"></div>
  
 
 ### Ferramentas
