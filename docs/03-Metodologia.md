@@ -12,7 +12,7 @@ A estrutura de ambientes é essencial para garantir um fluxo organizado e seguro
 --------- | ---------- |  
 | Repositório de código fonte | [GitHub](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2025-1-e4-proj-infra-t3-pmv-ads-2025-1-e4-proj-organize) |
 | Documentos do projeto | [Figma](https://www.figma.com/files/team/1420573355423046667/all-projects?fuid=1064914400717975648) |
-| Gerenciamento de Projeto | [Gantt](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2025-1-e4-proj-infra-t3-pmv-ads-2025-1-e4-proj-organize/blob/main/docs/img/Cronogramaequipe.png)  |
+| Gerenciamento de Projeto | [Gantt](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2025-1-e4-proj-infra-t3-pmv-ads-2025-1-e4-proj-organize/blob/main/docs/img/Gantt.png)  |
 | Comunicação e Reuniões | [Teams](https://teams.microsoft.com/_), [WhatsApp](https://web.whatsapp.com/), [Discord](https://discord.com/channels/1141565883148410880/1141566867622862879/) |
 
 ## Controle de Versão
@@ -79,7 +79,7 @@ As ferramentas empregadas no projeto são:
 
 | Ferramntas | Plataforma | 
 --------- | ---------- |  
-| Editor de código.  Visual Studio |
+| Editor de código| Visual Studio |
 | Ferramentas de desenho de tela | [Figma](https://www.figma.com/files/team/1420573355423046667/all-projects?fuid=1064914400717975648) |
 | Ferramentas de comunicação | [Teams](https://teams.microsoft.com/_), [WhatsApp](https://web.whatsapp.com/), [Discord](https://discord.com/channels/1141565883148410880/1141566867622862879/) |
 
