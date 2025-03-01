@@ -1,25 +1,24 @@
-# TÍTULO DO PROJETO
+# ORGANIZE
 
-`CURSO`
+`Análise e desenvolvimento de Sistemas`
 
-`DISCIPLINA`
+`Projeto`
 
-`SEMESTRE`
+`EIXO 4 - 2025/01`
 
-Descrever resumidamente, em um ou dois parágrafos, o projeto que está sendo desenvolvido.
+Em um ambiente corporativo, a organização e a gestão eficiente de tarefas são essenciais para o sucesso. Muitas empresas enfrentam desafios relacionados à desorganização e à má gestão de atividades, o que pode comprometer a produtividade e os resultados. Pensando nisso, o OrgaNize foi desenvolvido para oferecer uma solução eficiente, permitindo que equipes organizem, priorizem e acompanhem suas tarefas de forma estruturada, melhorando o fluxo de trabalho e a tomada de decisões.
 
 ## Integrantes
 
-* Nome completo do aluno 1
-* Nome completo do aluno 2
-* Nome completo do aluno 3
-* Nome completo do aluno 4
-* Nome completo do aluno 5
-* Nome completo do aluno 6
+* Bernardo Miguel Soutelo Marra  
+* Guilherme Brito Fonseca e Silva
+* Helbert Miranda Benício
+* Jefferson Wagner Silveira e Silva
+* Jonatas de Carvalho Brum
 
 ## Orientador
 
-* Nome completo do professor 1
+* Felipe Augusto Lara Soares
 
 ## Instruções de utilização
 

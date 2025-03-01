@@ -4,7 +4,7 @@
 
 Definição de como o software é estruturado em termos dos componentes que fazem parte da solução e do ambiente de hospedagem da aplicação.
 
-![Arquitetura da Solução](img/api_web_mobile.png)
+![organiZe](https://github.com/user-attachments/assets/0309f6e4-490a-407f-aaeb-431184527170)
 
 ## Diagrama de Classes
 
