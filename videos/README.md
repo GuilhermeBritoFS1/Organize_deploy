@@ -5,5 +5,3 @@
 ## Apresentação da 1ª etapa - Entrega 02/03/2025
 
 [Vídeo da 1ª etapa - Apresentação](https://youtu.be/t0XmFZEUaKI)
-
-<iframe width="560" height="315" src="https://youtu.be/t0XmFZEUaKI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
