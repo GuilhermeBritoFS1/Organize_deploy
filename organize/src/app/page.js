@@ -1,8 +1,7 @@
-import "./globals.css";
-export default function Home() {
+export default function home() {
   return (
     <div>
-      <hi>Olá mundo!</hi>
+      <h1>Pagina Inicial</h1>
     </div>
   );
 }

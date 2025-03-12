@@ -72,6 +72,8 @@ As ferramentas empregadas no projeto são:
 | Ferramntas                     | Plataforma                                                                                                                                                      |
 | ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Editor de código               | [Visual Code](https://code.visualstudio.com/)                                                                                                                   |
+| Biblioteca                     | [React](https://react.dev/)                                                                                                                                     |
+| Framework                      | [Next.js](https://nextjs.org/)                                                                                                                                  |
 | Ferramentas de desenho de tela | [Figma](https://www.figma.com/files/team/1420573355423046667/all-projects?fuid=1064914400717975648)                                                             |
 | Ferramentas de comunicação     | [Teams](https://teams.microsoft.com/_), [WhatsApp](https://web.whatsapp.com/), [Discord](https://discord.com/channels/1141565883148410880/1141566867622862879/) |
 | Ferramentas de diagramas       | [Lucid](https://lucid.app/)                                                                                                                                     |
