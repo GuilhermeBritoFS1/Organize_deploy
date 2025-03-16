@@ -21,7 +21,10 @@ export default function Header() {
           menuOpen ? "block" : "hidden"
         }`}
       >
-        <a href="./" className="block md:inline px-4 py-2 hover:underline">
+        <a
+          href="./homeOn"
+          className="block md:inline px-4 py-2 hover:underline"
+        >
           Início
         </a>
 
