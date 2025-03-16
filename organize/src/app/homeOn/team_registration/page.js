@@ -1,12 +1,12 @@
 export const metadata = {
-  title: "Cadastro",
+  title: "Cadastro de Equipes",
   description: "OrgaNize - Organize seu dia do jeito mais nice!",
 };
 
-export default function Create() {
+export default function Team_registration() {
   return (
     <div>
-      <h1>Pagina de Cadastro</h1>
+      <h1>Pagina de Cadastro de Equipes</h1>
     </div>
   );
 }
