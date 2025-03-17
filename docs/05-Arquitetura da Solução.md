@@ -6,13 +6,6 @@ Definição de como o software é estruturado em termos dos componentes que faze
 
 ![organiZe](https://github.com/user-attachments/assets/db1cf7b8-4293-4258-9d6c-6d347e0e819a)
 
-
-Web : Desenvolvido em React + NextJS
-Mobile : Desenvolvido em React Native
-Backend : Desenvolvido com NodeJS + Express
-Container : Docker registrado no Docker Hub
-Hospedagem e Compute Service: Azure (WebApp, BlobStorage)
-Banco de dados : mongodb
 ## Diagrama de Classes
 
 O diagrama de classes ilustra graficamente como será a estrutura do software, e como cada uma das classes da sua estrutura estarão interligadas. Essas classes servem de modelo para materializar os objetos que executarão na memória.
@@ -32,13 +25,12 @@ Estrutura do Documento
 
 ```Json
 {
-    "_id": "ObjectId('5f7e1bbf9b2a4f1a9c38b9a1')",
-    "name": "John Doe",
-    "email": "john.doe@example.com",
-    "passwordHash": "hash_da_senha",
-    "roles": ["admin", "user"],
-    "createdAt": "2024-08-29T10:00:00Z",
-    "updatedAt": "2024-08-29T12:00:00Z"
+  "_id": "objectId('65f1b2f9b2a4f1ac9c38b9a1')",
+  "name": "Alice Silva",
+  "email": "alice.silva@example.com",
+  "passwordHash": "hash_da_senha",
+  "createdAt": "2024-03-17T12:00:00Z",
+  "updatedAt": "2024-03-17T12:00:00Z"
 }
 ```
 
@@ -46,100 +38,88 @@ Estrutura do Documento
 > - <strong>_id:</strong> Identificador único do usuário gerado automaticamente pelo MongoDB.
 > - <strong>name:</strong> Nome completo do usuário.
 > - <strong>email:</strong> Endereço de email do usuário.
-> - <strong>passwordHash:</strong> Hash da senha do usuário.
-> - <strong>roles:</strong> Lista de papéis atribuídos ao usuário (por exemplo, admin, user).
+> - <strong>password:</strong> Hash da senha do usuário.
 > - <strong>createdAt:</strong> Data e hora de criação do usuário.
 > - <strong>updatedAt:</strong> Data e hora da última atualização dos dados do usuário.
 
-### Coleção: products
-Armazena as informações dos produtos disponíveis no sistema.
+### Coleção: tasks
+Armazena as informações das tarefas criadas pelos usuários.
 
 ```Json
 {
-    "_id": "ObjectId('5f7e1ccf9b2a4f1a9c38b9a2')",
-    "name": "Produto Exemplo",
-    "description": "Descrição detalhada do produto.",
-    "price": 99.99,
-    "category": "Categoria Exemplo",
-    "stock": 100,
-    "createdAt": "2024-08-29T10:30:00Z",
-    "updatedAt": "2024-08-29T11:30:00Z"
+  "_id": "objectId('65f1b3f9b2a4f1ac9c38b9a2')",
+  "title": "Finalizar relatório",
+  "description": "Relatório mensal de desempenho",
+  "status": "pendente",
+  "dueDate": "2024-03-20T18:00:00Z",
+  "createdBy": "objectId('65f1b2f9b2a4f1ac9c38b9a1')",
+  "assignedTo": "objectId('65f1b2f9b2a4f1ac9c38b9a3')",
+  "taskGroup": "objectId('65f1b4f9b2a4f1ac9c38b9a4')",
+  "createdAt": "2024-03-17T12:30:00Z"
 }
 ```
 
 #### Descrição dos Campos
-> - <strong>_id:</strong> Identificador único do usuário gerado automaticamente pelo MongoDB.
-> - <strong>name:</strong> Nome completo do usuário.
-> - <strong>email:</strong> Endereço de email do usuário.
-> - <strong>passwordHash:</strong> Hash da senha do usuário.
-> - <strong>roles:</strong> Lista de papéis atribuídos ao usuário (por exemplo, admin, user).
-> - <strong>createdAt:</strong> Data e hora de criação do usuário.
-> - <strong>updatedAt:</strong> Data e hora da última atualização dos dados do usuário.
+> - <strong>_id:</strong> Identificador único da tarefa gerado pelo MongoDB.
+> - <strong>title:</strong> Título da tarefa.
+> - <strong>description:</strong> Descrição detalhada da tarefa.
+> - <strong>status:</strong> Estado atual da tarefa (exemplo: "pendente", "em andamento", "concluída").
+> - <strong>dueDate:</strong> Data e hora limite para conclusão da tarefa.
+> - <strong>createdBy:</strong> ID do usuário que criou a tarefa.
+> - <strong>assignedTo:</strong> ID do usuário responsável pela tarefa.
+> - <strong>taskGroup:</strong> ID do grupo ao qual a tarefa pertence (caso esteja dentro de um grupo).
+> - <strong>createdAt:</strong> Data e hora de criação da tarefa.
 
-### Coleção: products
-Armazena as informações dos produtos disponíveis no sistema.
+### Coleção: taskGroups
+Armazena as informações dos grupos de tarefas e seus membros.
 
 Estrutura do Documento
 
 ```Json
 {
-    "_id": "ObjectId('5f7e1ccf9b2a4f1a9c38b9a2')",
-    "name": "Produto Exemplo",
-    "description": "Descrição detalhada do produto.",
-    "price": 99.99,
-    "category": "Categoria Exemplo",
-    "stock": 100,
-    "createdAt": "2024-08-29T10:30:00Z",
-    "updatedAt": "2024-08-29T11:30:00Z"
+  "_id": "objectId('65f1b4f9b2a4f1ac9c38b9a4')",
+  "name": "Projeto X",
+  "description": "Grupo de tarefas do Projeto X",
+  "createdBy": "objectId('65f1b2f9b2a4f1ac9c38b9a1')",
+  "tasks": [
+    "objectId('65f1b3f9b2a4f1ac9c38b9a2')"
+  ],
+  "createdAt": "2024-03-17T12:45:00Z"
 }
 ```
 
 #### Descrição dos Campos
-> - <strong>_id:</strong> Identificador único do produto gerado automaticamente pelo MongoDB.
-> - <strong>name:</strong> Nome do produto.
-> - <strong>description:</strong> Descrição detalhada do produto.
-> - <strong>price:</strong> Preço do produto.
-> - <strong>category:</strong> Categoria à qual o produto pertence.
-> - <strong>stock:</strong> Quantidade de produtos em estoque.
-> - <strong>createdAt:</strong> Data e hora de criação do produto.
-> - <strong>updatedAt:</strong> Data e hora da última atualização dos dados do produto.
+> - <strong>_id:</strong> Identificador único do grupo de tarefas gerado pelo MongoDB.
+> - <strong>name:</strong> Nome do grupo de tarefas.
+> - <strong>description:</strong> Descrição do grupo.
+> - <strong>createdBy:</strong> ID do usuário que criou o grupo.
+> - <strong>tasks:</strong> Lista de IDs das tarefas associadas ao grupo.
+> - <strong>createdAt:</strong> Data e hora de criação do grupo.
 
-### Coleção: orders
-Armazena as informações dos pedidos feitos pelos usuários.
+### Coleção: taskGroupMembers
+Armazena a relação entre usuários e grupos de tarefas, incluindo suas permissões.
 
 Estrutura do Documento
 
 ```Json
 {
-    "_id": "ObjectId('5f7e1ddf9b2a4f1a9c38b9a3')",
-    "userId": "ObjectId('5f7e1bbf9b2a4f1a9c38b9a1')",
-    "products": [
-        {
-            "productId": "ObjectId('5f7e1ccf9b2a4f1a9c38b9a2')",
-            "quantity": 2,
-            "price": 99.99
-        }
-    ],
-    "totalPrice": 199.98,
-    "status": "pending",
-    "createdAt": "2024-08-29T11:00:00Z",
-    "updatedAt": "2024-08-29T11:30:00Z"
+  "_id": "objectId('65f1b5f9b2a4f1ac9c38b9a5')",
+  "user": "objectId('65f1b2f9b2a4f1ac9c38b9a1')",
+  "taskGroup": "objectId('65f1b4f9b2a4f1ac9c38b9a4')",
+  "role": "admin",
+  "addedAt": "2024-03-17T13:00:00Z"
 }
 ```
 
 #### Descrição dos Campos
-> - <strong>_id:</strong> Identificador único do pedido gerado automaticamente pelo MongoDB.
-> - <strong>userId:</strong> Referência ao identificador do usuário que fez o pedido.
-> - <strong>products:</strong> Lista de produtos incluídos no pedido, cada um com:
-> - <strong>productId:</strong> Identificador do produto.
-> - <strong>quantity:</strong> Quantidade do produto pedido.
-> - <strong>price:</strong> Preço unitário do produto no momento do pedido.
-> - <strong>totalPrice:</strong> Preço total do pedido (soma de todos os itens).
-> - <strong>status:</strong> Status atual do pedido (por exemplo, pending, shipped, delivered).
-> - <strong>createdAt:</strong> Data e hora de criação do pedido.
-> - <strong>updatedAt:</strong> Data e hora da última atualização dos dados do pedido.
+> - <strong>_id:</strong> Identificador único do relacionamento entre usuário e grupo.
+> - <strong>user:</strong> ID do usuário que faz parte do grupo.
+> - <strong>taskGroup:</strong> ID do grupo de tarefas ao qual o usuário pertence.
+> - <strong>role:</strong> Nível de permissão do usuário dentro do grupo (admin, editor, viewer).
+> - <strong>addedAt:</strong> Data e hora em que o usuário foi adicionado ao grupo.
 
-### Boas Práticas
+
+<!-- ### Boas Práticas
 
 Validação de Dados: Implementar validação de esquema e restrições na aplicação para garantir a consistência dos dados.
 
@@ -170,13 +150,16 @@ As referências abaixo irão auxiliá-lo na geração do artefato “Esquema Rel
 
 ## Modelo Físico (Somente se tiver mais de um banco e outro for relacional)
 
-Entregar um arquivo banco.sql contendo os scripts de criação das tabelas do banco de dados. Este arquivo deverá ser incluído dentro da pasta src\bd.
+Entregar um arquivo banco.sql contendo os scripts de criação das tabelas do banco de dados. Este arquivo deverá ser incluído dentro da pasta src\bd. -->
 
 ## Tecnologias Utilizadas
 
-Descreva aqui qual(is) tecnologias você vai usar para resolver o seu problema, ou seja, implementar a sua solução. Liste todas as tecnologias envolvidas, linguagens a serem utilizadas, serviços web, frameworks, bibliotecas, IDEs de desenvolvimento, e ferramentas.
-
-Apresente também uma figura explicando como as tecnologias estão relacionadas ou como uma interação do usuário com o sistema vai ser conduzida, por onde ela passa até retornar uma resposta ao usuário.
+> - <strong>Web:</strong> Desenvolvido em React + NextJS no VisualStudioCode
+> - <strong>Mobile:</strong> Desenvolvido em React Native no VisualStudioCode
+> - <strong>Backend:</strong> Desenvolvido com NodeJS + Express no VisualStudioCode
+> - <strong>Container:</strong> Docker registrado no Docker Hub
+> - <strong>Hospedagem e Compute Service:</strong> Azure (WebApp, BlobStorage)
+> - <strong>Banco de dados:</strong> mongodb
 
 ## Hospedagem
 
