@@ -4,8 +4,15 @@
 
 Definição de como o software é estruturado em termos dos componentes que fazem parte da solução e do ambiente de hospedagem da aplicação.
 
-![organiZe](https://github.com/user-attachments/assets/0309f6e4-490a-407f-aaeb-431184527170)
+![organiZe](https://github.com/user-attachments/assets/db1cf7b8-4293-4258-9d6c-6d347e0e819a)
 
+
+Web : Desenvolvido em React + NextJS
+Mobile : Desenvolvido em React Native
+Backend : Desenvolvido com NodeJS + Express
+Container : Docker registrado no Docker Hub
+Hospedagem e Compute Service: Azure (WebApp, BlobStorage)
+Banco de dados : mongodb
 ## Diagrama de Classes
 
 O diagrama de classes ilustra graficamente como será a estrutura do software, e como cada uma das classes da sua estrutura estarão interligadas. Essas classes servem de modelo para materializar os objetos que executarão na memória.
