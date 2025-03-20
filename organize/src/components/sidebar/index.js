@@ -1,7 +1,7 @@
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Home, Info, LogIn, Menu, Package } from "lucide-react";
+import { Cog, Home, Info, LogIn, Menu, Package, User } from "lucide-react";
 import {
   TooltipProvider,
   Tooltip,
@@ -36,6 +36,32 @@ export function Sidebar() {
               </Link>
             </TooltipTrigger>
             <TooltipContent side="right">Início</TooltipContent>
+          </Tooltip>
+
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link
+                href="./profile"
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-gray-900 transition-colors hover:text-amber-200"
+              >
+                <User className="w-5 h-5" />
+                <span className="sr-only">Perfil</span>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent side="right">Perfil</TooltipContent>
+          </Tooltip>
+
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link
+                href="./settings"
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-gray-900 transition-colors hover:text-amber-200"
+              >
+                <Cog className="w-5 h-5" />
+                <span className="sr-only">Configurações</span>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent side="right">Configurações</TooltipContent>
           </Tooltip>
 
           <Tooltip>
@@ -93,6 +119,22 @@ export function Sidebar() {
                 >
                   <Home className="h-5 w-5 transition-all" />
                   Início
+                </Link>
+
+                <Link
+                  href="./profile"
+                  className="flex items-center gap-4 px-2.5  hover:text-amber-400 text-gray-900"
+                >
+                  <User className="h-5 w-5 transition-all" />
+                  Perfil
+                </Link>
+
+                <Link
+                  href="./settings"
+                  className="flex items-center gap-4 px-2.5  hover:text-amber-400 text-gray-900"
+                >
+                  <Cog className="h-5 w-5 transition-all" />
+                  Configurações
                 </Link>
 
                 <Link

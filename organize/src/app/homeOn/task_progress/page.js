@@ -5,8 +5,10 @@ export const metadata = {
 
 export default function Task_progress() {
   return (
-    <div>
-      <h1>Pagina de Tarefas em Andamento</h1>
-    </div>
+    <main className="sm:ml-14 p-4">
+      <div>
+        <h1>Pagina de Tarefas em Andamento</h1>
+      </div>
+    </main>
   );
 }

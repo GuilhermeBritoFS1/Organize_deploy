@@ -5,8 +5,10 @@ export const metadata = {
 
 export default function Task_assignment() {
   return (
-    <div>
-      <h1>Pagina de Atribuição de Tarefas</h1>
-    </div>
+    <main className="sm:ml-14 p-4">
+      <div>
+        <h1>Pagina de Atribuição de Tarefas</h1>
+      </div>
+    </main>
   );
 }
