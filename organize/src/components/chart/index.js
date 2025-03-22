@@ -2,7 +2,7 @@
 
 import { ChartColumnBig } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import { ChartContainer } from "../ui/chart";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "../ui/chart";
 import { Bar, CartesianGrid, XAxis, BarChart } from "recharts";
 
 export function ChartOverview() {
@@ -43,7 +43,7 @@ export function ChartOverview() {
               axisLine={false}
               tickFormatter={(value) => value.slice(0)}
             />
-
+            <ChartTooltip content={<ChartTooltipContent />} />
             <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
             <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
           </BarChart>

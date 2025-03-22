@@ -1,7 +1,7 @@
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Cog, Home, Info, LogIn, Menu, Package, User } from "lucide-react";
+import { Cog, Home, Info, LogIn, Menu, User } from "lucide-react";
 import {
   TooltipProvider,
   Tooltip,
@@ -20,7 +20,11 @@ export function Sidebar() {
               href="/"
               className="flex h-10 w-10 bg-primary rounded-full text-lg items-center justify-center text-primary-foreground md:text-base gap-2"
             >
-              <Package className="h-5 w-5 transition-all" />
+              <img
+                src="/logo.png"
+                alt="Logo do Projeto"
+                className="h-10 w-10"
+              />
               <span className="sr-only">Logo do Projeto</span>
             </Link>
           </TooltipProvider>
@@ -104,12 +108,16 @@ export function Sidebar() {
             </SheetTrigger>
 
             <SheetContent side="left" className="sm:max-w-xl bg-amber-200">
-              <nav className="grid gap-6 text-lg font-medium">
+              <nav className="grid gap-6 text-lg font-medium mt-4">
                 <Link
                   href="/"
                   className="flex h-10 w-10 bg-primary rounded-full text-lg items-center justify-center text-primary-foreground md:text-base gap-2"
                 >
-                  <Package className="h-5 w-5 transition-all" />
+                  <img
+                    src="/logo.png"
+                    alt="Logo do Projeto"
+                    className="h-10 w-10"
+                  />
                   <span className="sr-only">Logo do Projeto</span>
                 </Link>
 
