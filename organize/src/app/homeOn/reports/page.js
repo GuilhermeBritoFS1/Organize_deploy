@@ -1,4 +1,5 @@
 import { ChartOverview } from "@/components/chart";
+import { Teams } from "@/components/teams";
 import {
   Card,
   CardContent,
@@ -76,6 +77,7 @@ export default function Report() {
 
         <section className="mt-4 flex flex-col md:flex-row gap-4">
           <ChartOverview />
+          <Teams />
         </section>
       </div>
     </main>

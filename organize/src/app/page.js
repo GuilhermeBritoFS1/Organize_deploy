@@ -7,7 +7,7 @@ export const metadata = {
 
 export default function Home() {
   return (
-    <main className="sm:ml-14 p-4 flex items-center justify-center min-h-screen bg-gray-900 p-4">
+    <main className="sm:ml-14 p-4 flex items-center justify-center min-h-screen bg-gray-900">
       <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-start px-6 py-8">
         <img src="/logo.png" alt="Logo" className="mb-4 w-50 h-auto" />
         <h1 className="text-6xl font-bold mb-4 text-center">OrgaNize</h1>
