@@ -49,15 +49,15 @@ export default function Create() {
 
         <div className="flex flex-col ms-0 w-[50%] p-5 gap-10 my-auto">
             <div className="flex flex-col justify-center items-center gap-2">
-              <a className="flex flex-row h-[50px] gap-2 border w-1/2 p-2 rounded-md" href="">
+              <a className="flex flex-row h-[50px] gap-2 border w-2/3 p-2 rounded-md justify-center items-center" href="">
                 <FcGoogle size={30} />
                 <span className="text-2xl font-bold text-start">Cadastre-se pelo Google</span>
               </a>                
-              <a className="flex flex-row h-[50px] gap-2 border w-1/2 p-2 rounded-md" href="">
+              <a className="flex flex-row h-[50px] gap-2 border w-2/3 p-2 rounded-md justify-center items-center" href="">
                 <ImFacebook2 size={30} />
               <span className="text-2xl font-bold text-start">Cadastre-se pelo Facebook</span>
               </a>                
-              <a className="flex flex-row h-[50px] gap-2 border w-1/2 p-2 rounded-md" href="">
+              <a className="flex flex-row h-[50px] gap-2 border w-2/3 p-2 rounded-md justify-center items-center" href="">
                 <FaMicrosoft size={30} />
                 <span className="text-2xl font-bold text-start">Cadastre-se pela Microsoft</span>
               </a>                
