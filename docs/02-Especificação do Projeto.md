@@ -70,6 +70,8 @@ As tabelas que se seguem apresentam os requisitos funcionais e não funcionais q
 | RF-008 | Permitir a visualização do painel de status das tarefas, exemplo: 5/10.                    | MÉDIA      | A definir... |
 | RF-009 | Permitir a classificação de tarefas por prioridade (alta, média ou baixa) e categoria.     | MÉDIA      | A definir... |
 | RF-010 | Permitir a geração de relatórios dentro da plataforma.                                     | BAIXA      | A definir... |
+| RF-011 | Permitir a criacao de usuario "Admin".                                                     | BAIXA      | A definir... |
+| RF-012 | Permitir login por OAuth2                                                                  | BAIXA      | A definir... |
 
 ### Requisitos não Funcionais
 
