@@ -5,6 +5,8 @@ import { FcGoogle } from "react-icons/fc";
 import { ImFacebook2 } from "react-icons/im";
 import { FaMicrosoft } from "react-icons/fa";
 
+import { Input } from "@/components/ui/input";
+
 export const metadata = {
   title: "Cadastro",
   description: "OrgaNize - Organize seu dia do jeito mais nice!",
@@ -82,28 +84,28 @@ export default function Create() {
             </fieldset>
             {/* On submission, the input value will be appended to
           the URL, e.g. /search?query=abc */}
-            <input
+            <Input
               type="text"
               placeholder="Nome completo"
               id="name"
               name="name"
               className="border p-2 rounded-md text-sm/5"
             />
-            <input
+            <Input
               type="email"
               placeholder="Email (exemplo: user123@gmail.com)"
               id="email"
               name="email"
               className="border p-2 rounded-md text-sm/5"
             />
-            <input
+            <Input
               type="email"
               placeholder="Confirme email"
               id="confirmEmail"
               name="confirmEmail"
               className="border p-2 rounded-md text-sm/5"
             />
-            <input
+            <Input
               type="password"
               placeholder="Senha"
               id="password"
