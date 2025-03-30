@@ -12,7 +12,8 @@ import {
 } from "@/components/ui/select";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import SelectMulti from "react-select";
+import SelectMulti, {StylesConfig} from "react-select";
+import chroma from 'chroma-js';
 
 import styles from "@/app/homeOn/task_create/taskCreate.module.css";
 
@@ -78,7 +79,7 @@ export default function Task_create() {
               options={options}
               value={selectedOptions}
               onChange={handleSelectChange}
-              classNamePrefix="custom-select "
+              classNamePrefix="custom-select"
             />
             <div className="text-center">
               <p>Opções selecionadas:</p>
