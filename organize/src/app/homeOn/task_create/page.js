@@ -55,7 +55,7 @@ export default function Task_create() {
             <SelectTrigger
               placeholder="Selecione uma opção"
               style={{ color: "black", backgroundColor: '#ffbf00'}}
-              className="lg:w-1/3 md:w-2/3 sm:w-full w-full"
+              className="lg:w-1/2 md:w-1/2 sm:w-full w-full"
             >
               Equipe responsável
             </SelectTrigger>
@@ -70,27 +70,6 @@ export default function Task_create() {
               </SelectGroup>
             </SelectContent>
           </Select>
-          <div className="flex flex-col rounded-md border bg-[#ffbf00] p-2">
-            <label className="text-black text-center font-bold">
-              Membro(s) responsável(eis):
-            </label>
-            <SelectMulti
-              isMulti
-              options={options}
-              value={selectedOptions}
-              onChange={handleSelectChange}
-              classNamePrefix="custom-select"
-            />
-            <div className="text-center">
-              <p>Opções selecionadas:</p>
-              <ul>
-                {selectedOptions.map((option) => (
-                  <li key={option.value}>{option.label}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
           <DatePicker
             selected={startDate}
             onChange={(date) => setStartDate(date)}
