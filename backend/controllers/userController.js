@@ -84,6 +84,78 @@ const userController = {
             res.status(500).json({message: err.message });
         }
     },
+    get: async (req, res) => {
+        try {
+            const id = req.params.id;
+            const user = await UserModel.findById(id);
+
+            if(!user){
+                res.status(404).json({msg: "User nao encontrado"});
+                return;
+            }
+            res.json(user);
+        } catch (err) {
+            res.json(err)
+        }
+    },
+    delete: async (req,res) => {
+        try {
+            const id = req.params.id;
+            const user = await UserModel.findById(id);
+
+            if(!user){
+                res.status(404).json({msg: "User nao encontrado"});
+                return;
+            }
+            const deletedUser =  await UserModel.findByIdAndDelete(id)
+
+            res.status(200).json({deletedUser, msg: "User excluido com sucesso"})
+        } catch (err) {
+            res.json(err)
+        }
+    },
+    update: async (req,res) => {
+            const id = req.params.id;
+
+            const user = {
+                name: req.body.name,
+                email: req.body.email
+            };
+
+        const updatedUser = await UserModel.findByIdAndUpdate(id, user);
+        
+        if(!updatedUser){
+            res.status(404).json({msg: "Usuario nao encontrado"});
+            return;
+        }
+        res.status(201).json({user, msg: "Usuario atualizado com sucesso"})
+    },
+    passwordUpdate: async (req, res) => {
+        const { oldPassword, newPassword } = req.body;
+    
+        // Validações de senha aqui...
+    
+        try {
+            const user = await UserModel.findById(req.user.userId);  // Usando o ID do usuário do token
+    
+            if (!user) {
+                return res.status(404).json({ msg: "Usuário não encontrado" });
+            }
+    
+            const isMatch = await bcrypt.compare(oldPassword, user.password);
+            if (!isMatch) {
+                return res.status(401).json({ msg: "Senha antiga incorreta" });
+            }
+    
+            const hashedPassword = await bcrypt.hash(newPassword, 10);
+            user.password = hashedPassword;
+    
+            await user.save();
+            res.status(200).json({ msg: "Senha atualizada com sucesso" });
+        } catch (err) {
+            res.status(500).json({ msg: "Erro ao atualizar a senha" });
+        }
+    },
 
 };
 
