@@ -3,7 +3,7 @@
 import { useState } from "react";
 import SelectMulti, { StylesConfig } from "react-select";
 import { Button, buttonVariants } from "@/components/ui/button";
-
+import Link from 'next/link'
 import { cn } from "@/lib/utils";
 
 export default function Task_assignment() {
@@ -131,6 +131,12 @@ export default function Task_assignment() {
               <Button variant="secondary" size="sm">
                 Atribuir
               </Button>
+                <Link href="./task_Edit">
+                  <Button variant="secondary" size="sm">
+                    Editar
+                  </Button>
+                </Link>
+
             </li>
           );
         })}
