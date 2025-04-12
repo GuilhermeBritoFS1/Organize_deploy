@@ -4,7 +4,14 @@
 
 Definição de como o software é estruturado em termos dos componentes que fazem parte da solução e do ambiente de hospedagem da aplicação.
 
-![organiZe](https://github.com/user-attachments/assets/db1cf7b8-4293-4258-9d6c-6d347e0e819a)
+![Blank diagram](https://github.com/user-attachments/assets/9bad1671-77d9-4676-ad82-7f8063a08078)
+
+Web: Feito em JS com o framework React
+Mobile: Feito em JS com o framework React Native
+Gateway: Hospedado na Azure
+Backend: Conatainer docker hospedado no dockerhub feito com JS e framework Node Express
+Banco de dados: NoSql feito com mongoDb e hospedado no servidor nativo Atlas
+
 
 ## Diagrama de Classes
 
