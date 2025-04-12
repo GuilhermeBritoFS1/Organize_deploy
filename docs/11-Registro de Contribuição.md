@@ -42,12 +42,12 @@ Desenvolver a lógica de negócio e os serviços de backend do projeto.
 
 ### Responsáveis
 
-- **Desenvolvedor Backend**: Nome do desenvolvedor
-- **Engenheiro de Dados**: Nome do engenheiro
+- **Desenvolvedor Backend**: Bernardo Marra,Guilherme Brito,Helbert Benício,Jefferson Wagner e Jonatas Brum
+- **Engenheiro de Dados**: Bernardo Marra
 
 ### Prazo
 
-- **Data de conclusão**: YYYY-MM-DD
+- **Data de conclusão**: 2025-04-13
 
 ---
 
