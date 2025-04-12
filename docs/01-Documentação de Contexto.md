@@ -22,7 +22,7 @@ Entre as principais dificuldades estão:
 > - [Matriz Certezas, Suposições e Dúvidas](https://medium.com/educa%C3%A7%C3%A3o-fora-da-caixa/matriz-certezas-suposi%C3%A7%C3%B5es-e-d%C3%BAvidas-fa2263633655)
 > - [Brainstorming](https://www.euax.com.br/2018/09/brainstorming/) -->
 
-## Objetivos Específico
+## Objetivos Específicos
 
 O aplicativo OrgaNize propõe um sistema de "to-do" eficiente para mitigar esses problemas, organizando tarefas, melhorando a comunicação e garantindo um gerenciamento eficaz.
 
