@@ -65,13 +65,13 @@ As tabelas que se seguem apresentam os requisitos funcionais e não funcionais q
 | RF-003 | Permitir que os usuários façam logout na plataforma.                                       | ALTA       | Bernardo |
 | RF-004 | Permitir a redefinição de senha dos usuários na plataforma.                                | ALTA       | Guilherme |
 | RF-005 | Permitir a leitura, criação e edição de tarefas na plataforma.                            | ALTA       | Helbert |
-| RF-006 | Permitir que o sistema notifique sobre os prazos e atualizações das tarefas na plataforma. | MÉDIA      | A definir... |
+| RF-006 | Permitir que o sistema notifique sobre os prazos e atualizações das tarefas na plataforma. | MÉDIA      | Bianca |
 | RF-007 | Permitir a atribuição e delegação de tarefas entre usuários.                               | MÉDIA      | Helbert |
 | RF-008 | Permitir a visualização do painel de status das tarefas, exemplo: 5/10.                    | MÉDIA      | A definir... |
 | RF-009 | Permitir a classificação de tarefas por prioridade (alta, média ou baixa) e categoria.     | MÉDIA      | A definir... |
 | RF-010 | Permitir a geração de relatórios dentro da plataforma.                                     | BAIXA      | A definir... |
-| RF-011 | Permitir a criacao de usuario "Admin".                                                     | BAIXA      | A definir... |
-| RF-012 | Permitir login por OAuth2                                                                  | BAIXA      | A definir... |
+| RF-011 | Permitir a criacao de usuario "Admin".                                                     | BAIXA      | Bianca |
+| RF-012 | Permitir login por OAuth2                                                                  | BAIXA      | Bianca |
 | RF-013 | Permitir a leitura, edição e exclusão de dados pessoais ao usuário                         | ALTA      | Guilherme |
 | RF-014 | Permitir a leitura de tarefas com base no status ou prioridade                         | ALTA      | Jefferson |
 | RF-015 | Permitir a exclusão de tarefas                         | ALTA      | Jefferson |
