@@ -10,7 +10,8 @@ Em um ambiente corporativo, a organização e a gestão eficiente de tarefas sã
 
 ## Integrantes
 
-* Bernardo Miguel Soutelo Marra  
+* Bernardo Miguel Soutelo Marra
+* Bianca Campos Xavier
 * Guilherme Brito Fonseca e Silva
 * Helbert Miranda Benício
 * Jefferson Wagner Silveira e Silva
