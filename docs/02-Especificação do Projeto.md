@@ -8,13 +8,19 @@ O projeto foi desenvolvido com foco em proporcionar uma gestão eficiente de tar
 
 #### João, 40 anos, Gerente de Projetos
 
+![Personas](img/img_doc02/Person_Joao_Gerente.png)
+
 - João tem 40 anos, é Gerente de Projetos e enfrenta dificuldades para acompanhar o progresso das tarefas de sua equipe. Para otimizar a gestão e garantir a entrega eficiente dos projetos, busca um painel centralizado que facilite o monitoramento de prazos e a comunicação entre os membros da equipe, permitindo maior controle e previsibilidade sobre as entregas.
 
 #### Mariana, 30 anos, Analista de Marketing
 
+![Personas](img/img_doc02/Person_Mariana_Marketing.png)
+
 - Mariana tem 30 anos, é Analista de Marketing e enfrenta problemas de comunicação e retrabalho em suas atividades diárias. Para aumentar sua produtividade, busca uma ferramenta intuitiva que ajude a organizar suas tarefas, melhorar a colaboração com a equipe e reduzir erros operacionais.
 
 #### Lucas, 25 anos, Desenvolvedor
+
+![Personas](img/img_doc02/Person_Lucas_Dev.png)
 
 - Lucas tem 25 anos, é Desenvolvedor e frequentemente recebe tarefas com informações insuficientes, o que impacta sua eficiência. Para otimizar seu trabalho e contribuir para o crescimento da empresa, precisa de um sistema que facilite a atribuição e o detalhamento das demandas, garantindo mais clareza e agilidade na execução dos projetos.
 

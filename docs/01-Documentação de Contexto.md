@@ -6,15 +6,7 @@ Em um ambiente corporativo, a organização e a gestão eficiente de tarefas sã
 
 Entre as principais dificuldades estão:
 
-- **Falta de Priorização**: Sem um sistema claro, as equipes podem focar em atividades secundárias enquanto tarefas críticas ficam pendentes.
-
-- **Perda de Prazo**: A desorganização pode levar ao esquecimento de prazos importantes, afetando a reputação da empresa e a satisfação do cliente.
-
-- **Sobrecarga de Trabalho**: A falta de distribuição clara de tarefas pode gerar desequilíbrios na carga de trabalho e aumentar o risco de burnout.
-
-- **Falta de Visibilidade**: Gestores podem ter dificuldades para acompanhar o progresso dos projetos e a tomada de decisões.
-
-- **Redução da Produtividade**: A ausência de um sistema estruturado pode levar a distrações e perda de tempo.
+A ausência de um sistema estruturado pode gerar diversos problemas nas equipes, como a **falta de priorização**, fazendo com que atividades secundárias sejam executadas enquanto tarefas críticas permanecem pendentes. Isso contribui para a **perda de prazos**, o que compromete tanto a reputação da empresa quanto a satisfação dos clientes. Além disso, a **sobrecarga de trabalho** se torna comum quando não há uma distribuição clara de tarefas, aumentando o risco de burnout entre os colaboradores. A **falta de visibilidade** também dificulta o acompanhamento do progresso dos projetos pelos gestores, comprometendo a tomada de decisões. Por fim, esses fatores juntos resultam em uma **redução da produtividade**, com tempo sendo desperdiçado em meio à desorganização e distrações.
 
 <!-- > **Links Úteis**:
 >
@@ -28,15 +20,7 @@ O aplicativo OrgaNize propõe um sistema de "to-do" eficiente para mitigar esses
 
 ### Principais objetivo
 
-- **Organização de Tarefas** – Proporcionar uma estrutura eficiente para a criação, categorização e acompanhamento de tarefas.
-
-- **Melhoria da Comunicação** – Facilitar a interação entre usuários para garantir alinhamento e clareza nas responsabilidades.
-
-- **Aprimoramento da Produtividade** – Reduzir a sobrecarga e otimizar o tempo dos usuários ao estruturar melhor as demandas.
-
-- **Gerenciamento** – Permitir um controle mais preciso do fluxo de trabalho, prazos e prioridades.
-
-- **Redução de Problemas Organizacionais** – Minimizar falhas na execução de tarefas e evitar retrabalho por meio de um sistema eficiente.
+A implementação de um sistema eficiente traz diversos benefícios para a gestão de atividades, começando pela **organização de tarefas**, que possibilita a criação, categorização e acompanhamento estruturado das demandas. Isso contribui diretamente para a **melhoria da comunicação**, ao facilitar a interação entre os usuários e garantir clareza nas responsabilidades. Com processos mais claros, há também um **aprimoramento da produtividade**, já que a sobrecarga é reduzida e o tempo dos usuários é melhor aproveitado. Além disso, o **gerenciamento** se torna mais eficaz, permitindo maior controle sobre o fluxo de trabalho, prazos e prioridades. Por fim, todos esses fatores colaboram para a **redução de problemas organizacionais**, minimizando falhas na execução e evitando retrabalho por meio de uma abordagem mais estruturada.
 
 Esses objetivos garantem que o OrgaNize atenda às necessidades de seus usuários, promovendo eficiência e melhor gestão do tempo.
 
@@ -58,9 +42,7 @@ Diante desse cenário, o OrgaNize foi desenvolvido com o objetivo de otimizar a 
 
 O público-alvo abrange uma ampla gama de profissionais e organizações que buscam soluções para gestão, produtividade e colaboração. Eles podem ser classificados em três grandes grupos:
 
-- **Empresas e Organizações**: Pequenas, médias e grandes empresas, incluindo startups em crescimento, equipes remotas e híbridas.
-- **Gestores e Líderes**: Gerentes de projetos, coordenadores de equipes e empreendedores que necessitam de ferramentas e métodos para otimizar processos e melhorar a eficiência.
-- **Profissionais Individuais**: Freelancers, consultores e profissionais autônomos que buscam soluções para organização, produtividade e gestão de tempo.
+O público-alvo abrange **empresas e organizações** de diferentes portes, desde pequenas e médias empresas até grandes corporações e startups em expansão, incluindo também equipes que atuam de forma remota ou híbrida. Além disso, o sistema é ideal para **gestores e líderes**, como gerentes de projetos, coordenadores e empreendedores que precisam de ferramentas eficazes para otimizar processos e aumentar a eficiência de suas equipes. Por fim, também atende **profissionais individuais**, como freelancers, consultores e autônomos que buscam soluções práticas para melhorar sua organização, produtividade e gestão do tempo.
 
 ## Perfis dos Usuários
 
