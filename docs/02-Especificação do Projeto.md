@@ -58,6 +58,7 @@ As tabelas que se seguem apresentam os requisitos funcionais e não funcionais q
 
 ### Requisitos Funcionais
 
+<<<<<<< HEAD
 | ID     | Descrição do Requisito                                                                     | Prioridade | Responsável |
 | ------ | ------------------------------------------------------------------------------------------ | ---------- | ----------- |
 | RF-001 | Permitir que os usuários criem uma conta na plataforma.                                    | ALTA       | Bernardo    |
@@ -77,6 +78,30 @@ As tabelas que se seguem apresentam os requisitos funcionais e não funcionais q
 | RF-015 | Permitir a exclusão de tarefas                                                             | ALTA       | Jefferson   |
 | RF-016 | Permitir a Criação, edição, leitura e exclusão de grupo de tarefas                         | ALTA       | Jonatas     |
 | RF-017 | Permitir a adição e exclusão de membro(s) do grupo de tarefas                              | ALTA       | Jonatas     |
+=======
+| ID     | Descrição do Requisito                                                                     | Prioridade | Responsável  |
+| ------ | ------------------------------------------------------------------------------------------ | ---------- | ------------ |
+| RF-001 | Permitir que os usuários criem uma conta na plataforma.                                    | ALTA       | Bernardo |
+| RF-002 | Permitir a autenticação dos usuários na plataforma via e-mail e senha.                     | ALTA       | Bernardo |
+| RF-003 | Permitir que os usuários façam logout na plataforma.                                       | ALTA       | Bernardo |
+| RF-004 | Permitir a redefinição de senha dos usuários na plataforma.                                | ALTA       | Guilherme |
+| RF-005 | Permitir a leitura, criação e edição de tarefas na plataforma.                            | ALTA       | Helbert |
+| RF-006 | Permitir que o sistema notifique sobre os prazos e atualizações das tarefas na plataforma. | MÉDIA      | Bianca |
+| RF-007 | Permitir a atribuição e delegação de tarefas entre usuários.                               | MÉDIA      | Helbert |
+| RF-008 | Permitir a visualização do painel de status das tarefas, exemplo: 5/10.                    | MÉDIA      | A definir... |
+| RF-009 | Permitir a classificação de tarefas por prioridade (alta, média ou baixa) e categoria.     | MÉDIA      | A definir... |
+| RF-010 | Permitir a geração de relatórios dentro da plataforma.                                     | BAIXA      | A definir... |
+| RF-011 | Permitir a criacao de usuario "Admin".                                                     | BAIXA      | Bianca |
+| RF-012 | Permitir login por OAuth2                                                                  | BAIXA      | Bianca |
+| RF-013 | Permitir a leitura, edição e exclusão de dados pessoais ao usuário                         | ALTA      | Guilherme |
+| RF-014 | Permitir a leitura de tarefas com base no status ou prioridade                         | ALTA      | Jefferson |
+| RF-015 | Permitir a exclusão de tarefas                         | ALTA      | Jefferson |
+| RF-016 | Permitir a Criação, edição, leitura e exclusão de grupo de tarefas                         | ALTA      | Jonatas |
+| RF-017 | Permitir a adição e exclusão de membro(s) do grupo de tarefas                         | ALTA      | Jonatas |
+
+
+
+>>>>>>> 5b3f235dfd318600d7d0de63c950fd70f308d23c
 
 ### Requisitos não Funcionais
 
