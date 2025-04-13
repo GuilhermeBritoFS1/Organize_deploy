@@ -50,33 +50,23 @@ A aplicação será utilizada por diferentes perfis de usuários, cada um com ca
 
 #### Usuário Experiente em Tecnologia
 
-- Tem facilidade com plataformas digitais e sistemas de gestão.
-- Costuma utilizar automação de processos e integração entre ferramentas.
-- Possui autonomia para explorar novas funcionalidades.
+Usuário experiente em tecnologia, demonstra facilidade no uso de plataformas digitais e sistemas de gestão, utilizando com frequência recursos de automação de processos e integração entre ferramentas. Além disso, possui autonomia para explorar e se adaptar a novas funcionalidades, otimizando seu desempenho e a eficiência das atividades.
 
 #### Usuário Intermediário
 
-- Tem conhecimento básico de ferramentas digitais, mas pode precisar de suporte inicial.
-- Utiliza softwares de gestão de tarefas e produtividade regularmente.
-- Pode necessitar de treinamentos ou documentação detalhada para uso avançado.
+Usuário com conhecimento básico de ferramentas digitais, que pode precisar de suporte inicial para se familiarizar com novas plataformas. Utiliza regularmente softwares voltados à gestão de tarefas e produtividade, mas pode necessitar de treinamentos ou documentação detalhada para explorar recursos mais avançados.
 
 #### Usuário Iniciante ou Com Pouca Familiaridade com Tecnologia
 
-- Prefere interfaces simples e intuitivas.
-- Pode ter dificuldades em compreender recursos avançados.
-- Precisa de um suporte mais estruturado, como tutoriais passo a passo.
+Usuário que prefere interfaces simples e intuitivas, demonstrando possíveis dificuldades na compreensão de recursos mais complexos. Costuma demandar um suporte mais estruturado, como tutoriais passo a passo, para garantir um bom aproveitamento das ferramentas disponíveis.
 
 #### Usuário em Posição de Liderança
 
-- Encontra-se em níveis gerenciais ou de decisão.
-- Busca relatórios, dashboards e insights estratégicos sobre produtividade e desempenho.
-- Pode demandar personalizações específicas para a gestão de equipes.
+Usuário que ocupa cargos gerenciais ou de tomada de decisão, com foco na análise de relatórios, dashboards e insights estratégicos relacionados à produtividade e desempenho. Pode demandar personalizações específicas para apoiar a gestão eficiente de equipes e processos.
 
 #### Usuário Colaborador
 
-- Participa ativamente na execução das atividades e tarefas.
-- Precisa de ferramentas para organização do trabalho e comunicação eficiente com a equipe.
-- Pode não estar envolvido diretamente na tomada de decisão.
+Usuário que atua diretamente na execução das atividades e tarefas do dia a dia. Necessita de ferramentas que favoreçam a organização do trabalho e a comunicação eficiente com os demais membros da equipe, mesmo não estando diretamente envolvido nas decisões estratégicas.
 
 ## Mapa de Stakeholders:
 
