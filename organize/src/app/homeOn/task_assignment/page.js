@@ -43,6 +43,41 @@ export default function Task_assignment() {
       dateDue: "20/06/2025",
       members: ["Guilherme", "Pedro", "Jefferson"],
     },
+    {
+      id: 4,
+      Título: "Tarefa 4",
+      task_Group: "Equipe 4",
+      dateDue: "20/06/2025",
+      members: ["Guilherme", "Pedro", "Jefferson"],
+    },
+    {
+      id: 4,
+      Título: "Tarefa 4",
+      task_Group: "Equipe 4",
+      dateDue: "20/06/2025",
+      members: ["Guilherme", "Pedro", "Jefferson"],
+    },
+    {
+      id: 4,
+      Título: "Tarefa 4",
+      task_Group: "Equipe 4",
+      dateDue: "20/06/2025",
+      members: ["Guilherme", "Pedro", "Jefferson"],
+    },
+    {
+      id: 4,
+      Título: "Tarefa 4",
+      task_Group: "Equipe 4",
+      dateDue: "20/06/2025",
+      members: ["Guilherme", "Pedro", "Jefferson"],
+    },
+    {
+      id: 4,
+      Título: "Tarefa 4",
+      task_Group: "Equipe 4",
+      dateDue: "20/06/2025",
+      members: ["Guilherme", "Pedro", "Jefferson"],
+    },
   ];
 
   // Alterando para armazenar as seleções de cada tarefa individualmente
@@ -107,7 +142,7 @@ export default function Task_assignment() {
         </p>
       </div>
       <hr />
-      <ul className="flex md:flex-row sm:flex-col flex-col gap-5 my-5">
+      <ul className="flex md:flex-row flex-wrap sm:flex-col flex-col gap-5 justify-center my-5">
         {tasks.map((task) => {
           // Convertendo os membros em objetos no formato { value: "nome", label: "nome" }
           const membersOptions = task.members.map((member) => ({
@@ -116,7 +151,7 @@ export default function Task_assignment() {
           }));
 
           return (
-            <li key={task.id} className="md:w-[25%]">
+            <li key={task.id} className="lg:w-[23%] md:w-[25%] sm:w-[100%] w-[100%]">
               <Accordion>
                 <AccordionSummary
                   expandIcon={<ArrowDownwardIcon />}
@@ -139,7 +174,7 @@ export default function Task_assignment() {
                     />
                   </div>
                 </AccordionDetails>
-                <div className="flex flex-row gap-3 justify-center">
+                <div className="flex flex-row justify-evenly items-center p-2">
                   <Button variant="secondary">Atribuir</Button>
 
                   <Button variant="secondary">
