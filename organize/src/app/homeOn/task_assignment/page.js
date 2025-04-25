@@ -3,8 +3,15 @@
 import { useState } from "react";
 import SelectMulti, { StylesConfig } from "react-select";
 import { Button, buttonVariants } from "@/components/ui/button";
-import Link from 'next/link'
+import Link from "next/link";
 import { cn } from "@/lib/utils";
+import * as React from "react";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 export default function Task_assignment() {
   const tasks = [
@@ -100,7 +107,7 @@ export default function Task_assignment() {
         </p>
       </div>
       <hr />
-      <ul className="flex flex-col gap-5 my-5">
+      <ul className="flex md:flex-row sm:flex-col flex-col gap-5 my-5">
         {tasks.map((task) => {
           // Convertendo os membros em objetos no formato { value: "nome", label: "nome" }
           const membersOptions = task.members.map((member) => ({
@@ -109,34 +116,39 @@ export default function Task_assignment() {
           }));
 
           return (
-            <li
-              className="bg-linear-to-t from-sky-500 to-indigo-500 border-2 rounded-lg text-white p-3 flex flex-row gap-5 items-center"
-              key={task.id}
-            >
-              <span>{task.Título}</span>
-              <span>{task.task_Group}</span>
-              <span>{task.dateDue}</span>
-              <div className="flex flex-col rounded-md border bg-[#ffbf00] p-2 lg:w-[400px]">
-                <SelectMulti
-                  isMulti
-                  options={membersOptions} // Passando as opções dos membros
-                  value={selectedOptions[task.id]} // Vinculando a seleção à tarefa específica
-                  onChange={(membersOptions) =>
-                    handleSelectChange(task.id, membersOptions)
-                  } // Passando o índice da tarefa
-                  classNamePrefix="custom-select"
-                  styles={customStyles} // Aplica os estilos personalizados
-                />
-              </div>
-              <Button variant="secondary" size="sm">
-                Atribuir
-              </Button>
-                <Link href="./task_Edit">
-                  <Button variant="secondary" size="sm">
-                    Editar
-                  </Button>
-                </Link>
+            <li key={task.id} className="md:w-[25%]">
+              <Accordion>
+                <AccordionSummary
+                  expandIcon={<ArrowDownwardIcon />}
+                  aria-controls="panel1-content"
+                  id="panel1-header"
+                >
+                  <Typography component="span">Accordion 1</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <div className="flex flex-col rounded-md border bg-[white] p-2 w-[100%]">
+                    <SelectMulti
+                      isMulti
+                      options={membersOptions} // Passando as opções dos membros
+                      value={selectedOptions[task.id]} // Vinculando a seleção à tarefa específica
+                      onChange={(membersOptions) =>
+                        handleSelectChange(task.id, membersOptions)
+                      } // Passando o índice da tarefa
+                      classNamePrefix="custom-select"
+                      styles={customStyles} // Aplica os estilos personalizados
+                    />
+                  </div>
+                </AccordionDetails>
+                <div className="flex flex-row gap-3 justify-center">
+                  <Button variant="secondary">Atribuir</Button>
 
+                  <Button variant="secondary">
+                    <Link href="./task_Edit">Editar</Link>
+                  </Button>
+
+                  <Button variant="secondary">Deletar</Button>
+                </div>
+              </Accordion>
             </li>
           );
         })}
