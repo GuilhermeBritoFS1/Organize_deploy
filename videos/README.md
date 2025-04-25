@@ -5,3 +5,7 @@
 ## Apresentação da 1ª etapa - Entrega 02/03/2025
 
 [Vídeo da 1ª etapa - Apresentação](https://youtu.be/t0XmFZEUaKI)
+
+## Apresentação da 2ª etapa - Entrega 13/04/2025
+
+[Vídeo da 2ª etapa - Apresentação](https://youtu.be/SVX3iHVFHEI)

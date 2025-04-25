@@ -5,6 +5,13 @@ import SelectMulti, { StylesConfig } from "react-select";
 import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import * as React from "react";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 export default function Task_assignment() {
   const tasks = [
@@ -100,7 +107,7 @@ export default function Task_assignment() {
         </p>
       </div>
       <hr />
-      <ul className="flex flex-col gap-5 my-5">
+      <ul className="flex md:flex-row sm:flex-col flex-col gap-5 my-5">
         {tasks.map((task) => {
           // Convertendo os membros em objetos no formato { value: "nome", label: "nome" }
           const membersOptions = task.members.map((member) => ({
@@ -131,11 +138,12 @@ export default function Task_assignment() {
               <Button variant="secondary" size="sm">
                 Atribuir
               </Button>
-              <Link href="./task_Edit">
-                <Button variant="secondary" size="sm">
-                  Editar
-                </Button>
-              </Link>
+                <Link href="./task_Edit">
+                  <Button variant="secondary" size="sm">
+                    Editar
+                  </Button>
+                </Link>
+
             </li>
           );
         })}
