@@ -45,6 +45,12 @@ export default function Login() {
                 className="w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400"
                 placeholder="Digite sua senha"
               />
+              <a
+              href="/updatePassword"
+              className="text-blue-600 hover:text-blue-400 text-lg font-semibold"
+            >
+              Redefinir senha
+            </a>
             </div>
             <Link href="/homeOn">
               <button
@@ -61,7 +67,7 @@ export default function Login() {
             <a
               href="/create"
               className="text-blue-600 hover:text-blue-400 text-lg font-semibold"
-            >
+            > 
               Crie sua conta
             </a>
           </div>
