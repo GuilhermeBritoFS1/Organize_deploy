@@ -70,6 +70,29 @@ export default function Task_create() {
               </SelectGroup>
             </SelectContent>
           </Select>
+          <Select>
+            <SelectTrigger
+              placeholder="Selecione uma opção"
+              style={{ color: "black", backgroundColor: '#ffbf00'}}
+              className="lg:w-1/2 md:w-1/2 sm:w-full w-full"
+            >
+              Prioridade da tarefa
+            </SelectTrigger>
+            <SelectContent>
+              {/* Utilizando SelectGroup para agrupar as opções */}
+              <SelectGroup>
+                <SelectItem value="option1">Baixa</SelectItem>
+              </SelectGroup>
+
+              <SelectGroup>
+                <SelectItem value="option2">Média</SelectItem>
+              </SelectGroup>
+
+              <SelectGroup>
+                <SelectItem value="option3">Alta</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
           <DatePicker
             selected={startDate}
             onChange={(date) => setStartDate(date)}

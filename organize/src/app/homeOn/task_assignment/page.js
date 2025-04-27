@@ -12,8 +12,13 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 export default function Task_assignment() {
+
   const tasks = [
     {
       id: 1,
@@ -73,6 +78,17 @@ export default function Task_assignment() {
     },
   ];
 
+  const [priority, setPriority] = React.useState("");
+  const [status, setStatus] = React.useState("");
+
+  const handlePriority = (event) => {
+    setPriority(event.target.value);
+  };
+
+  const handleStatus = (event) => {
+    setStatus(event.target.value);
+  };
+
   // Alterando para armazenar as seleções de cada tarefa individualmente
   const [selectedOptions, setSelectedOptions] = useState(
     tasks.map(() => []) // Inicializando o estado com uma lista vazia para cada tarefa
@@ -96,7 +112,7 @@ export default function Task_assignment() {
     control: (provided) => ({
       ...provided,
       backgroundColor: "transparent", // Torna o fundo do seletor transparente
-      border: "1px solid #ffbf00", // Altere a borda do controle
+       //border: "1px solid #ffbf00", Altere a borda do controle
     }),
     multiValue: (provided) => ({
       ...provided,
@@ -144,7 +160,10 @@ export default function Task_assignment() {
           }));
 
           return (
-            <li key={task.id} className="lg:w-[23%] md:w-[25%] sm:w-[100%] w-[100%]">
+            <li
+              key={task.id}
+              className="lg:w-[23%] md:w-[25%] sm:w-[100%] w-[100%]"
+            >
               <Accordion>
                 <AccordionSummary
                   expandIcon={<ArrowDownwardIcon />}
@@ -175,6 +194,38 @@ export default function Task_assignment() {
                   </Button>
 
                   <Button variant="secondary">Deletar</Button>
+                </div>
+                <div className="text-center flex flex-row justify-evenly ">
+                  <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+                    <InputLabel id="demo-simple-select-filled-label">
+                      Prioridade
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-filled-label"
+                      id="demo-simple-select-filled"
+                      value={priority}
+                      onChange={handlePriority}
+                    >
+                      <MenuItem value={10}>Baixa</MenuItem>
+                      <MenuItem value={20}>Média</MenuItem>
+                      <MenuItem value={30}>Alta</MenuItem>
+                    </Select>
+                  </FormControl>
+                  <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+                    <InputLabel id="demo-simple-select-filled-label">
+                      Status
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-filled-label"
+                      id="demo-simple-select-filled"
+                      value={status}
+                      onChange={handleStatus}
+                    >
+                      <MenuItem value={10}>Pendente</MenuItem>
+                      <MenuItem value={20}>Em andamento</MenuItem>
+                      <MenuItem value={30}>Concluída</MenuItem>
+                    </Select>
+                  </FormControl>
                 </div>
               </Accordion>
             </li>
