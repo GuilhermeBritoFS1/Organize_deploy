@@ -18,7 +18,6 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
 export default function Task_assignment() {
-
   const tasks = [
     {
       id: 1,
@@ -112,7 +111,7 @@ export default function Task_assignment() {
     control: (provided) => ({
       ...provided,
       backgroundColor: "transparent", // Torna o fundo do seletor transparente
-       //border: "1px solid #ffbf00", Altere a borda do controle
+      //border: "1px solid #ffbf00", Altere a borda do controle
     }),
     multiValue: (provided) => ({
       ...provided,
@@ -186,17 +185,8 @@ export default function Task_assignment() {
                     />
                   </div>
                 </AccordionDetails>
-                <div className="flex flex-row justify-evenly items-center p-2">
-                  <Button variant="secondary">Atribuir</Button>
-
-                  <Button variant="secondary">
-                    <Link href="./task_Edit">Editar</Link>
-                  </Button>
-
-                  <Button variant="secondary">Deletar</Button>
-                </div>
-                <div className="text-center flex flex-row justify-evenly ">
-                  <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+                <div className="flex flex-col jusitfy-center p-2">
+                  <FormControl variant="filled" sx={{ m: 1, minWidth: "80%" }}>
                     <InputLabel id="demo-simple-select-filled-label">
                       Prioridade
                     </InputLabel>
@@ -211,7 +201,7 @@ export default function Task_assignment() {
                       <MenuItem value={30}>Alta</MenuItem>
                     </Select>
                   </FormControl>
-                  <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+                  <FormControl variant="filled" sx={{ m: 1, minWidth: "80%" }}>
                     <InputLabel id="demo-simple-select-filled-label">
                       Status
                     </InputLabel>
@@ -226,6 +216,15 @@ export default function Task_assignment() {
                       <MenuItem value={30}>Concluída</MenuItem>
                     </Select>
                   </FormControl>
+                </div>
+                <div className="flex flex-row justify-evenly items-center p-2">
+                  <Button variant="secondary">Atribuir</Button>
+
+                  <Button variant="secondary">
+                    <Link href="./task_Edit">Editar</Link>
+                  </Button>
+
+                  <Button variant="secondary">Deletar</Button>
                 </div>
               </Accordion>
             </li>
