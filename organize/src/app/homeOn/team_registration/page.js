@@ -1,13 +1,140 @@
+import Form from "next/form";
+
+import { Plus } from "lucide-react";
+import { FcGoogle } from "react-icons/fc";
+import { ImFacebook2 } from "react-icons/im";
+import { FaMicrosoft } from "react-icons/fa";
+
+import { Input } from "@/components/ui/input";
+
 export const metadata = {
   title: "Cadastro de Equipes",
-  description: "OrgaNize - Organize seu dia do jeito mais nice!",
+  description: "OrgaNize - Cadastre sua equipe e organize seus projetos!",
 };
 
-export default function Team_registration() {
+export default function TeamRegistration() {
+  const handleSubmit = async () => {
+    "use server";
+    console.log("Equipe cadastrada!");
+  };
+
   return (
-    <main className="sm:ml-14 p-4">
-      <div>
-        <h1>Pagina de Cadastro de Equipes</h1>
+    <main className="bg-gray-900 text-white h-screen flex flex-col">
+      <div className="flex flex-row md:w-3/4 sm:w-3/4 w-3/4 h-3/4 m-auto">
+        
+       {/* Lado esquerdo: imagens e ícone */}
+        <div className="bg-gradient-to-r from-white to-gray-300 text-black flex flex-col items-center justify-center text-center mx-auto md:w-[50%] sm:w-[30%] rounded-l-lg">
+          <div className="flex flex-wrap justify-center gap-2">
+            <img
+              className="inline-block lg:size-35 md:size-25 sm:size-20 size-20 rounded-full ring-2 ring-transparent"
+              src="https://images.unsplash.com/photo-1603415526960-f8f0b4b6d38f?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+              alt="Integrante 1"
+            />
+            <img
+              className="inline-block lg:size-35 md:size-25 sm:size-20 size-20 rounded-full ring-2 ring-transparent"
+              src="https://images.unsplash.com/photo-1614286973877-9d232debd640?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+              alt="Integrante 2"
+            />
+            <img
+              className="inline-block lg:size-35 md:size-25 sm:size-20 size-20 rounded-full ring-2 ring-transparent"
+              src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+              alt="Integrante 3"
+            />
+            <img
+              className="inline-block lg:size-35 md:size-25 sm:size-20 size-20 rounded-full ring-2 ring-transparent"
+              src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+              alt="Integrante 4"
+            />
+            <Plus color="black" size={140} />
+          </div>
+        </div>
+
+        {/* Lado direito: Formulário */}
+        <div className="flex flex-col ms-0 w-60% sm:w-[60%] md:w-4/5 lg:w-[50%] p-5 gap-10 my-auto">
+          
+          {/* Cadastro com redes sociais */}
+          <div className="flex flex-col justify-center items-center gap-2">
+            <a
+              className="flex flex-row md:h-[50px] sm:h-[20%] h-[20%] gap-2 border lg:w-[340px] w-full p-2 rounded-md justify-center items-center"
+              href=""
+            >
+              <FcGoogle className="text-2xl sm:text-2xl md:text-3xl lg:text-4xl" />
+              <span className="text-9 sm:text-2xl md:text-[20px] font-bold text-start">
+                Cadastre a equipe pelo Google
+              </span>
+            </a>
+            <a
+              className="flex flex-row md:h-[50px] sm:h-[20%] h-[20%] gap-2 border lg:w-[340px] w-full p-2 rounded-md justify-center items-center"
+              href=""
+            >
+              <ImFacebook2 className="text-2xl sm:text-2xl md:text-3xl lg:text-4xl" />
+              <span className="text-9 sm:text-2xl md:text-[20px] font-bold text-start">
+                Cadastre pelo Facebook
+              </span>
+            </a>
+            <a
+              className="flex flex-row md:h-[50px] sm:h-[20%] h-[20%] gap-2 border lg:w-[340px] w-full p-2 rounded-md justify-center items-center"
+              href=""
+            >
+              <FaMicrosoft className="text-2xl sm:text-2xl md:text-3xl lg:text-4xl" />
+              <span className="text-9 sm:text-2xl md:text-[20px] font-bold text-start">
+                Cadastre pelo Microsoft
+              </span>
+            </a>
+          </div>
+
+          {/* Formulário de Cadastro de Equipe */}
+          <Form className="flex flex-col gap-3">
+            <fieldset className="md:text-5xl sm:text-3xl text-3xl font-bold mb-4 text-center">
+              Cadastre sua Equipe
+            </fieldset>
+
+            <Input
+              type="text"
+              placeholder="Nome da Equipe"
+              id="teamName"
+              name="teamName"
+              className="border p-2 rounded-md text-sm/5"
+            />
+            <Input
+              type="text"
+              placeholder="Integrante 1"
+              id="member1"
+              name="member1"
+              className="border p-2 rounded-md text-sm/5"
+            />
+            <Input
+              type="text"
+              placeholder="Integrante 2"
+              id="member2"
+              name="member2"
+              className="border p-2 rounded-md text-sm/5"
+            />
+            <Input
+              type="text"
+              placeholder="Integrante 3"
+              id="member3"
+              name="member3"
+              className="border p-2 rounded-md text-sm/5"
+            />
+            <Input
+              type="email"
+              placeholder="Email de Contato da Equipe"
+              id="contactEmail"
+              name="contactEmail"
+              className="border p-2 rounded-md text-sm/5"
+            />
+
+            <div className="flex flex-row justify-center items-center mt-3">
+              <button
+                onClick={handleSubmit}
+                className="bg-[#ffbf00] hover:bg-[#ffd191] transition py-2 px-4 w-[70%] sm:w-[70%] md:w-[30%] rounded-md text-black font-bold"
+              >
+                CADASTRAR EQUIPE
+              </button>
+            </div>
+          </Form>
+        </div>
       </div>
     </main>
   );
