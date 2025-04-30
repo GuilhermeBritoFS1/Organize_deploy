@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import { useState } from "react";
 import Button from "@mui/material/Button";
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import Box from "@mui/material/Box";
@@ -17,8 +17,8 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 export default function updatePassword() {
-  const [showPassword1, setShowPassword1] = React.useState(false);
-  const [showPassword2, setShowPassword2] = React.useState(false);
+  const [showPassword1, setShowPassword1] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
 
   const handleClickShowPassword1 = () => setShowPassword1((show) => !show);
 

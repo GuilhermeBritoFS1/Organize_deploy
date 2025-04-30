@@ -1,23 +1,111 @@
-import Form from "next/form";
+"use client";
 
+import { useState, useRef, useEffect } from "react";
+import Form from "next/form";
+import { api } from "../../Services/page";
 import { Plus } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import { ImFacebook2 } from "react-icons/im";
 import { FaMicrosoft } from "react-icons/fa";
-
+import IconButton from "@mui/material/IconButton";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputAdornment from "@mui/material/InputAdornment";
 import { Input } from "@/components/ui/input";
-
-export const metadata = {
-  title: "Cadastro",
-  description: "OrgaNize - Organize seu dia do jeito mais nice!",
-};
+import { cn } from "@/lib/utils";
 
 export default function Create() {
-  const handleSubmit = async () => {
-    "use server";
+  const [resEmpty, setResEmpty] = useState(false);
+  const [resEmail, setResemail] = useState(false);
+  const [resPassword, setRespassword] = useState(false);
+  const [users, setUsers] = useState([]);
+  const [showPassword1, setShowPassword1] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
 
-    console.log("Clicou");
+  const handleClickShowPassword1 = () => setShowPassword1((show) => !show);
+
+  const handleMouseDownPassword1 = (event) => {
+    event.preventDefault();
   };
+
+  const handleMouseUpPassword1 = (event) => {
+    event.preventDefault();
+  };
+
+  const handleClickShowPassword2 = () => setShowPassword2((show) => !show);
+
+  const handleMouseDownPassword2 = (event) => {
+    event.preventDefault();
+  };
+
+  const handleMouseUpPassword2 = (event) => {
+    event.preventDefault();
+  };
+  const inputName = useRef();
+  const inputEmail = useRef();
+  const inputEmail2 = useRef();
+  const inputPassword = useRef();
+  const inputPassword2 = useRef();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (
+      !inputName.current.value ||
+      !inputEmail.current.value ||
+      !inputEmail2.current.value ||
+      !inputPassword.current.value ||
+      !inputPassword2.current.value
+    ) {
+      setResEmpty(true);
+    } else {
+      setResEmpty(false);
+    }
+
+    if (inputEmail.current.value !== inputEmail2.current.value) {
+      setResemail(true);
+    } else {
+      setResemail(false);
+    }
+
+    if (inputPassword.current.value !== inputPassword2.current.value) {
+      setRespassword(true);
+    } else {
+      setRespassword(false);
+    }
+
+    try {
+      await api.post(
+        "/user",
+        {
+          name: inputName.current.value,
+          email: inputEmail.current.value,
+          password: inputPassword.current.value,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    } catch (error) {
+      console.log("Erro ao cadastrar o usuário", error);
+    }
+    inputName.current.value = "";
+    inputEmail.current.value = "";
+    inputEmail2.current.value = "";
+    inputPassword.current.value = "";
+    inputPassword2.current.value = "";
+  };
+
+  /*const getUsers = async () => {
+    const userfromApi = await api.get("/users");
+    setUsers(userfromApi);
+  }
+
+  useEffect(() => {
+    getUsers();
+  }, []);*/
 
   return (
     <main className="bg-gray-900 text-white h-screen flex flex-col">
@@ -85,40 +173,86 @@ export default function Create() {
             {/* On submission, the input value will be appended to
           the URL, e.g. /search?query=abc */}
             <Input
+              autoComplete="off"
               type="text"
               placeholder="Nome completo"
               id="name"
               name="name"
               className="border p-2 rounded-md text-sm/5"
+              ref={inputName}
             />
             <Input
+              autoComplete="off"
               type="email"
               placeholder="Email (exemplo: user123@gmail.com)"
               id="email"
               name="email"
               className="border p-2 rounded-md text-sm/5"
+              ref={inputEmail}
             />
             <Input
+              autoComplete="off"
               type="email"
               placeholder="Confirme email"
               id="confirmEmail"
               name="confirmEmail"
               className="border p-2 rounded-md text-sm/5"
+              ref={inputEmail2}
             />
-            <Input
-              type="password"
-              placeholder="Senha"
-              id="password"
-              name="password"
-              className="border p-2 rounded-md text-sm/5"
-            />
-            <input
-              type="password"
-              placeholder="Confirme sua senha"
-              id="confirmPassword"
-              name="confirmPassword"
-              className="border p-2 rounded-md text-sm/5"
-            />
+            <div className="flex lg:flex-row md:flex-row sm:flex-col flex-col gap-2">
+              <OutlinedInput
+                className={cn(
+                  "file:border p-2 rounded-md text-sm/5 text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-lg-[45%] w-md-[45%] w-sm-[80%] w-[100%] min-w-0 rounded-md border bg-white px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
+                  "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
+                  "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive"
+                )}
+                id="outlined-adornment-password"
+                type={showPassword1 ? "text" : "password"}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label={
+                        showPassword1
+                          ? "hide the password"
+                          : "display the password"
+                      }
+                      onClick={handleClickShowPassword1}
+                      onMouseDown={handleMouseDownPassword1}
+                      onMouseUp={handleMouseUpPassword1}
+                      edge="end"
+                    >
+                      {showPassword1 ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+              <OutlinedInput
+                className={cn(
+                  "file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-lg-[40%] w-md-[45%] w-sm-[80%] w-[100%] min-w-0 rounded-md border bg-white px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+                  "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
+                  "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive"
+                )}
+                id="outlined-adornment-password"
+                type={showPassword2 ? "text" : "password"}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label={
+                        showPassword2
+                          ? "hide the password"
+                          : "display the password"
+                      }
+                      onClick={handleClickShowPassword2}
+                      onMouseDown={handleMouseDownPassword2}
+                      onMouseUp={handleMouseUpPassword2}
+                      edge="end"
+                    >
+                      {showPassword2 ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </div>
             <div className="flex flex-row justify-center items-center mt-3">
               <button
                 onClick={handleSubmit}
@@ -127,6 +261,13 @@ export default function Create() {
                 CADASTRAR
               </button>
             </div>
+            {resEmpty && (
+              <p className="block">Todos os campos devem ser preenchidos!</p>
+            )}
+            {resEmail && <p className="block">Os emails estão diferentes!</p>}
+            {resPassword && (
+              <p className="block">As senhas estão diferentes!</p>
+            )}
           </Form>
         </div>
       </div>
