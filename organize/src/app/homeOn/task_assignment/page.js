@@ -17,6 +17,9 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
+//css:
+import styles from "./taskAssignment.module.css";
+
 export default function Task_assignment() {
   const tasks = [
     {
@@ -25,6 +28,8 @@ export default function Task_assignment() {
       task_Group: "Equipe 1",
       dateDue: "24/06/2025",
       members: ["Guilherme", "Pedro", "Jefferson"],
+      status: "Em andamento",
+      priority: "Alta",
     },
     {
       id: 2,
@@ -32,6 +37,8 @@ export default function Task_assignment() {
       task_Group: "Equipe 2",
       dateDue: "30/06/2025",
       members: ["Guilherme", "Pedro", "Jefferson"],
+      status: "Em andamento",
+      priority: "Alta",
     },
     {
       id: 3,
@@ -39,6 +46,8 @@ export default function Task_assignment() {
       task_Group: "Equipe 3",
       dateDue: "22/06/2025",
       members: ["Guilherme", "Pedro", "Jefferson"],
+      status: "Em andamento",
+      priority: "Alta",
     },
     {
       id: 4,
@@ -46,6 +55,8 @@ export default function Task_assignment() {
       task_Group: "Equipe 4",
       dateDue: "20/06/2025",
       members: ["Guilherme", "Pedro", "Jefferson"],
+      status: "Em andamento",
+      priority: "Alta",
     },
     {
       id: 5,
@@ -53,6 +64,8 @@ export default function Task_assignment() {
       task_Group: "Equipe 4",
       dateDue: "20/06/2025",
       members: ["Guilherme", "Pedro", "Jefferson"],
+      status: "Em andamento",
+      priority: "Alta",
     },
     {
       id: 6,
@@ -60,6 +73,8 @@ export default function Task_assignment() {
       task_Group: "Equipe 4",
       dateDue: "20/06/2025",
       members: ["Guilherme", "Pedro", "Jefferson"],
+      status: "Em andamento",
+      priority: "Alta",
     },
     {
       id: 7,
@@ -67,6 +82,8 @@ export default function Task_assignment() {
       task_Group: "Equipe 4",
       dateDue: "20/06/2025",
       members: ["Guilherme", "Pedro", "Jefferson"],
+      status: "Em andamento",
+      priority: "Média",
     },
     {
       id: 8,
@@ -74,19 +91,12 @@ export default function Task_assignment() {
       task_Group: "Equipe 4",
       dateDue: "20/06/2025",
       members: ["Guilherme", "Pedro", "Jefferson"],
+      status: "Em andamento",
+      priority: "Baixa",
     },
   ];
 
-  const [priority, setPriority] = React.useState("");
-  const [status, setStatus] = React.useState("");
 
-  const handlePriority = (event) => {
-    setPriority(event.target.value);
-  };
-
-  const handleStatus = (event) => {
-    setStatus(event.target.value);
-  };
 
   // Alterando para armazenar as seleções de cada tarefa individualmente
   const [selectedOptions, setSelectedOptions] = useState(
@@ -161,7 +171,7 @@ export default function Task_assignment() {
           return (
             <li
               key={task.id}
-              className="lg:w-[23%] md:w-[25%] sm:w-[100%] w-[100%]"
+              className="lg:w-[23%] md:w-[25%] sm:w-[100%] w-[100%] opacity-50 hover:opacity-100"
             >
               <Accordion>
                 <AccordionSummary
@@ -193,12 +203,10 @@ export default function Task_assignment() {
                     <Select
                       labelId="demo-simple-select-filled-label"
                       id="demo-simple-select-filled"
-                      value={priority}
-                      onChange={handlePriority}
                     >
-                      <MenuItem value={10}>Baixa</MenuItem>
-                      <MenuItem value={20}>Média</MenuItem>
-                      <MenuItem value={30}>Alta</MenuItem>
+                      {task.priority === "Alta" ? <MenuItem value="Alta">Alta (valor atual)</MenuItem> : <MenuItem value="Alta">Alta</MenuItem>}
+                      {task.priority === "Média" ? <MenuItem value="Média">Média (valor atual)</MenuItem> : <MenuItem value="Média">Média</MenuItem>}
+                      {task.priority === "Baixa" ? <MenuItem value="Baixa">Baixa (valor atual)</MenuItem> : <MenuItem value="Baixa">Alta</MenuItem>}
                     </Select>
                   </FormControl>
                   <FormControl variant="filled" sx={{ m: 1, minWidth: "80%" }}>
@@ -208,12 +216,10 @@ export default function Task_assignment() {
                     <Select
                       labelId="demo-simple-select-filled-label"
                       id="demo-simple-select-filled"
-                      value={status}
-                      onChange={handleStatus}
                     >
-                      <MenuItem value={10}>Pendente</MenuItem>
-                      <MenuItem value={20}>Em andamento</MenuItem>
-                      <MenuItem value={30}>Concluída</MenuItem>
+                      <MenuItem value="Pedente">Pendente</MenuItem>
+                      <MenuItem value="Em andamento">Em andamento</MenuItem>
+                      <MenuItem value="Concluída">Concluída</MenuItem>
                     </Select>
                   </FormControl>
                 </div>

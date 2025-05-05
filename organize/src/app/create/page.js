@@ -16,12 +16,17 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
 export default function Create() {
-  const [resEmpty, setResEmpty] = useState(false);
-  const [resEmail, setResemail] = useState(false);
-  const [resPassword, setRespassword] = useState(false);
   const [users, setUsers] = useState([]);
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
+  const [resEmpty, setResEmpty] = useState(true);
+  const [resEmail, setResEmail] = useState(true);
+  const [resPassword, setRespassword] = useState(true);
+  const [Name, setName] = useState("");
+  const [Email, setEmail] = useState("");
+  const [Email2, setEmail2] = useState("");
+  const [Password, setPassword] = useState("");
+  const [Password2, setPassword2] = useState("");
 
   const handleClickShowPassword1 = () => setShowPassword1((show) => !show);
 
@@ -42,61 +47,58 @@ export default function Create() {
   const handleMouseUpPassword2 = (event) => {
     event.preventDefault();
   };
-  const inputName = useRef();
-  const inputEmail = useRef();
-  const inputEmail2 = useRef();
-  const inputPassword = useRef();
-  const inputPassword2 = useRef();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (
-      !inputName.current.value ||
-      !inputEmail.current.value ||
-      !inputEmail2.current.value ||
-      !inputPassword.current.value ||
-      !inputPassword2.current.value
+      Name === "" ||
+      Email === "" ||
+      Email2 === "" ||
+      Password === "" ||
+      Password2 === ""
     ) {
-      setResEmpty(true);
-    } else {
       setResEmpty(false);
     }
-
-    if (inputEmail.current.value !== inputEmail2.current.value) {
-      setResemail(true);
-    } else {
-      setResemail(false);
+    if (Name && Email && Email2 && Password && Password2) {
+      setResEmpty(true);
     }
 
-    if (inputPassword.current.value !== inputPassword2.current.value) {
+    if (Email !== Email2) {
+      setResEmail(false);
+    } else {
+      setResEmail(true);
+    }
+    if (Password === Password2) {
       setRespassword(true);
     } else {
       setRespassword(false);
     }
 
-    try {
-      await api.post(
-        "/user",
-        {
-          name: inputName.current.value,
-          email: inputEmail.current.value,
-          password: inputPassword.current.value,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+    api({
+      method: "post",
+      url: "/user",
+      data: {
+        name: Name,
+        email: Email,
+        password: Password,
+      },
+    });
+  };
+  /*try {
+      await api.post("/user", {
+        name: Name,
+        email: Email,
+        password: Password,
+      });
+      setName("");
+      setEmail("");
+      setEmail2("");
+      setPassword("");
+      setpassword2("");
     } catch (error) {
       console.log("Erro ao cadastrar o usuário", error);
     }
-    inputName.current.value = "";
-    inputEmail.current.value = "";
-    inputEmail2.current.value = "";
-    inputPassword.current.value = "";
-    inputPassword2.current.value = "";
-  };
+  };*/
 
   /*const getUsers = async () => {
     const userfromApi = await api.get("/users");
@@ -109,9 +111,9 @@ export default function Create() {
 
   return (
     <main className="bg-gray-900 text-white h-screen flex flex-col">
-      <div className="flex flex-row md:w-3/4 sm:w-3/4 w-3/4 h-3/4 sm:w-3/4 md:w-2/3 m-auto">
+      <div className="flex lg:flex-row md:flex-row sm:flex-col flex-col md:w-3/4 sm:w-3/4 w-3/4 h-4/5 sm:w-3/4 md:w-2/3 m-auto">
         <div className="bg-gradient-to-r from-white to-gray-3500 text-bg-white flex flex-col items-center justify-center text-center mx-auto md:w-[50%] sm:w-[30%] rounded-l-lg">
-          <div className="flex flex-wrap justify-center gap-2">
+          <div className="flex flex-wrap justify-center gap-2 p-2">
             <img
               className="inline-block lg:size-35 md:size-25 sm:size-20 size-20 rounded-full ring-2 ring-transparent"
               src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
@@ -166,7 +168,7 @@ export default function Create() {
               </span>
             </a>
           </div>
-          <Form className="flex flex-col gap-3">
+          <Form className="flex flex-col gap-3" onSubmit={handleSubmit}>
             <fieldset className="md:text-6xl sm:text-3xl text-3xl font-bold mb-4 text-center">
               Cadastre-se
             </fieldset>
@@ -179,7 +181,7 @@ export default function Create() {
               id="name"
               name="name"
               className="border p-2 rounded-md text-sm/5"
-              ref={inputName}
+              onChange={(e) => setName(e.target.value)}
             />
             <Input
               autoComplete="off"
@@ -188,7 +190,7 @@ export default function Create() {
               id="email"
               name="email"
               className="border p-2 rounded-md text-sm/5"
-              ref={inputEmail}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <Input
               autoComplete="off"
@@ -197,7 +199,7 @@ export default function Create() {
               id="confirmEmail"
               name="confirmEmail"
               className="border p-2 rounded-md text-sm/5"
-              ref={inputEmail2}
+              onChange={(e) => setEmail2(e.target.value)}
             />
             <div className="flex lg:flex-row md:flex-row sm:flex-col flex-col gap-2">
               <OutlinedInput
@@ -206,7 +208,7 @@ export default function Create() {
                   "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
                   "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive"
                 )}
-                id="outlined-adornment-password"
+                id="outlined-adornment-password1"
                 type={showPassword1 ? "text" : "password"}
                 endAdornment={
                   <InputAdornment position="end">
@@ -225,6 +227,7 @@ export default function Create() {
                     </IconButton>
                   </InputAdornment>
                 }
+                onChange={(e) => setPassword(e.target.value)}
               />
               <OutlinedInput
                 className={cn(
@@ -232,7 +235,7 @@ export default function Create() {
                   "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
                   "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive"
                 )}
-                id="outlined-adornment-password"
+                id="outlined-adornment-password2"
                 type={showPassword2 ? "text" : "password"}
                 endAdornment={
                   <InputAdornment position="end">
@@ -251,21 +254,22 @@ export default function Create() {
                     </IconButton>
                   </InputAdornment>
                 }
+                onChange={(e) => setPassword2(e.target.value)}
               />
             </div>
             <div className="flex flex-row justify-center items-center mt-3">
               <button
-                onClick={handleSubmit}
+                type="submit"
                 className="bg-[#ffbf00] hover:bg-[#ffd191] transition py-2 px-4 w-[70%] sm:w-[70%] md:w-[30%] rounded-md text-black font-bold"
               >
                 CADASTRAR
               </button>
             </div>
-            {resEmpty && (
+            {!resEmpty && (
               <p className="block">Todos os campos devem ser preenchidos!</p>
             )}
-            {resEmail && <p className="block">Os emails estão diferentes!</p>}
-            {resPassword && (
+            {!resEmail && <p className="block">Os emails estão diferentes!</p>}
+            {!resPassword && (
               <p className="block">As senhas estão diferentes!</p>
             )}
           </Form>

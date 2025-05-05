@@ -1,139 +1,93 @@
+"use client";
+
 import Form from "next/form";
 
 import { Plus } from "lucide-react";
-import { FcGoogle } from "react-icons/fc";
-import { ImFacebook2 } from "react-icons/im";
-import { FaMicrosoft } from "react-icons/fa";
-
+import { Formik, Field, FieldArray } from "formik";
+import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
-
-export const metadata = {
-  title: "Cadastro de Equipes",
-  description: "OrgaNize - Cadastre sua equipe e organize seus projetos!",
-};
+import { Textarea } from "@/components/ui/textarea";
 
 export default function TeamRegistration() {
   const handleSubmit = async () => {
-    "use server";
     console.log("Equipe cadastrada!");
   };
 
+  const myStyle = {
+    backgroundImage: `url("/postit.png")`,
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '5px',
+    padding: '65px'
+  }
+
   return (
-    <main className="bg-gray-900 text-white h-screen flex flex-col">
-      <div className="flex flex-row md:w-3/4 sm:w-3/4 w-3/4 h-3/4 m-auto">
-        
-       {/* Lado esquerdo: imagens e ícone */}
-        <div className="bg-gradient-to-r from-white to-gray-300 text-black flex flex-col items-center justify-center text-center mx-auto md:w-[50%] sm:w-[30%] rounded-l-lg">
-          <div className="flex flex-wrap justify-center gap-2">
-            <img
-              className="inline-block lg:size-35 md:size-25 sm:size-20 size-20 rounded-full ring-2 ring-transparent"
-              src="https://images.unsplash.com/photo-1603415526960-f8f0b4b6d38f?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-              alt="Integrante 1"
-            />
-            <img
-              className="inline-block lg:size-35 md:size-25 sm:size-20 size-20 rounded-full ring-2 ring-transparent"
-              src="https://images.unsplash.com/photo-1614286973877-9d232debd640?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-              alt="Integrante 2"
-            />
-            <img
-              className="inline-block lg:size-35 md:size-25 sm:size-20 size-20 rounded-full ring-2 ring-transparent"
-              src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-              alt="Integrante 3"
-            />
-            <img
-              className="inline-block lg:size-35 md:size-25 sm:size-20 size-20 rounded-full ring-2 ring-transparent"
-              src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-              alt="Integrante 4"
-            />
-            <Plus color="black" size={140} />
+    <main className="bg-gray-900 text-white h-screen flex justify-center">
+      {/* Lado direito: Formulário */}
+      <div className="flex flex-col justify-center">
+        {/* Formulário de Cadastro de Equipe */}
+        <div style={myStyle}>
+      
+          <fieldset className="md:text-5xl sm:text-3xl text-3xl font-bold mb-4 text-center text-yellow-800">
+            Cadastre sua Equipe
+          </fieldset>
+          <hr />
+          <Input
+            type="text"
+            placeholder="Nome da Equipe"
+            id="teamName"
+            name="teamName"
+            className="border p-2 rounded-md text-sm/5 bg-white"
+          />
+          <Formik
+            initialValues={{ campos: [""] }}
+            onSubmit={(values) => {
+              console.log("Valores:", values);
+            }}
+          >
+            {({ values }) => (
+              <Form>
+                <FieldArray name="campos">
+                  {({ push }) => (
+                    <div className="flex flex-col gap-[5px]">
+                      {values.campos.map((_, index) => (
+                        <div key={index}>
+                          <Field
+                            name={`campos.${index}`}
+                            placeholder={`Integrante ${index + 1}`}
+                            className={cn(
+                              "file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-full min-w-0 rounded-md border bg-white px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm m",
+                              "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
+                              "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive"
+                            )}
+                          />
+                        </div>
+                      ))}
+
+                      <button
+                        type="button"
+                        onClick={() => push("")}
+                        className="bg-[#ffd191] hover:bg-[#ffbf00] text-black font-bold px-4 py-2 rounded mb-2"
+                      >
+                        Adicionar integrante
+                      </button>
+                    </div>
+                  )}
+                </FieldArray>
+              </Form>
+            )}
+          </Formik>
+          <Textarea placeholder="Descrição da equipe" className="bg-white" />
+          <div className="flex flex-row justify-center items-center mt-3">
+            <button
+              onClick={handleSubmit}
+              className="bg-[#ffbf00] hover:bg-[#ffd191] transition py-2 px-4 rounded-md text-yellow-800 font-bold"
+            >
+              CADASTRAR EQUIPE
+            </button>
           </div>
-        </div>
-
-        {/* Lado direito: Formulário */}
-        <div className="flex flex-col ms-0 w-60% sm:w-[60%] md:w-4/5 lg:w-[50%] p-5 gap-10 my-auto">
-          
-          {/* Cadastro com redes sociais */}
-          <div className="flex flex-col justify-center items-center gap-2">
-            <a
-              className="flex flex-row md:h-[50px] sm:h-[20%] h-[20%] gap-2 border lg:w-[340px] w-full p-2 rounded-md justify-center items-center"
-              href=""
-            >
-              <FcGoogle className="text-2xl sm:text-2xl md:text-3xl lg:text-4xl" />
-              <span className="text-9 sm:text-2xl md:text-[20px] font-bold text-start">
-                Cadastre a equipe pelo Google
-              </span>
-            </a>
-            <a
-              className="flex flex-row md:h-[50px] sm:h-[20%] h-[20%] gap-2 border lg:w-[340px] w-full p-2 rounded-md justify-center items-center"
-              href=""
-            >
-              <ImFacebook2 className="text-2xl sm:text-2xl md:text-3xl lg:text-4xl" />
-              <span className="text-9 sm:text-2xl md:text-[20px] font-bold text-start">
-                Cadastre pelo Facebook
-              </span>
-            </a>
-            <a
-              className="flex flex-row md:h-[50px] sm:h-[20%] h-[20%] gap-2 border lg:w-[340px] w-full p-2 rounded-md justify-center items-center"
-              href=""
-            >
-              <FaMicrosoft className="text-2xl sm:text-2xl md:text-3xl lg:text-4xl" />
-              <span className="text-9 sm:text-2xl md:text-[20px] font-bold text-start">
-                Cadastre pelo Microsoft
-              </span>
-            </a>
-          </div>
-
-          {/* Formulário de Cadastro de Equipe */}
-          <Form className="flex flex-col gap-3">
-            <fieldset className="md:text-5xl sm:text-3xl text-3xl font-bold mb-4 text-center">
-              Cadastre sua Equipe
-            </fieldset>
-
-            <Input
-              type="text"
-              placeholder="Nome da Equipe"
-              id="teamName"
-              name="teamName"
-              className="border p-2 rounded-md text-sm/5"
-            />
-            <Input
-              type="text"
-              placeholder="Integrante 1"
-              id="member1"
-              name="member1"
-              className="border p-2 rounded-md text-sm/5"
-            />
-            <Input
-              type="text"
-              placeholder="Integrante 2"
-              id="member2"
-              name="member2"
-              className="border p-2 rounded-md text-sm/5"
-            />
-            <Input
-              type="text"
-              placeholder="Integrante 3"
-              id="member3"
-              name="member3"
-              className="border p-2 rounded-md text-sm/5"
-            />
-            <Input
-              type="email"
-              placeholder="Email de Contato da Equipe"
-              id="contactEmail"
-              name="contactEmail"
-              className="border p-2 rounded-md text-sm/5"
-            />
-
-            <div className="flex flex-row justify-center items-center mt-3">
-              <button
-                onClick={handleSubmit}
-                className="bg-[#ffbf00] hover:bg-[#ffd191] transition py-2 px-4 w-[70%] sm:w-[70%] md:w-[30%] rounded-md text-black font-bold"
-              >
-                CADASTRAR EQUIPE
-              </button>
-            </div>
-          </Form>
         </div>
       </div>
     </main>
