@@ -108,7 +108,7 @@ export default function updatePassword() {
             />
           </FormControl>
           <Button variant="contained" color="warning" startIcon={<BookmarkBorderIcon />}>
-            Delete
+            Mudar senha
           </Button>
         </div>
       </div>
