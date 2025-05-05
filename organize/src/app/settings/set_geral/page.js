@@ -1,5 +1,6 @@
 "use client";
 
+import { useTheme } from "next-themes";
 import {
   Card,
   CardHeader,
@@ -21,6 +22,8 @@ import { Separator } from "@/components/ui/separator";
 import { Settings } from "lucide-react";
 
 export default function GeralSettings() {
+  const { setTheme, theme } = useTheme();
+
   return (
     <main className="sm:ml-14 p-6 space-y-6">
       <div>
@@ -69,7 +72,10 @@ export default function GeralSettings() {
           {/* Tema */}
           <div className="space-y-2">
             <Label>Tema</Label>
-            <Select defaultValue="system">
+            <Select
+              defaultValue={theme || "system"}
+              onValueChange={(value) => setTheme(value)}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="Selecione o tema" />
               </SelectTrigger>
