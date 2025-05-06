@@ -1,11 +1,30 @@
-import Link from "next/link";
+"use client";
 
-export const metadata = {
-  title: "Login",
-  description: "OrgaNize - Organize seu dia do jeito mais nice!",
-};
+import Link from "next/link";
+import { useState } from "react";
+import { api } from "../../Services/page";
 
 export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    api({
+      method: "post",
+      url: "/user/login",
+      data: {
+        email,
+        password,
+      },
+    }).then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.error(error);
+    });;
+  };
+
   return (
     <main className="sm:ml-14 p-4 bg-gray-900">
       <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center text-center">
@@ -26,14 +45,15 @@ export default function Login() {
             Acesse sua conta
           </h2>
 
-          <form className="space-y-4 relative z-10">
+          <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
             <div>
-              <label className="block text-lg text-black mb-2">Usuário</label>
+              <label className="block text-lg text-black mb-2">Email</label>
               <input
                 type="text"
-                name="username"
+                name="email"
                 className="w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400"
-                placeholder="Digite seu usuário"
+                placeholder="Digite seu email"
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
 
@@ -44,13 +64,14 @@ export default function Login() {
                 name="password"
                 className="w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400"
                 placeholder="Digite sua senha"
+                onChange={(e) => setPassword(e.target.value)}
               />
               <a
-              href="/updatePassword"
-              className="text-blue-600 hover:text-blue-400 text-lg font-semibold"
-            >
-              Redefinir senha
-            </a>
+                href="/updatePassword"
+                className="text-blue-600 hover:text-blue-400 text-lg font-semibold"
+              >
+                Redefinir senha
+              </a>
             </div>
             <Link href="/homeOn">
               <button
@@ -67,7 +88,7 @@ export default function Login() {
             <a
               href="/create"
               className="text-blue-600 hover:text-blue-400 text-lg font-semibold"
-            > 
+            >
               Crie sua conta
             </a>
           </div>
