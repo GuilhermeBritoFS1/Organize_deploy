@@ -84,6 +84,8 @@ export default function Create() {
       },
     });
   };
+
+
   /*try {
       await api.post("/user", {
         name: Name,
@@ -263,7 +265,7 @@ export default function Create() {
                 className="bg-[#ffbf00] hover:bg-[#ffd191] transition py-2 px-4 w-[70%] sm:w-[70%] md:w-[30%] rounded-md text-black font-bold"
               >
                 CADASTRAR
-              </button>
+              </button>              
             </div>
             {!resEmpty && (
               <p className="block">Todos os campos devem ser preenchidos!</p>
