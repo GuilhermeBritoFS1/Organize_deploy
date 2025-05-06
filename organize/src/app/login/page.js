@@ -1,28 +1,34 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { api } from "../../Services/page";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    api({
-      method: "post",
-      url: "/user/login",
-      data: {
+
+    try {
+      const response = await api.post("/user/login", {
         email,
         password,
-      },
-    }).then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.error(error);
-    });;
+      });
+
+      const token = response.data.token;
+      if (token) {
+        localStorage.setItem("token", token);
+        router.push("/homeOn");
+      } else {
+        alert("Token não recebido. Verifique a resposta da API.");
+      }
+    } catch (error) {
+      console.error("Erro no login:", error);
+      alert("Email ou senha inválidos.");
+    }
   };
 
   return (
@@ -40,7 +46,6 @@ export default function Login() {
             alt="Post-it"
             className="w-full h-full object-cover shadow-lg absolute top-0 left-0 rounded-lg"
           />
-          <h2 className="text-2xl font-semibold text-center text-black mb-6 relative z-10"></h2>
           <h2 className="text-2xl font-semibold text-center text-black mb-6 relative z-10">
             Acesse sua conta
           </h2>
@@ -54,6 +59,7 @@ export default function Login() {
                 className="w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400"
                 placeholder="Digite seu email"
                 onChange={(e) => setEmail(e.target.value)}
+                required
               />
             </div>
 
@@ -65,6 +71,7 @@ export default function Login() {
                 className="w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400"
                 placeholder="Digite sua senha"
                 onChange={(e) => setPassword(e.target.value)}
+                required
               />
               <a
                 href="/updatePassword"
@@ -73,14 +80,13 @@ export default function Login() {
                 Redefinir senha
               </a>
             </div>
-            <Link href="/homeOn">
-              <button
-                type="submit"
-                className="w-full py-3 bg-[#ffbf00] text-white rounded-lg text-xl font-semibold hover:bg-[#ffd191] transition"
-              >
-                Entrar
-              </button>
-            </Link>
+
+            <button
+              type="submit"
+              className="w-full py-3 bg-[#ffbf00] text-white rounded-lg text-xl font-semibold hover:bg-[#ffd191] transition"
+            >
+              Entrar
+            </button>
           </form>
 
           <div className="mt-6 text-center relative z-10">
