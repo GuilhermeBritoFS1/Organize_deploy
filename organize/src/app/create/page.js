@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import Form from "next/form";
+import { useState } from "react";
 import { api } from "../../Services/page";
 import { Plus } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
@@ -50,6 +49,8 @@ export default function Create() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Verificação de campos obrigatórios
     if (
       Name === "" ||
       Email === "" ||
@@ -58,58 +59,49 @@ export default function Create() {
       Password2 === ""
     ) {
       setResEmpty(false);
+      return;
     }
     if (Name && Email && Email2 && Password && Password2) {
       setResEmpty(true);
     }
 
+    // Validação de emails
     if (Email !== Email2) {
       setResEmail(false);
+      return;
     } else {
       setResEmail(true);
     }
-    if (Password === Password2) {
-      setRespassword(true);
-    } else {
+
+    // Validação de senhas
+    if (Password !== Password2) {
       setRespassword(false);
+      return;
+    } else {
+      setRespassword(true);
     }
 
-    api({
-      method: "post",
-      url: "/user",
-      data: {
-        name: Name,
-        email: Email,
-        password: Password,
-      },
-    });
-  };
-
-
-  /*try {
-      await api.post("/user", {
+    // Cadastro de usuário
+    try {
+      const response = await api.post("/user", {
         name: Name,
         email: Email,
         password: Password,
       });
-      setName("");
-      setEmail("");
-      setEmail2("");
-      setPassword("");
-      setpassword2("");
+
+      if (response.status === 200) {
+        alert("Usuário cadastrado com sucesso!");
+        setName("");
+        setEmail("");
+        setEmail2("");
+        setPassword("");
+        setPassword2("");
+      }
     } catch (error) {
       console.log("Erro ao cadastrar o usuário", error);
+      alert(error.response.data.msg);
     }
-  };*/
-
-  /*const getUsers = async () => {
-    const userfromApi = await api.get("/users");
-    setUsers(userfromApi);
-  }
-
-  useEffect(() => {
-    getUsers();
-  }, []);*/
+  };
 
   return (
     <main className="bg-gray-900 text-white h-screen flex flex-col">
@@ -170,19 +162,17 @@ export default function Create() {
               </span>
             </a>
           </div>
-          <Form className="flex flex-col gap-3" onSubmit={handleSubmit}>
+          <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
             <fieldset className="md:text-6xl sm:text-3xl text-3xl font-bold mb-4 text-center">
               Cadastre-se
             </fieldset>
-            {/* On submission, the input value will be appended to
-          the URL, e.g. /search?query=abc */}
             <Input
               autoComplete="off"
               type="text"
               placeholder="Nome completo"
               id="name"
               name="name"
-              className="border p-2 rounded-md text-sm/5"
+              className="bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 p-2 text-sm/5"
               onChange={(e) => setName(e.target.value)}
             />
             <Input
@@ -191,7 +181,7 @@ export default function Create() {
               placeholder="Email (exemplo: user123@gmail.com)"
               id="email"
               name="email"
-              className="border p-2 rounded-md text-sm/5"
+              className="bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 p-2 text-sm/5"
               onChange={(e) => setEmail(e.target.value)}
             />
             <Input
@@ -200,18 +190,18 @@ export default function Create() {
               placeholder="Confirme email"
               id="confirmEmail"
               name="confirmEmail"
-              className="border p-2 rounded-md text-sm/5"
+              className="bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 p-2 text-sm/5"
               onChange={(e) => setEmail2(e.target.value)}
             />
             <div className="flex lg:flex-row md:flex-row sm:flex-col flex-col gap-2">
               <OutlinedInput
                 className={cn(
-                  "file:border p-2 rounded-md text-sm/5 text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-lg-[45%] w-md-[45%] w-sm-[80%] w-[100%] min-w-0 rounded-md border bg-white px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
-                  "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
-                  "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive"
+                  "file:border bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 p-2 text-sm/5 placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-lg-[45%] w-md-[45%] w-sm-[80%] w-[100%]"
                 )}
-                id="outlined-adornment-password1"
+                placeholder="Digite sua senha"
                 type={showPassword1 ? "text" : "password"}
+                onChange={(e) => setPassword(e.target.value)}
+                value={Password}
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
@@ -223,22 +213,20 @@ export default function Create() {
                       onClick={handleClickShowPassword1}
                       onMouseDown={handleMouseDownPassword1}
                       onMouseUp={handleMouseUpPassword1}
-                      edge="end"
                     >
                       {showPassword1 ? <VisibilityOff /> : <Visibility />}
                     </IconButton>
                   </InputAdornment>
                 }
-                onChange={(e) => setPassword(e.target.value)}
               />
               <OutlinedInput
                 className={cn(
-                  "file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-lg-[40%] w-md-[45%] w-sm-[80%] w-[100%] min-w-0 rounded-md border bg-white px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
-                  "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
-                  "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive"
+                  "file:border bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 p-2 text-sm/5 placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-lg-[45%] w-md-[45%] w-sm-[80%] w-[100%]"
                 )}
-                id="outlined-adornment-password2"
+                placeholder="Confirme sua senha"
                 type={showPassword2 ? "text" : "password"}
+                onChange={(e) => setPassword2(e.target.value)}
+                value={Password2}
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
@@ -250,31 +238,36 @@ export default function Create() {
                       onClick={handleClickShowPassword2}
                       onMouseDown={handleMouseDownPassword2}
                       onMouseUp={handleMouseUpPassword2}
-                      edge="end"
                     >
                       {showPassword2 ? <VisibilityOff /> : <Visibility />}
                     </IconButton>
                   </InputAdornment>
                 }
-                onChange={(e) => setPassword2(e.target.value)}
               />
             </div>
+
             <div className="flex flex-row justify-center items-center mt-3">
               <button
                 type="submit"
                 className="bg-[#ffbf00] hover:bg-[#ffd191] transition py-2 px-4 w-[70%] sm:w-[70%] md:w-[30%] rounded-md text-black font-bold"
               >
                 CADASTRAR
-              </button>              
+              </button>
             </div>
+
+            {/* Mensagens de erro */}
             {!resEmpty && (
-              <p className="block">Todos os campos devem ser preenchidos!</p>
+              <p className="block text-red-500">
+                Todos os campos devem ser preenchidos!
+              </p>
             )}
-            {!resEmail && <p className="block">Os emails estão diferentes!</p>}
+            {!resEmail && (
+              <p className="block text-red-500">Os emails estão diferentes!</p>
+            )}
             {!resPassword && (
-              <p className="block">As senhas estão diferentes!</p>
+              <p className="block text-red-500">As senhas estão diferentes!</p>
             )}
-          </Form>
+          </form>
         </div>
       </div>
     </main>

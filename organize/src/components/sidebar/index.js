@@ -1,15 +1,43 @@
+"use client";
+
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Cog, Home, Info, LogIn, Menu, User } from "lucide-react";
+import {
+  Cog,
+  Home,
+  Info,
+  LogIn,
+  LogOut,
+  LogOutIcon,
+  Menu,
+  User,
+} from "lucide-react";
 import {
   TooltipProvider,
   Tooltip,
   TooltipTrigger,
   TooltipContent,
 } from "../ui/tooltip";
+import { useEffect, useState } from "react";
+
+function isAuthenticated() {
+  return localStorage.getItem("isAuthenticated") == "true";
+}
 
 export function Sidebar() {
+  const [authenticated, setAuthenticated] = useState(false);
+
+  useEffect(() => {
+    setAuthenticated(isAuthenticated());
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.setItem("isAuthenticated", "false");
+    setAuthenticated(false);
+    window.location.href = "/";
+  };
+
   return (
     <div className="flex w-full flex-col bg-muted/40">
       {/* Sidebar web */}
@@ -29,36 +57,40 @@ export function Sidebar() {
             </Link>
           </TooltipProvider>
 
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Link
-                href="./homeOn"
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-gray-900 transition-colors hover:text-amber-200"
-              >
-                <Home className="w-5 h-5" />
-                <span className="sr-only">Início</span>
-              </Link>
-            </TooltipTrigger>
-            <TooltipContent side="right">Início</TooltipContent>
-          </Tooltip>
+          {authenticated && (
+            <>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Link
+                    href="/homeOn"
+                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-gray-900 transition-colors hover:text-amber-200"
+                  >
+                    <Home className="w-5 h-5" />
+                    <span className="sr-only">Início</span>
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent side="right">Início</TooltipContent>
+              </Tooltip>
+
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Link
+                    href="/profile"
+                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-gray-900 transition-colors hover:text-amber-200"
+                  >
+                    <User className="w-5 h-5" />
+                    <span className="sr-only">Perfil</span>
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent side="right">Perfil</TooltipContent>
+              </Tooltip>
+            </>
+          )}
 
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                href="./profile"
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-gray-900 transition-colors hover:text-amber-200"
-              >
-                <User className="w-5 h-5" />
-                <span className="sr-only">Perfil</span>
-              </Link>
-            </TooltipTrigger>
-            <TooltipContent side="right">Perfil</TooltipContent>
-          </Tooltip>
-
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Link
-                href="./settings"
+                href="/settings"
                 className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-gray-900 transition-colors hover:text-amber-200"
               >
                 <Cog className="w-5 h-5" />
@@ -71,7 +103,7 @@ export function Sidebar() {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                href="./about"
+                href="/about"
                 className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-gray-900 transition-colors hover:text-amber-200"
               >
                 <Info className="w-5 h-5" />
@@ -81,18 +113,33 @@ export function Sidebar() {
             <TooltipContent side="right">Sobre</TooltipContent>
           </Tooltip>
 
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Link
-                href="./login"
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-gray-900 transition-colors hover:text-amber-200"
-              >
-                <LogIn className="w-5 h-5" />
-                <span className="sr-only">Log in</span>
-              </Link>
-            </TooltipTrigger>
-            <TooltipContent side="right">Log in</TooltipContent>
-          </Tooltip>
+          {authenticated ? (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button
+                  onClick={handleLogout}
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-gray-900 transition-colors hover:text-amber-200"
+                >
+                  <LogOutIcon className="w-5 h-5" />
+                  <span className="sr-only">Log out</span>
+                </button>
+              </TooltipTrigger>
+              <TooltipContent side="right">Log out</TooltipContent>
+            </Tooltip>
+          ) : (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link
+                  href="/login"
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-gray-900 transition-colors hover:text-amber-200"
+                >
+                  <LogIn className="w-5 h-5" />
+                  <span className="sr-only">Log in</span>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent side="right">Log in</TooltipContent>
+            </Tooltip>
+          )}
         </nav>
       </aside>
 
@@ -121,45 +168,59 @@ export function Sidebar() {
                   <span className="sr-only">Logo do Projeto</span>
                 </Link>
 
-                <Link
-                  href="./homeOn"
-                  className="flex items-center gap-4 px-2.5  hover:text-amber-400 text-gray-900"
-                >
-                  <Home className="h-5 w-5 transition-all" />
-                  Início
-                </Link>
+                {authenticated && (
+                  <>
+                    <Link
+                      href="/homeOn"
+                      className="flex items-center gap-4 px-2.5 hover:text-amber-400 text-gray-900"
+                    >
+                      <Home className="h-5 w-5 transition-all" />
+                      Início
+                    </Link>
+
+                    <Link
+                      href="/profile"
+                      className="flex items-center gap-4 px-2.5 hover:text-amber-400 text-gray-900"
+                    >
+                      <User className="h-5 w-5 transition-all" />
+                      Perfil
+                    </Link>
+                  </>
+                )}
 
                 <Link
-                  href="./profile"
-                  className="flex items-center gap-4 px-2.5  hover:text-amber-400 text-gray-900"
-                >
-                  <User className="h-5 w-5 transition-all" />
-                  Perfil
-                </Link>
-
-                <Link
-                  href="./settings"
-                  className="flex items-center gap-4 px-2.5  hover:text-amber-400 text-gray-900"
+                  href="/settings"
+                  className="flex items-center gap-4 px-2.5 hover:text-amber-400 text-gray-900"
                 >
                   <Cog className="h-5 w-5 transition-all" />
                   Configurações
                 </Link>
 
                 <Link
-                  href="./about"
-                  className="flex items-center gap-4 px-2.5  hover:text-amber-400 text-gray-900"
+                  href="/about"
+                  className="flex items-center gap-4 px-2.5 hover:text-amber-400 text-gray-900"
                 >
                   <Info className="h-5 w-5 transition-all" />
                   Sobre
                 </Link>
 
-                <Link
-                  href="./login"
-                  className="flex items-center gap-4 px-2.5  hover:text-amber-400 text-gray-900"
-                >
-                  <LogIn className="h-5 w-5 transition-all" />
-                  Log in
-                </Link>
+                {authenticated ? (
+                  <button
+                    onClick={handleLogout}
+                    className="flex items-center gap-4 px-2.5 hover:text-amber-400 text-gray-900"
+                  >
+                    <LogOut className="h-5 w-5 transition-all" />
+                    Log out
+                  </button>
+                ) : (
+                  <Link
+                    href="/login"
+                    className="flex items-center gap-4 px-2.5 hover:text-amber-400 text-gray-900"
+                  >
+                    <LogIn className="h-5 w-5 transition-all" />
+                    Log in
+                  </Link>
+                )}
               </nav>
             </SheetContent>
           </Sheet>
