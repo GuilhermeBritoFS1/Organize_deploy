@@ -1,12 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "../../Services/page";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff"; // Importação dos ícones
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false); // Estado para controlar a visibilidade da senha
   const router = useRouter();
 
   const handleSubmit = async (e) => {
@@ -20,6 +23,7 @@ export default function Login() {
 
       const token = response.data.token;
       if (token) {
+        localStorage.setItem("isAuthenticated", true);
         localStorage.setItem("token", token);
         router.push("/homeOn");
       } else {
@@ -30,6 +34,14 @@ export default function Login() {
       alert("Email ou senha inválidos.");
     }
   };
+
+  // useEffect para realizar o reload após a navegação
+  useEffect(() => {
+    // Verifica se a rota atual é a página desejada
+    if (window.location.pathname === "/homeOn") {
+      location.reload();
+    }
+  }, [router.asPath]); // Dependência na rota atual
 
   return (
     <main className="sm:ml-14 p-4 bg-gray-900">
@@ -65,14 +77,27 @@ export default function Login() {
 
             <div>
               <label className="block text-lg text-black mb-2">Senha</label>
-              <input
-                type="password"
-                name="password"
-                className="w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400"
-                placeholder="Digite sua senha"
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"} // Altera o tipo de input dependendo do estado
+                  name="password"
+                  className="w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400"
+                  placeholder="Digite sua senha"
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)} // Alterna a visibilidade da senha
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                >
+                  {showPassword ? (
+                    <VisibilityOff className="w-6 h-6" /> // Usando o ícone VisibilityOff
+                  ) : (
+                    <Visibility className="w-6 h-6" /> // Usando o ícone Visibility
+                  )}
+                </button>
+              </div>
               <a
                 href="/updatePassword"
                 className="text-blue-600 hover:text-blue-400 text-lg font-semibold"

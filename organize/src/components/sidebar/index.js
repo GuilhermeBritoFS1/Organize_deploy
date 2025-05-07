@@ -1,7 +1,16 @@
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Cog, Home, Info, LogIn, LogOut, Menu, User } from "lucide-react";
+import {
+  Cog,
+  Home,
+  Info,
+  LogIn,
+  LogOut,
+  LogOutIcon,
+  Menu,
+  User,
+} from "lucide-react";
 import {
   TooltipProvider,
   Tooltip,
@@ -9,7 +18,18 @@ import {
   TooltipContent,
 } from "../ui/tooltip";
 
+// Função para verificar se o usuário está autenticado
+function isAuthenticated() {
+  let isAuthenticated = localStorage.getItem("isAuthenticated");
+  console.log(isAuthenticated);
+
+  return isAuthenticated == "true";
+  // Certifique-se de que seja um valor booleano
+}
+
 export function Sidebar() {
+  const authenticated = isAuthenticated(); // Verifica se o usuário está autenticado
+
   return (
     <div className="flex w-full flex-col bg-muted/40">
       {/* Sidebar web */}
@@ -81,18 +101,37 @@ export function Sidebar() {
             <TooltipContent side="right">Sobre</TooltipContent>
           </Tooltip>
 
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Link
-                href="/login"
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-gray-900 transition-colors hover:text-amber-200"
-              >
-                <LogIn className="w-5 h-5" />
-                <span className="sr-only">Log in</span>
-              </Link>
-            </TooltipTrigger>
-            <TooltipContent side="right">Log in</TooltipContent>
-          </Tooltip>
+          {/* Botão de login ou logout */}
+          {authenticated ? (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link
+                  onClick={() => {
+                    localStorage.setItem("isAuthenticated", false);
+                  }}
+                  href="/"
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-gray-900 transition-colors hover:text-amber-200"
+                >
+                  <LogOutIcon className="w-5 h-5" />
+                  <span className="sr-only">Log out</span>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent side="right">Log out</TooltipContent>
+            </Tooltip>
+          ) : (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link
+                  href="/login"
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-gray-900 transition-colors hover:text-amber-200"
+                >
+                  <LogIn className="w-5 h-5" />
+                  <span className="sr-only">Log in</span>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent side="right">Log in</TooltipContent>
+            </Tooltip>
+          )}
         </nav>
       </aside>
 
@@ -153,21 +192,27 @@ export function Sidebar() {
                   Sobre
                 </Link>
 
-                <Link
-                  href="/login"
-                  className="flex items-center gap-4 px-2.5  hover:text-amber-400 text-gray-900"
-                >
-                  <LogIn className="h-5 w-5 transition-all" />
-                  Log in
-                </Link>
-
-                <Link
-                  href="/"
-                  className="flex items-center gap-4 px-2.5  hover:text-amber-400 text-gray-900"
-                >
-                  <LogOut className="h-5 w-5 transition-all" />
-                  Log out
-                </Link>
+                {/* Botão de login ou logout para mobile */}
+                {authenticated ? (
+                  <Link
+                    onClick={() => {
+                      localStorage.setItem("isAuthenticated", false);
+                    }}
+                    href="/"
+                    className="flex items-center gap-4 px-2.5  hover:text-amber-400 text-gray-900"
+                  >
+                    <LogOut className="h-5 w-5 transition-all" />
+                    Log out
+                  </Link>
+                ) : (
+                  <Link
+                    href="/login"
+                    className="flex items-center gap-4 px-2.5  hover:text-amber-400 text-gray-900"
+                  >
+                    <LogIn className="h-5 w-5 transition-all" />
+                    Log in
+                  </Link>
+                )}
               </nav>
             </SheetContent>
           </Sheet>

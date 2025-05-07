@@ -172,7 +172,7 @@ export default function Create() {
               placeholder="Nome completo"
               id="name"
               name="name"
-              className="border p-2 rounded-md text-sm/5"
+              className="bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 p-2 text-sm/5"
               onChange={(e) => setName(e.target.value)}
             />
             <Input
@@ -181,7 +181,7 @@ export default function Create() {
               placeholder="Email (exemplo: user123@gmail.com)"
               id="email"
               name="email"
-              className="border p-2 rounded-md text-sm/5"
+              className="bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 p-2 text-sm/5"
               onChange={(e) => setEmail(e.target.value)}
             />
             <Input
@@ -190,14 +190,15 @@ export default function Create() {
               placeholder="Confirme email"
               id="confirmEmail"
               name="confirmEmail"
-              className="border p-2 rounded-md text-sm/5"
+              className="bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 p-2 text-sm/5"
               onChange={(e) => setEmail2(e.target.value)}
             />
             <div className="flex lg:flex-row md:flex-row sm:flex-col flex-col gap-2">
               <OutlinedInput
                 className={cn(
-                  "file:border p-2 rounded-md text-sm/5 text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-lg-[45%] w-md-[45%] w-sm-[80%] w-[100%]"
+                  "file:border bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 p-2 text-sm/5 placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-lg-[45%] w-md-[45%] w-sm-[80%] w-[100%]"
                 )}
+                placeholder="Digite sua senha"
                 type={showPassword1 ? "text" : "password"}
                 onChange={(e) => setPassword(e.target.value)}
                 value={Password}
@@ -220,8 +221,9 @@ export default function Create() {
               />
               <OutlinedInput
                 className={cn(
-                  "file:border p-2 rounded-md text-sm/5 text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-lg-[45%] w-md-[45%] w-sm-[80%] w-[100%]"
+                  "file:border bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 p-2 text-sm/5 placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-lg-[45%] w-md-[45%] w-sm-[80%] w-[100%]"
                 )}
+                placeholder="Confirme sua senha"
                 type={showPassword2 ? "text" : "password"}
                 onChange={(e) => setPassword2(e.target.value)}
                 value={Password2}
