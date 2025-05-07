@@ -26,6 +26,9 @@ export default function Login() {
         localStorage.setItem("isAuthenticated", true);
         localStorage.setItem("token", token);
         router.push("/homeOn");
+        setTimeout(() => {
+          window.location.reload();
+        }, 200);
       } else {
         alert("Token não recebido. Verifique a resposta da API.");
       }
@@ -34,14 +37,6 @@ export default function Login() {
       alert("Email ou senha inválidos.");
     }
   };
-
-  // useEffect para realizar o reload após a navegação
-  useEffect(() => {
-    // Verifica se a rota atual é a página desejada
-    if (window.location.pathname === "/homeOn") {
-      location.reload();
-    }
-  }, [router.asPath]); // Dependência na rota atual
 
   return (
     <main className="sm:ml-14 p-4 bg-gray-900">

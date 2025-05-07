@@ -1,11 +1,28 @@
+"use client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
-export const metadata = {
-  title: "Home",
-  description: "OrgaNize - Organize seu dia do jeito mais nice!",
-};
+function isAuthenticated() {
+  return localStorage.getItem("isAuthenticated") == "true";
+}
 
 export default function Home() {
+  const router = useRouter();
+  const [authenticated, setAuthenticated] = useState(false);
+
+  useEffect(() => {
+    setAuthenticated(isAuthenticated());
+  }, []);
+
+  const handleStartClick = () => {
+    if (authenticated) {
+      router.push("/homeOn");
+    } else {
+      router.push("/login");
+    }
+  };
+
   return (
     <main className="sm:ml-14 p-4 flex items-center justify-center min-h-screen bg-gray-900">
       <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-start px-6 py-8">
@@ -67,25 +84,26 @@ export default function Home() {
                 className="absolute inset-0 w-full h-full object-cover shadow-lg"
               />
               <div className="absolute inset-0 flex flex-col justify-center items-center p-4 text-black font-semibold">
-                <uL className="text-lg">
+                <ul className="text-lg">
                   <li>° Freelancers</li>
                   <li>° Consultores</li>
                   <li>
                     ° Profissionais autônomos focados em organização,
                     produtividade e gestão de tempo
                   </li>
-                </uL>
+                </ul>
               </div>
             </div>
           </div>
         </div>
 
         <div className="mt-12 text-center">
-          <Link href="/login">
-            <button className="bg-[#ffbf00] px-6 py-3 rounded-lg text-black font-semibold text-lg hover:bg-[#ffd191]">
-              COMECE AGORA!!
-            </button>
-          </Link>
+          <button
+            onClick={handleStartClick}
+            className="bg-[#ffbf00] px-6 py-3 rounded-lg text-black font-semibold text-lg hover:bg-[#ffd191]"
+          >
+            COMECE AGORA!!
+          </button>
         </div>
       </div>
     </main>
