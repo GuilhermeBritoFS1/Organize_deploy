@@ -89,7 +89,7 @@ export default function Create() {
         password: Password,
       });
 
-      if (response.status === 200) {
+      if (response.status === 201) {
         alert("Usuário cadastrado com sucesso!");
         setName("");
         setEmail("");
@@ -104,7 +104,7 @@ export default function Create() {
   };
 
   return (
-    <main className="bg-gray-900 text-white h-screen flex flex-col">
+    <main className="text-white h-screen flex flex-col">
       <div className="flex lg:flex-row md:flex-row sm:flex-col flex-col md:w-3/4 sm:w-3/4 w-3/4 h-4/5 sm:w-3/4 md:w-2/3 m-auto">
         <div className="bg-gradient-to-r from-white to-gray-3500 text-bg-white flex flex-col items-center justify-center text-center mx-auto md:w-[50%] sm:w-[30%] rounded-l-lg">
           <div className="flex flex-wrap justify-center gap-2 p-2">

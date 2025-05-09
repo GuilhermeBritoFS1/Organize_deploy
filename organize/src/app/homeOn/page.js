@@ -1,3 +1,5 @@
+import { Icon } from "lucide-react";
+
 export const metadata = {
   title: "Página Inicial",
   description: "OrgaNize - Organize seu dia do jeito mais nice!",
@@ -19,6 +21,7 @@ export default function HomeOn() {
       link: "homeOn/task_assignment",
     },
     { name: "RELATÓRIOS", icon: "📊", link: "homeOn/reports" },
+    { name: "EQUIPES", icon: "🫂", link: "homeOn/teams" },
   ];
 
   return (

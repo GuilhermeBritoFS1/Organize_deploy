@@ -32,7 +32,7 @@ export default function Task_create() {
   ];
 
   return (
-    <main className="sm:ml-14 p-4 bg-gray-900 h-screen">
+    <main className="sm:ml-14 p-4 h-screen">
       <form className="flex flex-col text-black justify-center items-center rounded-xl lg:w-1/2 md:w-3/4 mx-auto my-auto md:h-2/3 sm:h-2/3 h-2/3 bg-[url('/postit2.png')] bg-center bg-cover relative">
         <fieldset className="md:text-4xl sm:text-[25px] text-[25px] font-bold md:mb-2 text-start">
           Criar tarefa
