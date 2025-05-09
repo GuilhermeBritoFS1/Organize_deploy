@@ -5,14 +5,13 @@ export const metadata = {
 
 export default function About() {
   return (
-    <main className="sm:ml-14 p-4 bg-gray-900">
-      <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center text-center px-4">
+    <main className="sm:ml-14 p-4 min-h-screen text-white flex flex-col items-center justify-center text-center px-4">
         <img src="/logo.png" alt="Logo" className="mb-4 w-50 h-auto" />
-        <h1 className="text-6xl font-bold mb-4">OrgaNize</h1>
-        <p className="text-3xl font-bold mb-4">
+        <h1 className="text-yellow-500 text-6xl font-bold mb-4">OrgaNize</h1>
+        <p className="text-yellow-500 text-3xl font-bold mb-4">
           Organize seu dia do jeito mais nice!
         </p>
-        <p className="text-3xl font-bold mb-4">Sobre o sistema</p>
+        <p className="text-yellow-500 text-3xl font-bold mb-4">Sobre o sistema</p>
 
         <div className="relative max-w-xl p-8 rounded-lg shadow-lg">
           <img
@@ -35,7 +34,6 @@ export default function About() {
             </p>
           </div>
         </div>
-      </div>
     </main>
   );
 }
