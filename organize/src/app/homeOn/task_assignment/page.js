@@ -1,17 +1,16 @@
 "use client";
 
-import { useState } from "react";
-import SelectMulti, { StylesConfig } from "react-select";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { useState, useEffect } from "react";
+import SelectMulti from "react-select";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
+import { useTheme } from "next-themes";
 import * as React from "react";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -57,8 +56,8 @@ export default function Task_assignment() {
     },
     {
       id: 5,
-      Título: "Tarefa 4",
-      task_Group: "Equipe 4",
+      Título: "Tarefa 5",
+      task_Group: "Equipe 5",
       dateDue: "20/06/2025",
       members: ["Guilherme", "Pedro", "Jefferson"],
       status: "Em andamento",
@@ -66,30 +65,12 @@ export default function Task_assignment() {
     },
     {
       id: 6,
-      Título: "Tarefa 4",
-      task_Group: "Equipe 4",
-      dateDue: "20/06/2025",
-      members: ["Guilherme", "Pedro", "Jefferson"],
-      status: "Em andamento",
-      priority: "Alta",
-    },
-    {
-      id: 7,
-      Título: "Tarefa 4",
-      task_Group: "Equipe 4",
+      Título: "Tarefa 6",
+      task_Group: "Equipe 6",
       dateDue: "20/06/2025",
       members: ["Guilherme", "Pedro", "Jefferson"],
       status: "Em andamento",
       priority: "Média",
-    },
-    {
-      id: 8,
-      Título: "Tarefa 4",
-      task_Group: "Equipe 4",
-      dateDue: "20/06/2025",
-      members: ["Guilherme", "Pedro", "Jefferson"],
-      status: "Em andamento",
-      priority: "Baixa",
     },
   ];
 
@@ -98,7 +79,14 @@ export default function Task_assignment() {
     tasks.map(() => []) // Inicializando o estado com uma lista vazia para cada tarefa
   );
 
-  // Função para atualizar as seleções de cada tarefa
+  // Controle do tema
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const handleSelectChange = (index, options) => {
     const updatedSelections = [...selectedOptions];
     updatedSelections[index] = options;
@@ -109,28 +97,31 @@ export default function Task_assignment() {
   const customStyles = {
     option: (provided, state) => ({
       ...provided,
-      color: state.isSelected ? "#ffbf00" : "black", // Altera a cor do texto para 'blue' quando não selecionado, e 'white' quando selecionado
-      backgroundColor: state.isSelected ? "#ffbf00" : "transparent", // Altera o fundo das opções selecionadas
+      color: state.isSelected
+        ? "#ffbf00"
+        : theme === "dark"
+        ? "white"
+        : "black",
+      backgroundColor: state.isSelected ? "#ffbf00" : "transparent",
       padding: "10px",
     }),
     control: (provided) => ({
       ...provided,
-      backgroundColor: "transparent", // Torna o fundo do seletor transparente
-      //border: "1px solid #ffbf00", Altere a borda do controle
+      backgroundColor: "transparent",
     }),
     multiValue: (provided) => ({
       ...provided,
-      backgroundColor: "#ffbf00", // Cor de fundo para os itens selecionados
-      color: "black", // Cor do texto para os itens selecionados
+      backgroundColor: "#ffbf00",
+      color: "black",
     }),
     multiValueLabel: (provided) => ({
       ...provided,
-      color: "black", // Cor do texto dentro do item selecionado
+      color: "black",
       fontWeight: "bold",
     }),
     multiValueRemove: (provided) => ({
       ...provided,
-      color: "black", // Cor do ícone de remoção dos itens selecionados
+      color: "black",
       ":hover": {
         backgroundColor: "red",
         color: "white",
@@ -138,21 +129,23 @@ export default function Task_assignment() {
     }),
   };
 
-  /*  const options = [
-    { value: "option1", label: "Opção 1" },
-    { value: "option2", label: "Opção 2" },
-    { value: "option3", label: "Opção 3" },
-  ];*/
+  if (!mounted) return null;
 
   return (
-    <main className="sm:ml-14 p-4 bg-gray-900 h-screen">
+    <main
+      className={`sm:ml-14 p-4 h-screen ${
+        theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-black"
+      }`}
+    >
       <div>
-        <h1 className="text-white font-bold lg:text-4xl">
+        <h1
+          className={`font-bold lg:text-4xl ${
+            theme === "dark" ? "text-yellow-500" : "text-black"
+          }`}
+        >
           Atribuição de Tarefas
         </h1>
-        <p className="text-white italic lg:text-base">
-          Distribua tarefas por integrantes
-        </p>
+        <p className="italic lg:text-base">Distribua tarefas por integrantes</p>
       </div>
       <hr />
       <ul className="flex md:flex-row flex-wrap sm:flex-col flex-col gap-5 justify-center my-5">
@@ -166,7 +159,7 @@ export default function Task_assignment() {
           return (
             <li
               key={task.id}
-              className="lg:w-[23%] md:w-[25%] sm:w-[100%] w-[100%] opacity-50 hover:opacity-100"
+              className={`lg:w-[23%] md:w-[25%] sm:w-[100%] w-[100%] opacity-50 hover:opacity-100`}
             >
               <Accordion>
                 <AccordionSummary
@@ -174,10 +167,14 @@ export default function Task_assignment() {
                   aria-controls="panel1-content"
                   id="panel1-header"
                 >
-                  <Typography component="span">Accordion 1</Typography>
+                  <Typography component="span">{task.Título}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <div className="flex flex-col rounded-md border bg-[white] p-2 w-[100%]">
+                  <div
+                    className={`flex flex-col rounded-md border ${
+                      theme === "dark" ? "bg-gray-800" : "bg-white"
+                    } p-2 w-[100%]`}
+                  >
                     <SelectMulti
                       isMulti
                       options={membersOptions} // Passando as opções dos membros
@@ -198,6 +195,11 @@ export default function Task_assignment() {
                     <Select
                       labelId="demo-simple-select-filled-label"
                       id="demo-simple-select-filled"
+                      className={
+                        theme === "dark"
+                          ? "bg-gray-700 text-white"
+                          : "bg-white text-black"
+                      }
                     >
                       {task.priority === "Alta" ? (
                         <MenuItem value="Alta">Alta (valor atual)</MenuItem>
@@ -212,7 +214,7 @@ export default function Task_assignment() {
                       {task.priority === "Baixa" ? (
                         <MenuItem value="Baixa">Baixa (valor atual)</MenuItem>
                       ) : (
-                        <MenuItem value="Baixa">Alta</MenuItem>
+                        <MenuItem value="Baixa">Baixa</MenuItem>
                       )}
                     </Select>
                   </FormControl>
@@ -223,6 +225,11 @@ export default function Task_assignment() {
                     <Select
                       labelId="demo-simple-select-filled-label"
                       id="demo-simple-select-filled"
+                      className={
+                        theme === "dark"
+                          ? "bg-gray-700 text-white"
+                          : "bg-white text-black"
+                      }
                     >
                       <MenuItem value="Pedente">Pendente</MenuItem>
                       <MenuItem value="Em andamento">Em andamento</MenuItem>

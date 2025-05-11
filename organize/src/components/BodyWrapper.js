@@ -13,9 +13,11 @@ export function BodyWrapper({ children }) {
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-  if (!mounted) return null;
+  if (!mounted) return <div />; // Evitar problemas de hidratação
 
   return (
     <html lang="pt-BR" data-theme={theme || "light"} suppressHydrationWarning>

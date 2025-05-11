@@ -1,11 +1,18 @@
-import { Icon } from "lucide-react";
+"use client";
 
-export const metadata = {
-  title: "Página Inicial",
-  description: "OrgaNize - Organize seu dia do jeito mais nice!",
-};
+import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
 
 export default function HomeOn() {
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
   const apps = [
     { name: "CRIAR TAREFA", icon: "📝", link: "homeOn/task_create" },
     { name: "TAREFAS EM ANDAMENTO", icon: "⏳", link: "homeOn/task_progress" },
@@ -25,13 +32,18 @@ export default function HomeOn() {
   ];
 
   return (
-    <main className="sm:ml-14 p-4 flex items-center justify-center min-h-screen bg-gray-900 text-white">
+    <main
+      className={`sm:ml-14 p-4 flex items-center justify-center min-h-screen ${
+        theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-black"
+      }`}
+    >
       <div className="flex flex-col items-center text-center w-full max-w-4xl p-4">
-        <img src="/logo.png" alt="Logo" className="mb-4 w-50 h-auto" />
-        <h1 className="text-6xl font-bold mb-4">OrgaNize</h1>
-        <p className="text-3xl font-bold mb-4">
+        <img src="/logo.png" alt="Logo" className="mb-4 w-48 h-auto" />
+        <h1 className="text-6xl font-bold mb-4 text-yellow-500">OrgaNize</h1>
+        <p className="text-3xl font-bold mb-4 text-yellow-500">
           Organize seu dia do jeito mais nice!
         </p>
+
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 w-full justify-center">
           {apps.map((app, index) => (
             <a
@@ -43,13 +55,13 @@ export default function HomeOn() {
                 <img
                   src="postit2.png"
                   alt="Post-it"
-                  className="w-full h-full object-cover shadow-lg"
+                  className="w-full h-full object-cover shadow-lg rounded-lg"
                 />
-                <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <span className="text-5xl mb-3 drop-shadow-lg">
+                <div className="absolute inset-0 flex flex-col items-center justify-center p-2">
+                  <span className="text-5xl mb-2 drop-shadow-md">
                     {app.icon}
                   </span>
-                  <span className="text-xl font-semibold text-gray-900 drop-shadow-lg">
+                  <span className="text-lg font-semibold text-black text-center drop-shadow-md">
                     {app.name}
                   </span>
                 </div>

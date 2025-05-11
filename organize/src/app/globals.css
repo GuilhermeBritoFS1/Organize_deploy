@@ -150,6 +150,7 @@
   }
 }
 
+/* Definir background e foreground para light e dark */
 [data-theme='light'] {
   --background: #ffffff;
   --foreground: #000000;
