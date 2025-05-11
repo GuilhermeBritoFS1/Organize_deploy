@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -18,19 +18,71 @@ import chroma from "chroma-js";
 import { useTheme } from "next-themes"; // Importando o hook useTheme
 import styles from "@/app/homeOn/task_create/taskCreate.module.css";
 
+//Services
+import { api } from "../../../Services/page";
+
 export default function Task_create() {
-  const [startDate, setStartDate] = useState(new Date());
+  const [date, setDate] = useState(new Date());
   const [selectedOptions, setSelectedOptions] = useState([]);
+  const [teams, setTeams] = useState([{}]);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [priority, setPriority] = useState("");
+  const [teamId, setTeamId] = useState("");
 
-  const handleSelectChange = (options) => {
-    setSelectedOptions(options);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    const getAllTeams = async () => {
+      try {
+        const response = await api.get("/task-groups?created=true", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setTeams(response.data);
+      } catch (error) {
+        console.log("Erro ao cadastrar o usuário", error);
+        alert(error.response.data.msg);
+      }
+    };
+
+    getAllTeams();
+  }, []);
+
+  const createTask = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem("token");
+    try {
+      const response = await api.post(
+        "/tasks",
+        {
+          title,
+          description,
+          dueDate: date,
+          priority,
+          taskGroupId: teamId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.status === 201) {
+        alert("Tarefa criada com sucesso!");
+        setTitle("");
+        setDescription("");
+        setPriority("");
+        setTeamId(null);
+        console.log(response);
+      }
+    } catch (error) {
+      console.log("Erro ao criar tarefa", error);
+      alert(error.response.data.msg);
+      console.log(date, priority, teamId)
+    }
   };
-
-  const options = [
-    { value: "option1", label: "Opção 1" },
-    { value: "option2", label: "Opção 2" },
-    { value: "option3", label: "Opção 3" },
-  ];
 
   // Usando o hook useTheme para obter o tema
   const { theme } = useTheme();
@@ -44,6 +96,7 @@ export default function Task_create() {
   return (
     <main className="sm:ml-14 p-4 h-screen">
       <form
+        onSubmit={createTask}
         className={`flex flex-col justify-center items-center rounded-xl lg:w-1/2 md:w-3/4 mx-auto my-auto md:h-2/3 sm:h-2/3 h-2/3 bg-[url('/postit2.png')] bg-center bg-cover relative`}
       >
         <fieldset className="md:text-4xl sm:text-[25px] text-[25px] font-bold md:mb-2 text-start">
@@ -55,35 +108,39 @@ export default function Task_create() {
           type="text"
           className={`my-5 lg:w-2/3 md:w-1/2 sm:w-1/2 w-1/2 md:text-base ${inputStyle}`}
           style={styles}
+          onChange={(e) => setTitle(e.target.value)}
         />
         <Textarea
           placeholder="Descrição"
           type="text"
           className={`mb-5 lg:w-2/3 md:w-1/2 sm:w-1/2 w-1/2 md:text-base ${inputStyle}`}
           style={styles}
+          onChange={(e) => setDescription(e.target.value)}
         />
         <div className="flex md:flex-row gap-5 sm:flex-col flex-col">
-          <Select>
+          <Select onValueChange={(value) => setTeamId(value)}>
             <SelectTrigger
-              placeholder="Selecione uma opção"
               style={{
                 color: theme === "dark" ? "white" : "black",
                 backgroundColor: theme === "dark" ? "#444" : "#ffbf00",
               }}
               className="lg:w-1/2 md:w-1/2 sm:w-full w-full"
             >
-              Equipe responsável
+              {teamId
+                ? teams.find((team) => team.id === teamId)?.name
+                : "Equipe responsável"}
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                <SelectItem value="option1">Opção 1</SelectItem>
-              </SelectGroup>
-              <SelectGroup>
-                <SelectItem value="option3">Opção 2</SelectItem>
+                {teams.map((team, index) => (
+                  <SelectItem key={index} value={team.id}>
+                    {team.name}
+                  </SelectItem>
+                ))}
               </SelectGroup>
             </SelectContent>
           </Select>
-          <Select>
+          <Select onValueChange={(value) => setPriority(value)}>
             <SelectTrigger
               placeholder="Selecione uma opção"
               style={{
@@ -92,27 +149,36 @@ export default function Task_create() {
               }}
               className="lg:w-1/2 md:w-1/2 sm:w-full w-full"
             >
-              Prioridade da tarefa
+              {priority || "Prioridade da tarefa"}
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                <SelectItem value="option1">Baixa</SelectItem>
+                <SelectItem value="baixa">Baixa</SelectItem>
               </SelectGroup>
               <SelectGroup>
-                <SelectItem value="option2">Média</SelectItem>
+                <SelectItem value="média">Média</SelectItem>
               </SelectGroup>
               <SelectGroup>
-                <SelectItem value="option3">Alta</SelectItem>
+                <SelectItem value="alta">Alta</SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>
           <DatePicker
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
-            dateFormat="dd/MM/yyyy"
+            selected={date}
+            onChange={(date) => setDate(date)}
+            dateFormat="yyyy/MM/dd"
             placeholderText="Data de vencimento"
             className={`"file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-full min-w-0 rounded-md border bg-[#ffbf00] px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm", "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]", "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive"`}
           />
+        </div>
+
+        <div className="flex flex-row mt-3">
+          <button
+            type="submit"
+            className="bg-[#ffbf00] hover:bg-[#ffd191] transition py-2 px-4 rounded-md text-black font-bold"
+          >
+            Criar tarefa
+          </button>
         </div>
       </form>
     </main>
