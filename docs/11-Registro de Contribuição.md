@@ -65,12 +65,12 @@ Desenvolver a interface web do projeto, garantindo uma experiência de usuário 
 
 ### Responsáveis
 
-- **Desenvolvedor Frontend**: Nome do desenvolvedor
-- **Designer UI/UX**: Nome do designer
+- **Desenvolvedor Frontend**: Bernardo Marra, Bianca Xavier, Guilherme Brito, Helbert Benício, Jefferson Wagner e Jonatas Brum
+- **Designer UI/UX**: Guilherme Brito,Helbert Benício,Jefferson Wagner
 
 ### Prazo
 
-- **Data de conclusão**: YYYY-MM-DD
+- **Data de conclusão**: 2025-05-11
 
 ---
 
