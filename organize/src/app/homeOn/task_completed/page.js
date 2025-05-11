@@ -48,23 +48,43 @@ export default function TaskCompleted() {
   const closeModal = () => setModalData(null);
 
   return (
-    <main className="min-h-screen bg-gray-900 text-white p-6 flex flex-col items-center">
-      <div className="w-full max-w-5xl">
-        <div className="bg-yellow-400 text-gray-900 font-bold text-center py-4 rounded-lg mb-6 text-xl">
-          ✅ Tarefas Concluídas
-        </div>
+    <main className="sm:ml-14 p-4 flex items-center justify-center min-h-screen bg-gray-900 text-white">
+      <div className="flex flex-col items-center text-center w-full max-w-6xl p-4">
+        <img src="/logo.png" alt="Logo" className="mb-4 w-32 sm:w-40 h-auto" />
+        <h1 className="text-3xl sm:text-5xl font-bold mb-6">
+          Tarefas Concluídas
+        </h1>
 
-        <div className="flex flex-wrap gap-6 justify-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
           {tarefasConcluidas.map((tarefa, index) => (
             <div
               key={index}
               onClick={() => openModal(tarefa)}
-              className="bg-gray-700 p-4 rounded-lg shadow cursor-pointer hover:bg-gray-600 w-72 transition"
+              className="relative w-full aspect-square flex items-center justify-center cursor-pointer"
             >
-              <div className="font-bold text-lg">{tarefa.titulo}</div>
-              <div className="text-sm text-gray-300">{tarefa.descricao}</div>
-              <div className="text-xs text-gray-400 mt-2">
-                Concluído em: {tarefa.data}
+              <div className="relative w-full h-full">
+                <img
+                  src="/postit2.png"
+                  alt="Post-it"
+                  className="w-full h-full object-cover shadow-lg"
+                />
+                <div className="absolute inset-0 flex flex-col items-center justify-center p-3 text-gray-900">
+                  <h2 className="text-lg font-bold text-center">
+                    {tarefa.titulo}
+                  </h2>
+                  <p className="text-sm mt-1">{tarefa.descricao}</p>
+                  <div className="text-xs mt-2 space-y-1">
+                    <p>
+                      <strong>Responsável:</strong> {tarefa.pessoa}
+                    </p>
+                    <p>
+                      <strong>Área:</strong> {tarefa.area}
+                    </p>
+                    <p>
+                      <strong>Data:</strong> {tarefa.data}
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           ))}
@@ -74,7 +94,7 @@ export default function TaskCompleted() {
       {/* Modal */}
       {modalData && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center pt-20 z-50">
-          <div className="bg-gray-800 text-white p-6 rounded-lg w-full max-w-lg relative">
+          <div className="bg-gray-800 text-white p-6 rounded-lg w-full max-w-lg max-h-screen overflow-y-auto relative">
             <button
               onClick={closeModal}
               className="absolute top-2 right-4 text-2xl font-bold text-gray-400 hover:text-white"
@@ -86,12 +106,17 @@ export default function TaskCompleted() {
             </div>
             <div className="text-md mb-2">{modalData.descricao}</div>
             <div className="text-md mb-2">
-              Responsável: <span className="font-medium">{modalData.pessoa}</span>
+              <strong>Responsável:</strong> {modalData.pessoa}
             </div>
             <div className="text-md mb-2">
-              Descrição: {modalData.descricaoCompleta}
+              <strong>Área:</strong> {modalData.area}
             </div>
-            <div className="text-md">Data de conclusão: {modalData.data}</div>
+            <div className="text-md mb-2">
+              <strong>Descrição:</strong> {modalData.descricaoCompleta}
+            </div>
+            <div className="text-md">
+              <strong>Data de conclusão:</strong> {modalData.data}
+            </div>
           </div>
         </div>
       )}

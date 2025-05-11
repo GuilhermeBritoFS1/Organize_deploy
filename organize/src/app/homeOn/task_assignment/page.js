@@ -17,7 +17,6 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
-
 export default function Task_assignment() {
   const tasks = [
     {
@@ -93,8 +92,6 @@ export default function Task_assignment() {
       priority: "Baixa",
     },
   ];
-
-
 
   // Alterando para armazenar as seleções de cada tarefa individualmente
   const [selectedOptions, setSelectedOptions] = useState(
@@ -202,9 +199,21 @@ export default function Task_assignment() {
                       labelId="demo-simple-select-filled-label"
                       id="demo-simple-select-filled"
                     >
-                      {task.priority === "Alta" ? <MenuItem value="Alta">Alta (valor atual)</MenuItem> : <MenuItem value="Alta">Alta</MenuItem>}
-                      {task.priority === "Média" ? <MenuItem value="Média">Média (valor atual)</MenuItem> : <MenuItem value="Média">Média</MenuItem>}
-                      {task.priority === "Baixa" ? <MenuItem value="Baixa">Baixa (valor atual)</MenuItem> : <MenuItem value="Baixa">Alta</MenuItem>}
+                      {task.priority === "Alta" ? (
+                        <MenuItem value="Alta">Alta (valor atual)</MenuItem>
+                      ) : (
+                        <MenuItem value="Alta">Alta</MenuItem>
+                      )}
+                      {task.priority === "Média" ? (
+                        <MenuItem value="Média">Média (valor atual)</MenuItem>
+                      ) : (
+                        <MenuItem value="Média">Média</MenuItem>
+                      )}
+                      {task.priority === "Baixa" ? (
+                        <MenuItem value="Baixa">Baixa (valor atual)</MenuItem>
+                      ) : (
+                        <MenuItem value="Baixa">Alta</MenuItem>
+                      )}
                     </Select>
                   </FormControl>
                   <FormControl variant="filled" sx={{ m: 1, minWidth: "80%" }}>
