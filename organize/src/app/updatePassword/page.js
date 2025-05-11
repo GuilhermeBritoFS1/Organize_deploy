@@ -1,115 +1,95 @@
 "use client";
 
-import { useState } from "react";
-import Button from "@mui/material/Button";
-import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
-import Input from "@mui/material/Input";
-import FilledInput from "@mui/material/FilledInput";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
-import InputAdornment from "@mui/material/InputAdornment";
-import FormHelperText from "@mui/material/FormHelperText";
-import FormControl from "@mui/material/FormControl";
-import TextField from "@mui/material/TextField";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { useState, useEffect } from "react";
+import { api } from "../../Services/page";
+import { useTheme } from "next-themes";
+import { useRouter } from "next/navigation";
 
-export default function updatePassword() {
-  const [showPassword1, setShowPassword1] = useState(false);
-  const [showPassword2, setShowPassword2] = useState(false);
+export default function ResetPassword() {
+  const [email, setEmail] = useState("");
+  const [mounted, setMounted] = useState(false);
+  const { theme } = useTheme();
+  const router = useRouter();
 
-  const handleClickShowPassword1 = () => setShowPassword1((show) => !show);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-  const handleMouseDownPassword1 = (event) => {
-    event.preventDefault();
-  };
+  if (!mounted) return null;
 
-  const handleMouseUpPassword1 = (event) => {
-    event.preventDefault();
-  };
-
-  const handleClickShowPassword2 = () => setShowPassword2((show) => !show);
-
-  const handleMouseDownPassword2 = (event) => {
-    event.preventDefault();
-  };
-
-  const handleMouseUpPassword2 = (event) => {
-    event.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await api.post("/user/reset-password", { email });
+      if (response.status === 200) {
+        alert("Instruções de redefinição de senha enviadas para seu email.");
+        router.push("/login");
+      } else {
+        alert("Não foi possível enviar o email. Verifique o endereço.");
+      }
+    } catch (error) {
+      console.error("Erro ao solicitar redefinição:", error);
+      alert("Erro ao solicitar redefinição de senha.");
+    }
   };
 
   return (
-    <main className="sm:ml-14 p-4 bg-gray-900">
-      <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center text-center">
+    <main
+      className={`sm:ml-14 p-4 ${
+        theme === "dark" ? "bg-gray-900" : "bg-white"
+      }`}
+    >
+      <div
+        className={`min-h-screen ${
+          theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-black"
+        } flex flex-col items-center justify-center text-center`}
+      >
+        <img src="/logo.png" alt="Logo" className="mb-4 w-50 h-auto" />
+        <h1 className="text-5xl font-bold mb-2 text-yellow-500">
+          Redefinir Senha
+        </h1>
+        <p className="text-lg mb-6 text-yellow-500">
+          Insira seu e-mail para receber instruções
+        </p>
+
         <div className="w-full max-w-sm p-8 rounded-lg shadow-lg relative">
           <img
             src="postit2.png"
             alt="Post-it"
-            className="w-full h-full object-cover shadow-lg absolute top-0 left-0 rounded-lg"
+            className={`w-full h-full object-cover shadow-lg absolute top-0 left-0 rounded-lg ${
+              theme === "dark" ? "opacity-90" : "opacity-70"
+            }`}
           />
-          <h2 className="text-2xl font-semibold text-center text-black mb-6 relative z-10"></h2>
-          <h2 className="text-2xl font-semibold text-center text-black mb-6 relative z-10">
-            Alterar senha
-          </h2>
-          <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
-            <InputLabel htmlFor="outlined-adornment-password">
-              Antiga senha
-            </InputLabel>
-            <OutlinedInput
-              id="outlined-adornment-password"
-              type={showPassword1 ? "text" : "password"}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label={
-                      showPassword1
-                        ? "hide the password"
-                        : "display the password"
-                    }
-                    onClick={handleClickShowPassword1}
-                    onMouseDown={handleMouseDownPassword1}
-                    onMouseUp={handleMouseUpPassword1}
-                    edge="end"
-                  >
-                    {showPassword1 ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              }
-              label="Antiga senha"
-            />
-          </FormControl>
-          <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
-            <InputLabel htmlFor="outlined-adornment-password">
-              Nova senha
-            </InputLabel>
-            <OutlinedInput
-              id="outlined-adornment-password"
-              type={showPassword2 ? "text" : "password"}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label={
-                      showPassword2
-                        ? "hide the password"
-                        : "display the password"
-                    }
-                    onClick={handleClickShowPassword2}
-                    onMouseDown={handleMouseDownPassword2}
-                    onMouseUp={handleMouseUpPassword2}
-                    edge="end"
-                  >
-                    {showPassword2 ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              }
-              label="Nova senha"
-            />
-          </FormControl>
-          <Button variant="contained" color="warning" startIcon={<BookmarkBorderIcon />}>
-            Mudar senha
-          </Button>
+
+          <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
+            <div>
+              <label className="block text-lg text-black mb-2">Email</label>
+              <input
+                type="email"
+                name="email"
+                className="w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400"
+                placeholder="Digite seu email"
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full py-3 bg-[#ffbf00] text-white rounded-lg text-xl font-semibold hover:bg-[#ffd191] transition"
+            >
+              Enviar
+            </button>
+          </form>
+
+          <div className="mt-6 text-center relative z-10">
+            <a
+              href="/login"
+              className="text-blue-600 hover:text-blue-400 text-lg font-semibold"
+            >
+              Voltar para o login
+            </a>
+          </div>
         </div>
       </div>
     </main>

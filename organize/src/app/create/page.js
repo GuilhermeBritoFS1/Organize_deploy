@@ -90,7 +90,7 @@ export default function Create() {
       });
 
       if (response.status === 201) {
-        alert("Usuário cadastrado com sucesso!");
+        alert("Usuário cadastrado com sucesso!"); // Notificação de sucesso
         setName("");
         setEmail("");
         setEmail2("");
@@ -104,9 +104,9 @@ export default function Create() {
   };
 
   return (
-    <main className="text-white h-screen flex flex-col">
+    <main className="text-amber-400 h-screen flex flex-col">
       <div className="flex lg:flex-row md:flex-row sm:flex-col flex-col md:w-3/4 sm:w-3/4 w-3/4 h-4/5 sm:w-3/4 md:w-2/3 m-auto">
-        <div className="bg-gradient-to-r from-white to-gray-3500 text-bg-white flex flex-col items-center justify-center text-center mx-auto md:w-[50%] sm:w-[30%] rounded-l-lg">
+        <div className="bg-gradient-to-r from-amber-400 to-gray-3500 text-bg-white flex flex-col items-center justify-center text-center mx-auto md:w-[50%] sm:w-[30%] rounded-l-lg">
           <div className="flex flex-wrap justify-center gap-2 p-2">
             <img
               className="inline-block lg:size-35 md:size-25 sm:size-20 size-20 rounded-full ring-2 ring-transparent"
@@ -196,7 +196,7 @@ export default function Create() {
             <div className="flex lg:flex-row md:flex-row sm:flex-col flex-col gap-2">
               <OutlinedInput
                 className={cn(
-                  "file:border bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 p-2 text-sm/5 placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-lg-[45%] w-md-[45%] w-sm-[80%] w-[100%]"
+                  "file:border bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 p-2 text-sm/5 placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-gray-600 border-input flex h-9 w-lg-[45%] w-md-[45%] w-sm-[80%] w-[100%]"
                 )}
                 placeholder="Digite sua senha"
                 type={showPassword1 ? "text" : "password"}
@@ -221,7 +221,7 @@ export default function Create() {
               />
               <OutlinedInput
                 className={cn(
-                  "file:border bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 p-2 text-sm/5 placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-lg-[45%] w-md-[45%] w-sm-[80%] w-[100%]"
+                  "file:border bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 p-2 text-sm/5 placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-gray-600 border-input flex h-9 w-lg-[45%] w-md-[45%] w-sm-[80%] w-[100%]"
                 )}
                 placeholder="Confirme sua senha"
                 type={showPassword2 ? "text" : "password"}

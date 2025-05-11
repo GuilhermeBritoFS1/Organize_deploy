@@ -1,7 +1,7 @@
-export const metadata = {
-  title: "Tarefas em Andamento",
-  description: "OrgaNize - Veja todas suas tarefas em execução!",
-};
+"use client";
+
+import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
 
 const tasks = [
   {
@@ -74,11 +74,25 @@ const tasks = [
 ];
 
 export default function TaskList() {
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  // UseEffect to ensure that the theme has been mounted
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
   return (
-    <main className="sm:ml-14 p-4 flex items-center justify-center min-h-screen bg-gray-900 text-white">
+    <main
+      className={`sm:ml-14 p-4 flex items-center justify-center min-h-screen ${
+        theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-black"
+      }`}
+    >
       <div className="flex flex-col items-center text-center w-full max-w-6xl p-4">
         <img src="/logo.png" alt="Logo" className="mb-4 w-32 sm:w-40 h-auto" />
-        <h1 className="text-3xl sm:text-5xl font-bold mb-6">
+        <h1 className="text-3xl sm:text-5xl font-bold mb-6 text-yellow-500">
           Tarefas em Execução
         </h1>
 
@@ -92,9 +106,9 @@ export default function TaskList() {
                 <img
                   src="/postit2.png"
                   alt="Post-it"
-                  className="w-full h-full object-cover shadow-lg"
+                  className="w-full h-full object-cover shadow-lg rounded-lg"
                 />
-                <div className="absolute inset-0 flex flex-col items-center justify-center p-3 text-gray-900">
+                <div className="absolute inset-0 flex flex-col items-center justify-center p-3">
                   <h2 className="text-lg font-bold text-center">{task.name}</h2>
                   <p className="text-sm mt-1">{task.description}</p>
                   <div className="text-xs mt-2 space-y-1">

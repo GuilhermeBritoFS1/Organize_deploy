@@ -10,7 +10,6 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -23,15 +22,24 @@ import {
   SelectItem,
   SelectGroup,
 } from "@/components/ui/select";
-import Form from "next/form";
 import { Input } from "@/components/ui/input";
 
-//Services
+// Services
 import { api } from "../../../Services/page";
+
+// Theme hook
+import { useTheme } from "next-themes";
 
 export default function Task_assignment() {
   const [members, setMembers] = useState([{}]);
   const [teams, setTeams] = useState([{}]);
+
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -57,28 +65,31 @@ export default function Task_assignment() {
   const customStyles = {
     option: (provided, state) => ({
       ...provided,
-      color: state.isSelected ? "#ffbf00" : "black", // Altera a cor do texto para 'blue' quando não selecionado, e 'white' quando selecionado
-      backgroundColor: state.isSelected ? "#ffbf00" : "transparent", // Altera o fundo das opções selecionadas
+      color: state.isSelected
+        ? "#ffbf00"
+        : theme === "dark"
+        ? "white"
+        : "black",
+      backgroundColor: state.isSelected ? "#ffbf00" : "transparent",
       padding: "10px",
     }),
     control: (provided) => ({
       ...provided,
-      backgroundColor: "transparent", // Torna o fundo do seletor transparente
-      //border: "1px solid #ffbf00", Altere a borda do controle
+      backgroundColor: "transparent",
     }),
     multiValue: (provided) => ({
       ...provided,
-      backgroundColor: "#ffbf00", // Cor de fundo para os itens selecionados
-      color: "black", // Cor do texto para os itens selecionados
+      backgroundColor: "#ffbf00",
+      color: "black",
     }),
     multiValueLabel: (provided) => ({
       ...provided,
-      color: "black", // Cor do texto dentro do item selecionado
+      color: "black",
       fontWeight: "bold",
     }),
     multiValueRemove: (provided) => ({
       ...provided,
-      color: "black", // Cor do ícone de remoção dos itens selecionados
+      color: "black",
       ":hover": {
         backgroundColor: "red",
         color: "white",
@@ -86,14 +97,14 @@ export default function Task_assignment() {
     }),
   };
 
-  /*  const options = [
-    { value: "option1", label: "Opção 1" },
-    { value: "option2", label: "Opção 2" },
-    { value: "option3", label: "Opção 3" },
-  ];*/
+  if (!mounted) return null;
 
   return (
-    <main className="sm:ml-14 p-4 h-screen">
+    <main
+      className={`sm:ml-14 p-4 h-screen ${
+        theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-black"
+      }`}
+    >
       <div>
         <h1 className="text-yellow-500 text-center font-bold lg:text-4xl">
           Equipes
@@ -109,7 +120,9 @@ export default function Task_assignment() {
             return (
               <div
                 key={team.id}
-                className="lg:w-[23%] md:w-[25%] sm:w-[100%] w-[100%] opacity-50 hover:opacity-100"
+                className={`lg:w-[23%] md:w-[25%] sm:w-[100%] w-[100%] opacity-50 hover:opacity-100 ${
+                  theme === "dark" ? "bg-gray-800" : "bg-white"
+                }`}
               >
                 <Accordion>
                   <AccordionSummary
@@ -120,7 +133,11 @@ export default function Task_assignment() {
                     <Typography component="span">{team.name}</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <div className="flex flex-col rounded-md border bg-[white] p-2 w-[100%]">
+                    <div
+                      className={`flex flex-col rounded-md border p-2 w-[100%] ${
+                        theme === "dark" ? "bg-gray-800" : "bg-white"
+                      }`}
+                    >
                       <Formik
                         initialValues={{ friends: [] }}
                         onSubmit={(values) =>
@@ -129,7 +146,7 @@ export default function Task_assignment() {
                           }, 500)
                         }
                         render={({ values }) => (
-                          <Form>
+                          <form>
                             <FieldArray
                               name="friends"
                               render={(arrayHelpers) => (
@@ -176,7 +193,6 @@ export default function Task_assignment() {
                                             Perfil
                                           </SelectTrigger>
                                           <SelectContent>
-                                            {/* Utilizando SelectGroup para agrupar as opções */}
                                             <SelectGroup>
                                               <SelectItem value="viewer">
                                                 Observador
@@ -190,12 +206,11 @@ export default function Task_assignment() {
                                             </SelectGroup>
                                           </SelectContent>
                                         </Select>
-                                        <Select></Select>
                                         <button
                                           type="button"
                                           onClick={() =>
                                             arrayHelpers.remove(index)
-                                          } // remove a friend from the list
+                                          }
                                           className="text-black font-bold"
                                         >
                                           -
@@ -204,7 +219,7 @@ export default function Task_assignment() {
                                           type="button"
                                           onClick={() =>
                                             arrayHelpers.insert(index, "")
-                                          } // insert an empty string at a position
+                                          }
                                           className="text-black font-bold"
                                         >
                                           +
@@ -217,7 +232,6 @@ export default function Task_assignment() {
                                       onClick={() => arrayHelpers.push("")}
                                       className="bg-[#ffbf00] hover:bg-[#ffd191] transition py-2 px-4 rounded-md text-yellow-800 font-bold"
                                     >
-                                      {/* show this when user has removed all friends from the list */}
                                       Adicionar integrante
                                     </button>
                                   )}
@@ -229,7 +243,7 @@ export default function Task_assignment() {
                                 ADICIONAR
                               </button>
                             </div>
-                          </Form>
+                          </form>
                         )}
                       />
                     </div>

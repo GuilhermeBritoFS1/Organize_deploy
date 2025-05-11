@@ -19,9 +19,9 @@ export default function Profile() {
     newPassword: "",
     confirmPassword: "",
     newEmail: "",
-    confirmEmail: ""
+    confirmEmail: "",
   });
-  
+
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
   const [showSecurity, setShowSecurity] = useState(false);
@@ -38,17 +38,16 @@ export default function Profile() {
 
   const handleChange = (e) => {
     const { id, value } = e.target;
-    setForm(prev => ({
+    setForm((prev) => ({
       ...prev,
-      [id]: value
+      [id]: value,
     }));
   };
 
   const handleSave = async () => {
     setIsUpdating(true);
     try {
-      // Simulação de chamada API para atualizar perfil
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       console.log("Dados atualizados:", { ...form, image });
       alert("Perfil atualizado com sucesso!");
     } catch (error) {
@@ -65,24 +64,26 @@ export default function Profile() {
       return;
     }
 
-    if (!window.confirm("Tem certeza que deseja alterar seu e-mail para " + form.newEmail + "?")) {
+    if (
+      !window.confirm(
+        `Tem certeza que deseja alterar seu e-mail para ${form.newEmail}?`
+      )
+    ) {
       return;
     }
 
     setIsUpdating(true);
     try {
-      // Simulação de chamada API para atualizar e-mail
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      await new Promise((resolve) => setTimeout(resolve, 1500));
       console.log("E-mail atualizado para:", form.newEmail);
-      
-      // Atualiza o e-mail no estado
-      setForm(prev => ({
+
+      setForm((prev) => ({
         ...prev,
         email: form.newEmail,
         newEmail: "",
-        confirmEmail: ""
+        confirmEmail: "",
       }));
-      
+
       setEmailUpdateSuccess(true);
       setTimeout(() => setEmailUpdateSuccess(false), 3000);
     } catch (error) {
@@ -98,7 +99,7 @@ export default function Profile() {
   };
 
   return (
-    <div className="flex justify-center items-start min-h-screen p-4 bg-gray-50 py-8">
+    <div className="flex justify-center items-start min-h-screen p-4 bg-gray-50 py-8 dark:bg-background">
       <style jsx>{`
         .btn-yellow {
           background-color: oklch(0.828 0.189 84.429);
@@ -107,14 +108,16 @@ export default function Profile() {
           background-color: oklch(0.728 0.189 84.429);
         }
       `}</style>
-      
+
       <Card className="w-full max-w-2xl shadow-xl">
         <CardHeader className="border-b">
-          <CardTitle className="text-2xl font-semibold text-center">Editar Perfil</CardTitle>
+          <CardTitle className="text-2xl font-semibold text-center">
+            Editar Perfil
+          </CardTitle>
         </CardHeader>
-        
+
         <CardContent className="p-6 space-y-6">
-          {/* Seção de Foto */}
+          {/* Foto de Perfil */}
           <div className="flex flex-col items-center space-y-4">
             <div className="relative">
               {preview ? (
@@ -124,16 +127,18 @@ export default function Profile() {
                   className="h-32 w-32 rounded-full object-cover border-4 border-white shadow-md"
                 />
               ) : (
-                <div className="h-32 w-32 rounded-full bg-gray-200 flex items-center justify-center border-4 border-white shadow-md">
-                  <span className="text-gray-500">Sem imagem</span>
+                <div className="h-32 w-32 rounded-full bg-gray-200 flex items-center justify-center border-4 border-white shadow-md dark:bg-muted">
+                  <span className="text-gray-500 dark:text-gray-300">
+                    Sem imagem
+                  </span>
                 </div>
               )}
             </div>
             <div className="w-64">
-              <Input 
-                id="photo" 
-                type="file" 
-                accept="image/*" 
+              <Input
+                id="photo"
+                type="file"
+                accept="image/*"
                 onChange={handleImageChange}
                 className="file:text-sm file:font-medium"
               />
@@ -143,79 +148,67 @@ export default function Profile() {
           {/* Informações Básicas */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label htmlFor="name" className="text-gray-700">Nome Completo</Label>
-              <Input
-                id="name"
-                value={form.name}
-                onChange={handleChange}
-                className="bg-white"
-              />
+              <Label htmlFor="name">Nome Completo</Label>
+              <Input id="name" value={form.name} onChange={handleChange} />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="role" className="text-gray-700">Cargo/Posição</Label>
-              <Input
-                id="role"
-                value={form.role}
-                onChange={handleChange}
-                className="bg-white"
-              />
+              <Label htmlFor="role">Cargo/Posição</Label>
+              <Input id="role" value={form.role} onChange={handleChange} />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="birthdate" className="text-gray-700">Data de Nascimento</Label>
+              <Label htmlFor="birthdate">Data de Nascimento</Label>
               <Input
                 id="birthdate"
                 type="date"
                 value={form.birthdate}
                 onChange={handleChange}
-                className="bg-white"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-gray-700">E-mail Atual</Label>
+              <Label htmlFor="email">E-mail Atual</Label>
               <Input
                 id="email"
                 type="email"
                 value={form.email}
                 readOnly
-                className="bg-gray-100"
+                className="bg-gray-100 dark:bg-muted"
               />
             </div>
           </div>
 
-          {/* Bio */}
+          {/* Biografia */}
           <div className="space-y-2">
-            <Label htmlFor="bio" className="text-gray-700">Biografia</Label>
+            <Label htmlFor="bio">Biografia</Label>
             <Textarea
               id="bio"
               value={form.bio}
               onChange={handleChange}
               rows={4}
-              className="bg-white"
               placeholder="Fale um pouco sobre você..."
             />
           </div>
 
-          {/* Seção de Segurança (Acordeão) */}
+          {/* Acordeão de Segurança */}
           <div className="border rounded-lg overflow-hidden">
-            <button 
+            <button
               onClick={toggleSecurity}
-              className="w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 transition-colors"
+              className="w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 dark:bg-muted dark:hover:bg-muted/70"
             >
-              <span className="font-medium text-gray-800">Configurações de Segurança</span>
-              {showSecurity ? <ChevronUp className="text-gray-500" /> : <ChevronDown className="text-gray-500" />}
+              <span className="font-medium">Configurações de Segurança</span>
+              {showSecurity ? <ChevronUp /> : <ChevronDown />}
             </button>
-            
+
             {showSecurity && (
-              <div className="p-4 space-y-4 bg-white">
-                {/* Atualização de E-mail */}
+              <div className="p-4 space-y-4 bg-white dark:bg-background">
+                {/* Atualizar E-mail */}
                 <div className="space-y-4 border-b pb-4">
-                  <h3 className="font-medium text-gray-800">Alterar E-mail</h3>
-                  
+                  <h3 className="font-medium">Alterar E-mail</h3>
+
                   <div className="space-y-3">
-                    <Label htmlFor="newEmail" className="text-gray-700">Novo E-mail</Label>
+                    <Label htmlFor="newEmail">Novo E-mail</Label>
                     <Input
                       id="newEmail"
                       type="email"
@@ -224,9 +217,9 @@ export default function Profile() {
                       placeholder="Digite o novo e-mail"
                     />
                   </div>
-                  
+
                   <div className="space-y-3">
-                    <Label htmlFor="confirmEmail" className="text-gray-700">Confirme o E-mail</Label>
+                    <Label htmlFor="confirmEmail">Confirme o E-mail</Label>
                     <Input
                       id="confirmEmail"
                       type="email"
@@ -235,30 +228,32 @@ export default function Profile() {
                       placeholder="Confirme o novo e-mail"
                     />
                   </div>
-                  
+
                   <div className="pt-2">
-                    <Button 
+                    <Button
                       onClick={handleEmailUpdate}
-                      disabled={isUpdating || !form.newEmail || !form.confirmEmail}
-                      className="w-full bg-blue-50 text-blue-600 hover:bg-blue-100"
+                      disabled={
+                        isUpdating || !form.newEmail || !form.confirmEmail
+                      }
+                      className="w-full bg-blue-50 text-blue-600 hover:bg-blue-100 dark:bg-muted dark:text-blue-400"
                     >
                       {isUpdating ? "Atualizando..." : "Atualizar E-mail"}
                     </Button>
                   </div>
-                  
+
                   {emailUpdateSuccess && (
-                    <div className="text-green-600 text-sm mt-2">
+                    <div className="text-green-600 text-sm mt-2 dark:text-green-400">
                       E-mail atualizado com sucesso!
                     </div>
                   )}
                 </div>
 
-                {/* Atualização de Senha */}
+                {/* Atualizar Senha */}
                 <div className="space-y-4 pt-4">
-                  <h3 className="font-medium text-gray-800">Alterar Senha</h3>
-                  
+                  <h3 className="font-medium">Alterar Senha</h3>
+
                   <div className="space-y-3">
-                    <Label htmlFor="currentPassword" className="text-gray-700">Senha Atual</Label>
+                    <Label htmlFor="currentPassword">Senha Atual</Label>
                     <Input
                       id="currentPassword"
                       type="password"
@@ -267,10 +262,10 @@ export default function Profile() {
                       placeholder="Digite sua senha atual"
                     />
                   </div>
-                  
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-3">
-                      <Label htmlFor="newPassword" className="text-gray-700">Nova Senha</Label>
+                      <Label htmlFor="newPassword">Nova Senha</Label>
                       <Input
                         id="newPassword"
                         type="password"
@@ -279,9 +274,9 @@ export default function Profile() {
                         placeholder="Digite a nova senha"
                       />
                     </div>
-                    
+
                     <div className="space-y-3">
-                      <Label htmlFor="confirmPassword" className="text-gray-700">Confirme a Senha</Label>
+                      <Label htmlFor="confirmPassword">Confirme a Senha</Label>
                       <Input
                         id="confirmPassword"
                         type="password"
@@ -291,12 +286,17 @@ export default function Profile() {
                       />
                     </div>
                   </div>
-                  
+
                   <div className="pt-2">
-                    <Button 
+                    <Button
                       variant="outline"
-                      disabled={isUpdating || !form.currentPassword || !form.newPassword || !form.confirmPassword}
-                      className="w-full bg-blue-50 text-blue-600 hover:bg-blue-100"
+                      disabled={
+                        isUpdating ||
+                        !form.currentPassword ||
+                        !form.newPassword ||
+                        !form.confirmPassword
+                      }
+                      className="w-full bg-blue-50 text-blue-600 hover:bg-blue-100 dark:bg-muted dark:text-blue-400"
                     >
                       {isUpdating ? "Atualizando..." : "Atualizar Senha"}
                     </Button>
@@ -308,10 +308,10 @@ export default function Profile() {
 
           {/* Botão de Salvar */}
           <div className="flex justify-center pt-4">
-            <Button 
-              onClick={handleSave} 
+            <Button
+              onClick={handleSave}
               disabled={isUpdating}
-              className="btn-yellow w-full md:w-64 h-12 text-lg hover:bg-yellow-500 transition-colors shadow-md"
+              className="bg-amber-400 text-gray-800 w-full md:w-64 h-12 text-lg hover:bg-amber-200 transition-colors shadow-md"
             >
               {isUpdating ? "Salvando..." : "Salvar Alterações"}
             </Button>

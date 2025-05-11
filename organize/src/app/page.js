@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
 
 function isAuthenticated() {
   return localStorage.getItem("isAuthenticated") == "true";
@@ -9,9 +10,13 @@ function isAuthenticated() {
 
 export default function Home() {
   const router = useRouter();
+  const { theme } = useTheme(); // Adiciona o hook de tema
   const [authenticated, setAuthenticated] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
+  // Garantir que o componente só será montado no lado do cliente
   useEffect(() => {
+    setMounted(true);
     setAuthenticated(isAuthenticated());
   }, []);
 
@@ -23,9 +28,15 @@ export default function Home() {
     }
   };
 
+  if (!mounted) return <div />; // Evita problemas de hidratação
+
   return (
-    <main className="sm:ml-14 p-4 flex items-center justify-center min-h-screen bg-gray-900">
-      <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-start px-6 py-8">
+    <main
+      className={`sm:ml-14 p-4 flex items-center justify-center min-h-screen ${
+        theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-black"
+      }`}
+    >
+      <div className="min-h-screen flex flex-col items-center justify-start px-6 py-8">
         <img src="/logo.png" alt="Logo" className="mb-4 w-50 h-auto" />
         <h1 className="text-6xl font-bold mb-4 text-center">OrgaNize</h1>
         <p className="text-3xl font-bold mb-8 text-center">

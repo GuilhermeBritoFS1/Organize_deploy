@@ -4,13 +4,22 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "../../Services/page";
 import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff"; // Importação dos ícones
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { useTheme } from "next-themes";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false); // Estado para controlar a visibilidade da senha
+  const [showPassword, setShowPassword] = useState(false);
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,11 +48,19 @@ export default function Login() {
   };
 
   return (
-    <main className="sm:ml-14 p-4 bg-gray-900">
-      <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center text-center">
+    <main
+      className={`sm:ml-14 p-4 ${
+        theme === "dark" ? "bg-gray-900" : "bg-white"
+      }`}
+    >
+      <div
+        className={`min-h-screen ${
+          theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-black"
+        } flex flex-col items-center justify-center text-center`}
+      >
         <img src="/logo.png" alt="Logo" className="mb-4 w-50 h-auto" />
-        <h1 className="text-6xl font-bold mb-4">OrgaNize</h1>
-        <p className="text-3xl font-bold mb-4">
+        <h1 className="text-6xl font-bold mb-4 text-yellow-500">OrgaNize</h1>
+        <p className="text-3xl font-bold mb-4 text-yellow-500">
           Organize seu dia do jeito mais nice!
         </p>
 
@@ -51,7 +68,9 @@ export default function Login() {
           <img
             src="postit2.png"
             alt="Post-it"
-            className="w-full h-full object-cover shadow-lg absolute top-0 left-0 rounded-lg"
+            className={`w-full h-full object-cover shadow-lg absolute top-0 left-0 rounded-lg ${
+              theme === "dark" ? "opacity-90" : "opacity-70"
+            }`}
           />
           <h2 className="text-2xl font-semibold text-center text-black mb-6 relative z-10">
             Acesse sua conta
@@ -74,7 +93,7 @@ export default function Login() {
               <label className="block text-lg text-black mb-2">Senha</label>
               <div className="relative">
                 <input
-                  type={showPassword ? "text" : "password"} // Altera o tipo de input dependendo do estado
+                  type={showPassword ? "text" : "password"}
                   name="password"
                   className="w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400"
                   placeholder="Digite sua senha"
@@ -83,13 +102,13 @@ export default function Login() {
                 />
                 <button
                   type="button"
-                  onClick={() => setShowPassword(!showPassword)} // Alterna a visibilidade da senha
+                  onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
                 >
                   {showPassword ? (
-                    <VisibilityOff className="w-6 h-6" /> // Usando o ícone VisibilityOff
+                    <VisibilityOff className="w-6 h-6" />
                   ) : (
-                    <Visibility className="w-6 h-6" /> // Usando o ícone Visibility
+                    <Visibility className="w-6 h-6" />
                   )}
                 </button>
               </div>
@@ -97,7 +116,7 @@ export default function Login() {
                 href="/updatePassword"
                 className="text-blue-600 hover:text-blue-400 text-lg font-semibold"
               >
-                Redefinir senha
+                Esqueceu a senha?
               </a>
             </div>
 
