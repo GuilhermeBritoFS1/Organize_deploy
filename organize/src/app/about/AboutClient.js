@@ -15,7 +15,9 @@ export default function AboutClient() {
   return (
     <main
       className={`sm:ml-14 p-4 min-h-screen flex flex-col items-center justify-center text-center px-4 ${
-        theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-black"
+        theme === "dark"
+          ? "bg-gray-900 text-gray-600"
+          : "bg-amber-100 text-black"
       }`}
     >
       <img src="/logo.png" alt="Logo" className="mb-4 w-48 h-auto" />

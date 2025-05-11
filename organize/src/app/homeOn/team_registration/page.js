@@ -62,7 +62,7 @@ export default function TeamRegistration() {
   return (
     <main
       className={`h-screen flex justify-center ${
-        theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-black"
+        theme === "dark" ? "bg-gray-900 text-white" : "bg-amber-100 text-black"
       }`}
     >
       {/* Lado direito: Formulário */}
@@ -70,7 +70,11 @@ export default function TeamRegistration() {
         {/* Formulário de Cadastro de Equipe */}
         <div
           style={myStyle}
-          className={theme === "dark" ? "bg-gray-800" : "bg-gray-200"}
+          className={
+            theme === "dark"
+              ? "bg-gray-900 text-gray-600"
+              : "bg-amber-100 text-black"
+          }
         >
           <fieldset
             className={`md:text-5xl sm:text-3xl text-3xl font-bold mb-4 text-center ${

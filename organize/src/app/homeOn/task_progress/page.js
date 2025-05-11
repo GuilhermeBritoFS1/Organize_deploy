@@ -87,7 +87,9 @@ export default function TaskList() {
   return (
     <main
       className={`sm:ml-14 p-4 flex items-center justify-center min-h-screen ${
-        theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-black"
+        theme === "dark"
+          ? "bg-gray-900 text-gray-600"
+          : "bg-amber-100 text-black"
       }`}
     >
       <div className="flex flex-col items-center text-center w-full max-w-6xl p-4">

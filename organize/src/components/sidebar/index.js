@@ -209,7 +209,7 @@ export function Sidebar() {
                     onClick={handleLogout}
                     className="flex items-center gap-4 px-2.5 hover:text-amber-400 text-gray-900"
                   >
-                    <LogOut className="h-5 w-5 transition-all" />
+                    <LogOutIcon className="h-5 w-5 transition-all" />
                     Log out
                   </button>
                 ) : (

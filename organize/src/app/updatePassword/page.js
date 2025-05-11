@@ -36,12 +36,14 @@ export default function ResetPassword() {
   return (
     <main
       className={`sm:ml-14 p-4 ${
-        theme === "dark" ? "bg-gray-900" : "bg-white"
+        theme === "dark" ? "bg-gray-900" : "bg-amber-100"
       }`}
     >
       <div
         className={`min-h-screen ${
-          theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-black"
+          theme === "dark"
+            ? "bg-gray-900 text-gray-600"
+            : "bg-amber-100 text-black"
         } flex flex-col items-center justify-center text-center`}
       >
         <img src="/logo.png" alt="Logo" className="mb-4 w-50 h-auto" />

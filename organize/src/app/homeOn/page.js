@@ -34,13 +34,15 @@ export default function HomeOn() {
   return (
     <main
       className={`sm:ml-14 p-4 flex items-center justify-center min-h-screen ${
-        theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-black"
+        theme === "dark"
+          ? "bg-gray-900 text-gray-600"
+          : "bg-amber-100 text-black"
       }`}
     >
       <div className="flex flex-col items-center text-center w-full max-w-4xl p-4">
         <img src="/logo.png" alt="Logo" className="mb-4 w-48 h-auto" />
-        <h1 className="text-6xl font-bold mb-4 text-yellow-500">OrgaNize</h1>
-        <p className="text-3xl font-bold mb-4 text-yellow-500">
+        <h1 className="text-6xl font-bold mb-4 text-slate-500">OrgaNize</h1>
+        <p className="text-3xl font-bold mb-4 text-gray-500">
           Organize seu dia do jeito mais nice!
         </p>
 

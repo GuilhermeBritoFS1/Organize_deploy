@@ -102,7 +102,9 @@ export default function Task_assignment() {
   return (
     <main
       className={`sm:ml-14 p-4 h-screen ${
-        theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-black"
+        theme === "dark"
+          ? "bg-gray-900 text-gray-600"
+          : "bg-amber-100 text-black"
       }`}
     >
       <div>
