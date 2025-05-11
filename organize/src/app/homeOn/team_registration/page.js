@@ -41,7 +41,7 @@ export default function TeamRegistration() {
   };
 
   const myStyle = {
-    backgroundImage: `url("/postit.png")`,
+    backgroundImage: `url("/postit2.png")`,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     display: "flex",
