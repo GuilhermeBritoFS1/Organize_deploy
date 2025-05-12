@@ -4,6 +4,22 @@
 
 Layout padrão das aplicações web e mobile que serão utilizado em todas as páginas com a definição de identidade visual, aspectos de responsividade e iconografia.
 
+O layout padrão do site foi construído através dos padrões utilizados em projetos Next.js por meio da linguagem Javascript, padrões como Tailwind css para formatação de componentes, assim como códigos importados de bibliotecas como Material Ui, Shadcn Ui, etc.
+
+#### Tela de menu inicial (backgroundColor padrão)
+
+Exibe interfaces responsáveis pela criação, gerenciamento e por fim finalização de tarefas.
+
+![Menu inicial](img/img_doc06/Layout_padrao.png)
+
+Cores : "bg-amber-100 text-black"
+
+#### Tela de menu inicial (backgroundColor escuro)
+
+![Menu inicial](img/img_doc06/Layout_escuro.png)
+
+Cores : "bg-gray-900 text-gray-600"
+
 > **Links Úteis**:
 >
 > - [CSS Website Layout (W3Schools)](https://www.w3schools.com/css/css_website_layout.asp)
