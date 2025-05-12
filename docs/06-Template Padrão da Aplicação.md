@@ -20,6 +20,12 @@ Cores : "bg-amber-100 text-black"
 
 Cores : "bg-gray-900 text-gray-600"
 
+#### Tela de menu inicial (Responsivo backgroundColor escuro)
+
+![Menu inicial](img\img_doc6\Layout_responsivo.png)
+
+Cores : "bg-gray-900 text-gray-600"
+
 > **Links Úteis**:
 >
 > - [CSS Website Layout (W3Schools)](https://www.w3schools.com/css/css_website_layout.asp)
