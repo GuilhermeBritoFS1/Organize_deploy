@@ -10,13 +10,13 @@ O layout padrão do site foi construído através dos padrões utilizados em pro
 
 Exibe interfaces responsáveis pela criação, gerenciamento e por fim finalização de tarefas.
 
-![Menu inicial](img/img_doc06/Layout_padrao.png)
+![Menu inicial](img\img_doc6\Layout_padrao.png)
 
 Cores : "bg-amber-100 text-black"
 
 #### Tela de menu inicial (backgroundColor escuro)
 
-![Menu inicial](img/img_doc06/Layout_escuro.png)
+![Menu inicial](img\img_doc6\Layout_escuro.png)
 
 Cores : "bg-gray-900 text-gray-600"
 
