@@ -21,11 +21,11 @@ export default function AboutClient() {
       }`}
     >
       <img src="/logo.png" alt="Logo" className="mb-4 w-48 h-auto" />
-      <h1 className="text-6xl font-bold mb-4 text-gray-400">OrgaNize</h1>
-      <p className="text-3xl font-bold mb-4 text-gray-400">
+      <h1 className="text-6xl font-bold mb-4  text-slate-500">OrgaNize</h1>
+      <p className="text-3xl font-bold mb-4  text-slate-500">
         Organize seu dia do jeito mais nice!
       </p>
-      <p className="text-3xl font-bold mb-4 text-gray-400">Sobre o sistema</p>
+      <p className="text-3xl font-bold mb-4  text-slate-500">Sobre o sistema</p>
 
       <div className="relative max-w-xl p-8 rounded-lg shadow-lg">
         <img

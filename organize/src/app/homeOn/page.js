@@ -42,7 +42,7 @@ export default function HomeOn() {
       <div className="flex flex-col items-center text-center w-full max-w-4xl p-4">
         <img src="/logo.png" alt="Logo" className="mb-4 w-48 h-auto" />
         <h1 className="text-6xl font-bold mb-4 text-slate-500">OrgaNize</h1>
-        <p className="text-3xl font-bold mb-4 text-gray-500">
+        <p className="text-3xl font-bold mb-4 text-slate-500">
           Organize seu dia do jeito mais nice!
         </p>
 

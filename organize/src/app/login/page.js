@@ -61,8 +61,8 @@ export default function Login() {
         } flex flex-col items-center justify-center text-center`}
       >
         <img src="/logo.png" alt="Logo" className="mb-4 w-50 h-auto" />
-        <h1 className="text-6xl font-bold mb-4 text-yellow-500">OrgaNize</h1>
-        <p className="text-3xl font-bold mb-4 text-yellow-500">
+        <h1 className="text-6xl font-bold mb-4  text-slate-500">OrgaNize</h1>
+        <p className="text-3xl font-bold mb-4  text-slate-500">
           Organize seu dia do jeito mais nice!
         </p>
 
