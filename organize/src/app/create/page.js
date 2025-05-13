@@ -139,7 +139,7 @@ export default function Create() {
               href=""
             >
               <FcGoogle className="text-2xl sm:text-2xl md:text-3xl lg:text-4xl" />
-              <span className="text-9 sm:text-2xl md:text-[20px] font-bold text-start">
+              <span className="text-9 sm:text-2xl md:text-[20px] font-bold text-start  text-slate-500">
                 Cadastre-se pelo Google
               </span>
             </a>
@@ -148,7 +148,7 @@ export default function Create() {
               href=""
             >
               <ImFacebook2 className="text-2xl sm:text-2xl md:text-3xl lg:text-4xl" />
-              <span className="text-9 sm:text-2xl md:text-[20px] font-bold text-start">
+              <span className="text-9 sm:text-2xl md:text-[20px] font-bold text-start  text-slate-500">
                 Cadastre-se pelo Facebook
               </span>
             </a>
@@ -157,13 +157,13 @@ export default function Create() {
               href=""
             >
               <FaMicrosoft className="text-2xl sm:text-2xl md:text-3xl lg:text-4xl" />
-              <span className="text-9 sm:text-2xl md:text-[20px] font-bold text-start">
+              <span className="text-9 sm:text-2xl md:text-[20px] font-bold text-start  text-slate-500">
                 Cadastre-se pela Microsoft
               </span>
             </a>
           </div>
           <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
-            <fieldset className="md:text-6xl sm:text-3xl text-3xl font-bold mb-4 text-center">
+            <fieldset className="md:text-6xl sm:text-3xl text-3xl font-bold mb-4 text-center  text-slate-500">
               Cadastre-se
             </fieldset>
             <Input

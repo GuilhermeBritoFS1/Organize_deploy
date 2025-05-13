@@ -40,14 +40,16 @@ export default function Home() {
     >
       <div className="min-h-screen flex flex-col items-center justify-start px-6 py-8">
         <img src="/logo.png" alt="Logo" className="mb-4 w-50 h-auto" />
-        <h1 className="text-6xl font-bold mb-4 text-center">OrgaNize</h1>
-        <p className="text-3xl font-bold mb-8 text-center">
+        <h1 className="text-6xl font-bold mb-4 text-center text-slate-500">
+          OrgaNize
+        </h1>
+        <p className="text-3xl font-bold mb-8 text-center text-slate-500">
           Organize seu dia do jeito mais nice!
         </p>
 
         <div className="flex flex-wrap justify-center gap-6">
           <div className="bg-gray-800 rounded-lg shadow-md w-80 p-4 relative">
-            <h2 className="text-2xl font-semibold mb-4 text-center">
+            <h2 className="text-2xl font-semibold mb-4 text-center text-gray-400">
               Empresas e Organizações
             </h2>
             <div className="relative w-full h-64">
@@ -67,7 +69,7 @@ export default function Home() {
           </div>
 
           <div className="bg-gray-800 rounded-lg shadow-md w-80 p-4 relative">
-            <h2 className="text-2xl font-semibold mb-4 text-center">
+            <h2 className="text-2xl font-semibold mb-4 text-center  text-gray-400">
               Gestores e Líderes
             </h2>
             <div className="relative w-full h-64">
@@ -87,7 +89,7 @@ export default function Home() {
           </div>
 
           <div className="bg-gray-800 rounded-lg shadow-md w-80 p-4 relative">
-            <h2 className="text-2xl font-semibold mb-4 text-center">
+            <h2 className="text-2xl font-semibold mb-4 text-center  text-gray-400">
               Profissionais Individuais
             </h2>
             <div className="relative w-full h-64">

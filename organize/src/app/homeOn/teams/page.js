@@ -108,10 +108,10 @@ export default function Task_assignment() {
       }`}
     >
       <div>
-        <h1 className="text-yellow-500 text-center font-bold lg:text-4xl">
+        <h1 className=" text-slate-500 text-center font-bold lg:text-4xl">
           Equipes
         </h1>
-        <p className="text-yellow-500 text-center lg:text-base">
+        <p className=" text-slate-500 text-center lg:text-base">
           Aqui você pode adicionar integrantes a sua equipe
         </p>
       </div>
