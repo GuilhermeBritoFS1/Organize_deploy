@@ -47,10 +47,10 @@ export default function ResetPassword() {
         } flex flex-col items-center justify-center text-center`}
       >
         <img src="/logo.png" alt="Logo" className="mb-4 w-50 h-auto" />
-        <h1 className="text-5xl font-bold mb-2 text-yellow-500">
+        <h1 className="text-5xl font-bold mb-2  text-slate-500">
           Redefinir Senha
         </h1>
-        <p className="text-lg mb-6 text-yellow-500">
+        <p className="text-lg mb-6  text-slate-500">
           Insira seu e-mail para receber instruções
         </p>
 
