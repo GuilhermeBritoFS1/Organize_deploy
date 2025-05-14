@@ -17,6 +17,10 @@ export default function Home() {
   const [authenticated, setAuthenticated] = useState(false);
   const { width } = useWindowDimensions();
 
+  const accessLogin = async () => {
+    router.push("/tabs_login/login");
+  };
+
   useEffect(() => {
     AsyncStorage.getItem("isAuthenticated").then((value) => {
       setAuthenticated(value === "true");
@@ -59,7 +63,7 @@ export default function Home() {
       </View>
 
       <TouchableOpacity onPress={handleStartClick} style={styles.button}>
-        <Text href="/Login" style={styles.buttonText}>
+        <Text onPress={accessLogin} style={styles.buttonText}>
           COMECE AGORA!!
         </Text>
       </TouchableOpacity>
