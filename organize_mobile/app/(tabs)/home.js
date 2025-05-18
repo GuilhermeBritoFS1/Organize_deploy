@@ -110,13 +110,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 36,
     fontWeight: "bold",
-    color: "#1f2937",
+    color: "#64748b",
     textAlign: "center",
   },
   subtitle: {
     fontSize: 18,
     fontWeight: "500",
-    color: "#334155",
+    color: "#64748b",
     textAlign: "center",
     marginBottom: 20,
   },
@@ -136,10 +136,10 @@ const styles = StyleSheet.create({
     elevation: 6,
   },
   cardTitle: {
-    fontSize: 18,
+    fontSize: 25,
     fontWeight: "bold",
     color: "#cbd5e1",
-    marginBottom: 12,
+    marginBottom: 0,
   },
   postitWrapper: {
     width: "90%",
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     position: "relative",
   },
   postitImage: {
-    width: "100%",
+    width: "115%",
     height: "100%",
     resizeMode: "contain",
     position: "absolute",
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   cardText: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: "bold",
     color: "#000",
     marginVertical: 2,
