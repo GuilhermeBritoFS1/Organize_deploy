@@ -18,7 +18,7 @@ export default function Home() {
   const { width } = useWindowDimensions();
 
   const accessLogin = async () => {
-    router.push("/tabs_login/login");
+    router.push("/login/login");
   };
 
   useEffect(() => {
