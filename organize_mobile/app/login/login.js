@@ -18,6 +18,14 @@ export default function LoginScreen() {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
+  const accessReset = async () => {
+    router.push("/resetPass/resetPass");
+  };
+
+  const accessCreate = async () => {
+    router.push("/create/create");
+  };
+
   const handleLogin = async () => {
     try {
       if (email && password) {
@@ -83,7 +91,7 @@ export default function LoginScreen() {
               </TouchableOpacity>
             </View>
 
-            <TouchableOpacity onPress={() => router.push("/updatePassword")}>
+            <TouchableOpacity onPress={accessReset}>
               <Text style={styles.link}>Esqueceu a senha?</Text>
             </TouchableOpacity>
 
@@ -93,7 +101,7 @@ export default function LoginScreen() {
 
             <View style={styles.signup}>
               <Text style={styles.signupText}>Ainda não tem uma conta?</Text>
-              <TouchableOpacity onPress={() => router.push("/create")}>
+              <TouchableOpacity onPress={accessCreate}>
                 <Text style={styles.link}>Crie sua conta</Text>
               </TouchableOpacity>
             </View>

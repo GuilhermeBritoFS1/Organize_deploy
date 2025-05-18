@@ -9,18 +9,36 @@ import {
   useColorScheme,
   Dimensions,
 } from "react-native";
+import { useRouter } from "expo-router";
 
 const apps = [
-  { name: "CRIAR TAREFA", icon: "📝", link: "homeOn/task_create" },
-  { name: "TAREFAS EM ANDAMENTO", icon: "⏳", link: "homeOn/task_progress" },
-  { name: "TAREFAS CONCLUÍDAS", icon: "✅", link: "homeOn/task_completed" },
-  { name: "CADASTRO DE EQUIPES", icon: "👥", link: "homeOn/team_registration" },
-  { name: "ATRIBUIÇÃO DE TAREFAS", icon: "📋", link: "homeOn/task_assignment" },
-  { name: "RELATÓRIOS", icon: "📊", link: "homeOn/reports" },
-  { name: "EQUIPES", icon: "🫂", link: "homeOn/teams" },
+  { name: "CRIAR TAREFA", icon: "📝", link: "/task_create/task_create" },
+  {
+    name: "TAREFAS EM ANDAMENTO",
+    icon: "⏳",
+    link: "/task_progress/task_progress",
+  },
+  {
+    name: "TAREFAS CONCLUÍDAS",
+    icon: "✅",
+    link: "/task_completed/task_completed",
+  },
+  {
+    name: "CADASTRO DE EQUIPES",
+    icon: "👥",
+    link: "/team_registration/team_registration",
+  },
+  {
+    name: "ATRIBUIÇÃO DE TAREFAS",
+    icon: "📋",
+    link: "/task_assignment/task_assignment",
+  },
+  { name: "RELATÓRIOS", icon: "📊", link: "/reports/reports" },
+  { name: "EQUIPES", icon: "🫂", link: "/teams/teams" },
 ];
 
 export default function HomeScreen() {
+  const router = useRouter();
   const colorScheme = useColorScheme();
   const isDark = colorScheme === "dark";
 
@@ -50,11 +68,11 @@ export default function HomeScreen() {
         keyExtractor={(item) => item.name}
         numColumns={numColumns}
         ListHeaderComponent={Header}
-        contentContainerStyle={[styles.grid, { paddingBottom: 64 }]} // Garantir rolagem completa
+        contentContainerStyle={[styles.grid, { paddingBottom: 64 }]}
         columnWrapperStyle={numColumns > 1 ? styles.row : null}
         renderItem={({ item }) => (
           <TouchableOpacity
-            onPress={() => console.log("Navegar para:", item.link)}
+            onPress={() => router.push(item.link)}
             style={[styles.item, { width: itemSize, height: itemSize }]}
           >
             <View style={styles.postitContainer}>
