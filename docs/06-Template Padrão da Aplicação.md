@@ -10,25 +10,30 @@ O layout padrão do site foi construído através dos padrões utilizados em pro
 
 Exibe interfaces responsáveis pela criação, gerenciamento e por fim finalização de tarefas.
 
-![Menu inicial](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2025-1-e4-proj-infra-t3-pmv-ads-2025-1-e4-proj-organize/blob/Guilherme/docs/img/img_doc6/Layout_padrao.png)
+![Menu inicial](img/img_doc6/Layout_padrao.png)
 
 Cores : "bg-amber-100 text-black"
 
 #### Tela de menu inicial (backgroundColor escuro)
 
-![Menu inicial](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2025-1-e4-proj-infra-t3-pmv-ads-2025-1-e4-proj-organize/blob/Guilherme/docs/img/img_doc6/Layout_escuro.png)
+![Menu inicial](img/img_doc6/Layout_escuro.png)
 
 Cores : "bg-gray-900 text-gray-600"
+
+#### Tela de menu inicial (Responsivo backgroundColor padrão)
+
+![Menu inicial](img/img_doc6/Layout_responsivo_padrao.png)
+
+Cores : "bg-amber-100 text-black"
 
 #### Tela de menu inicial (Responsivo backgroundColor escuro)
 
-![Menu inicial](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2025-1-e4-proj-infra-t3-pmv-ads-2025-1-e4-proj-organize/blob/Guilherme/docs/img/img_doc6/Layout_responsivo.png)
+![Menu inicial](img/img_doc6/Layout_responsivo_escuro.png)
 
 Cores : "bg-gray-900 text-gray-600"
 
-> **Links Úteis**:
->
-> - [CSS Website Layout (W3Schools)](https://www.w3schools.com/css/css_website_layout.asp)
-> - [Website Page Layouts](http://www.cellbiol.com/bioinformatics_web_development/chapter-3-your-first-web-page-learning-html-and-css/website-page-layouts/)
-> - [Perfect Liquid Layout](https://matthewjamestaylor.com/perfect-liquid-layouts)
-> - [How and Why Icons Improve Your Web Design](https://usabilla.com/blog/how-and-why-icons-improve-you-web-design/)
+#### Tela de menu inicial Mobile (Responsivo backgroundColor claro)
+
+![Menu inicial](img/img_doc6/Layout_mobile.png)
+
+Cores : "bg-amber-100 text-black"
