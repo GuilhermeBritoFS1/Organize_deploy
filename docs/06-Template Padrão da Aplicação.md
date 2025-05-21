@@ -6,34 +6,32 @@ Layout padrão das aplicações web e mobile que serão utilizado em todas as p�
 
 O layout padrão do site foi construído através dos padrões utilizados em projetos Next.js por meio da linguagem Javascript, padrões como Tailwind css para formatação de componentes, assim como códigos importados de bibliotecas como Material Ui, Shadcn Ui, etc.
 
+## Identidade Visual
+
+A identidade visual adotada para as aplicações web e mobile é moderna e equilibrada, combinando tons sóbrios como o *gray-900* e *slate-500* com cores vibrantes e acolhedoras como o amarelo (#ffbf00) e o âmbar claro (*amber-100*). Essa paleta transmite profissionalismo, acessibilidade e energia. A tipografia é limpa e legível, os ícones seguem uma linha minimalista e coerente, e o layout é responsivo, garantindo uma experiência fluida e consistente em diferentes dispositivos.
+
+![Identidade Visual](img/img_doc6/Identidade_Visual.png)
+
+## Template Padrão
+
 #### Tela de menu inicial (backgroundColor padrão)
 
 Exibe interfaces responsáveis pela criação, gerenciamento e por fim finalização de tarefas.
 
 ![Menu inicial](img/img_doc6/Layout_padrao.png)
 
-Cores : "bg-amber-100 text-black"
-
 #### Tela de menu inicial (backgroundColor escuro)
 
 ![Menu inicial](img/img_doc6/Layout_escuro.png)
-
-Cores : "bg-gray-900 text-gray-600"
 
 #### Tela de menu inicial (Responsivo backgroundColor padrão)
 
 ![Menu inicial](img/img_doc6/Layout_responsivo_padrao.png)
 
-Cores : "bg-amber-100 text-black"
-
 #### Tela de menu inicial (Responsivo backgroundColor escuro)
 
 ![Menu inicial](img/img_doc6/Layout_responsivo_escuro.png)
 
-Cores : "bg-gray-900 text-gray-600"
-
 #### Tela de menu inicial Mobile (Responsivo backgroundColor claro)
 
 ![Menu inicial](img/img_doc6/Layout_mobile.png)
-
-Cores : "bg-amber-100 text-black"
