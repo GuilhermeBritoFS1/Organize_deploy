@@ -73,10 +73,3 @@ Usuário que atua diretamente na execução das atividades e tarefas do dia a di
 ![Mapa de Stakeholders](img/img_doc01/MapaStakeholders_OrgaNize.png)
 
 A OrgaNize é uma solução voltada para diferentes perfis de stakeholders, abrangendo desde grandes organizações até profissionais autônomos. Entre os principais públicos atendidos estão as empresas e organizações, que incluem pequenas, médias e grandes empresas, startups em crescimento e equipes remotas ou híbridas que buscam mais eficiência e colaboração. Também são stakeholders os gestores e líderes, como gerentes de projetos, coordenadores de equipes e empreendedores, que necessitam de ferramentas para liderar com mais organização. Por fim, a plataforma também atende profissionais individuais, como freelancers, consultores e profissionais autônomos, oferecendo suporte para que gerenciem melhor suas atividades de forma independente.
-
-<!-- > **Links Úteis**:
->
-> - [Público-alvo](https://blog.hotmart.com/pt-br/publico-alvo/)
-> - [Como definir o público alvo](https://exame.com/pme/5-dicas-essenciais-para-definir-o-publico-alvo-do-seu-negocio/)
-> - [Público-alvo: o que é, tipos, como definir seu público e exemplos](https://klickpages.com.br/blog/publico-alvo-o-que-e/)
-> - [Qual a diferença entre público-alvo e persona?](https://rockcontent.com/blog/diferenca-publico-alvo-e-persona/) -->
