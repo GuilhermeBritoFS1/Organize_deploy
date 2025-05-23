@@ -15,10 +15,10 @@ import "react-datepicker/dist/react-datepicker.css";
 import SelectMulti, { StylesConfig } from "react-select";
 import chroma from "chroma-js";
 
-import { useTheme } from "next-themes"; // Importando o hook useTheme
+import { useTheme } from "next-themes";
 import styles from "@/app/homeOn/task_create/taskCreate.module.css";
 
-//Services
+// Services
 import { api } from "../../../Services/page";
 
 export default function Task_create() {
@@ -42,13 +42,22 @@ export default function Task_create() {
         });
         setTeams(response.data);
       } catch (error) {
-        console.log("Erro ao cadastrar o usuário", error);
+        console.log("Erro ao buscar equipes", error);
         alert(error.response.data.msg);
       }
     };
 
     getAllTeams();
   }, []);
+
+  const resetForm = () => {
+    setTitle("");
+    setDescription("");
+    setPriority("");
+    setTeamId("");
+    setDate(new Date());
+    setSelectedOptions([]);
+  };
 
   const createTask = async (e) => {
     e.preventDefault();
@@ -71,23 +80,17 @@ export default function Task_create() {
       );
       if (response.status === 201) {
         alert("Tarefa criada com sucesso!");
-        setTitle("");
-        setDescription("");
-        setPriority("");
-        setTeamId(null);
+        resetForm();
         console.log(response);
       }
     } catch (error) {
       console.log("Erro ao criar tarefa", error);
       alert(error.response.data.msg);
-      console.log(date, priority, teamId);
     }
   };
 
-  // Usando o hook useTheme para obter o tema
   const { theme } = useTheme();
 
-  // Definindo as cores com base no tema
   const inputStyle =
     theme === "dark" ? "bg-gray-700 text-white" : "bg-[#ffbf00] text-black";
   const selectStyle =
@@ -108,6 +111,7 @@ export default function Task_create() {
           type="text"
           className={`my-5 lg:w-2/3 md:w-1/2 sm:w-1/2 w-1/2 md:text-base ${inputStyle}`}
           style={styles}
+          value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
         <Textarea
@@ -115,10 +119,11 @@ export default function Task_create() {
           type="text"
           className={`mb-5 lg:w-2/3 md:w-1/2 sm:w-1/2 w-1/2 md:text-base ${inputStyle}`}
           style={styles}
+          value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
         <div className="flex md:flex-row gap-5 sm:flex-col flex-col">
-          <Select onValueChange={(value) => setTeamId(value)}>
+          <Select onValueChange={(value) => setTeamId(value)} value={teamId}>
             <SelectTrigger
               style={{
                 color: theme === "dark" ? "white" : "black",
@@ -140,9 +145,8 @@ export default function Task_create() {
               </SelectGroup>
             </SelectContent>
           </Select>
-          <Select onValueChange={(value) => setPriority(value)}>
+          <Select onValueChange={(value) => setPriority(value)} value={priority}>
             <SelectTrigger
-              placeholder="Selecione uma opção"
               style={{
                 color: theme === "dark" ? "white" : "black",
                 backgroundColor: theme === "dark" ? "#444" : "#ffbf00",
@@ -154,11 +158,7 @@ export default function Task_create() {
             <SelectContent>
               <SelectGroup>
                 <SelectItem value="baixa">Baixa</SelectItem>
-              </SelectGroup>
-              <SelectGroup>
                 <SelectItem value="media">Média</SelectItem>
-              </SelectGroup>
-              <SelectGroup>
                 <SelectItem value="alta">Alta</SelectItem>
               </SelectGroup>
             </SelectContent>
@@ -168,7 +168,7 @@ export default function Task_create() {
             onChange={(date) => setDate(date)}
             dateFormat="yyyy/MM/dd"
             placeholderText="Data de vencimento"
-            className={`"file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-full min-w-0 rounded-md border bg-[#ffbf00] px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm", "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]", "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive"`}
+            className={`file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-full min-w-0 rounded-md border bg-[#ffbf00] px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive`}
           />
         </div>
 

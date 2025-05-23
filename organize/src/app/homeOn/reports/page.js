@@ -116,7 +116,7 @@ export default function Report() {
 
         <section className="mt-4 flex flex-col md:flex-row gap-4">
           <ChartOverview />
-          {/* <Teams /> */}
+          <Teams />
         </section>
       </div>
     </main>
