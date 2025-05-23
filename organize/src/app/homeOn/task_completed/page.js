@@ -2,57 +2,47 @@
 
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
-
-const tarefasConcluidas = [
-  {
-    titulo: "Erro ao gerar relatório",
-    descricao: "Criar filtros",
-    pessoa: "João Vitor",
-    area: "Desenvolvimento",
-    descricaoCompleta:
-      "Erro ocorrendo a não realização dos filtros para exportar o relatório de faturamento.",
-    data: "07/05/2025",
-  },
-  {
-    titulo: "Finalizar relatório",
-    descricao: "Enviado para o gerente",
-    pessoa: "Julia",
-    area: "Relatórios",
-    descricaoCompleta:
-      "Relatório finalizado e enviado ao gerente, com todas as métricas atualizadas e gráficas.",
-    data: "28/02/2025",
-  },
-  {
-    titulo: "Atualizar documentação",
-    descricao: "Cliente Heinz",
-    pessoa: "Carlos Eduardo",
-    area: "Documentação",
-    descricaoCompleta:
-      "A documentação foi atualizada para refletir os novos endpoints da API, com exemplos e descrições detalhadas.",
-    data: "01/04/2025",
-  },
-  {
-    titulo: "Treinamento Presencial",
-    descricao: "Cliente IFOOD- Unidade São Caetano",
-    pessoa: "Lucas",
-    area: "Backend",
-    descricaoCompleta:
-      "Agendar treinamento para o dia 02/02 na unidade São Caetano para 200 pessoas.",
-    data: "07/05/2025",
-  },
-];
+import { api } from "../../../Services/page"; // ajuste o path conforme seu projeto
 
 export default function TaskCompleted() {
   const [modalData, setModalData] = useState(null);
+  const [tarefasConcluidas, setTarefasConcluidas] = useState([]);
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   const openModal = (tarefa) => setModalData(tarefa);
   const closeModal = () => setModalData(null);
 
-  // UseEffect to ensure that the theme has been mounted
   useEffect(() => {
     setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    const fetchTasks = async () => {
+      try {
+        // Busca todas as tarefas sem filtro
+        const response = await api.get("/tasks", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          // params removido para buscar tudo
+        });
+
+        // Filtra só as tarefas com status 'concluido' no frontend
+        const concluidas = response.data.filter(
+          (tarefa) => tarefa.status === "concluido"
+        );
+
+        setTarefasConcluidas(concluidas);
+      } catch (error) {
+        console.error("Erro ao buscar tarefas", error);
+        alert("Erro ao buscar tarefas.");
+      }
+    };
+
+    fetchTasks();
   }, []);
 
   if (!mounted) return null;
@@ -72,9 +62,15 @@ export default function TaskCompleted() {
         </h1>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
+          {tarefasConcluidas.length === 0 && (
+            <p className="col-span-full text-center text-gray-500">
+              Nenhuma tarefa concluída encontrada.
+            </p>
+          )}
+
           {tarefasConcluidas.map((tarefa, index) => (
             <div
-              key={index}
+              key={tarefa._id || index}
               onClick={() => openModal(tarefa)}
               className="relative w-full aspect-square flex items-center justify-center cursor-pointer"
             >
@@ -86,18 +82,28 @@ export default function TaskCompleted() {
                 />
                 <div className="absolute inset-0 flex flex-col items-center justify-center p-3">
                   <h2 className="text-lg font-bold text-center">
-                    {tarefa.titulo}
+                    {tarefa.title || tarefa.titulo}
                   </h2>
-                  <p className="text-sm mt-1">{tarefa.descricao}</p>
+                  <p className="text-sm mt-1">
+                    {tarefa.description || tarefa.descricao}
+                  </p>
                   <div className="text-xs mt-2 space-y-1">
                     <p>
-                      <strong>Responsável:</strong> {tarefa.pessoa}
+                      <strong>Responsável:</strong>{" "}
+                      {tarefa.person || tarefa.pessoa}
                     </p>
                     <p>
                       <strong>Área:</strong> {tarefa.area}
                     </p>
                     <p>
-                      <strong>Data:</strong> {tarefa.data}
+                      <strong>Data:</strong>{" "}
+                      {tarefa.dueDate
+                        ? new Intl.DateTimeFormat("pt-BR", {
+                            day: "2-digit",
+                            month: "2-digit",
+                            year: "numeric",
+                          }).format(new Date(tarefa.dueDate))
+                        : tarefa.data}
                     </p>
                   </div>
                 </div>
@@ -118,20 +124,31 @@ export default function TaskCompleted() {
               &times;
             </button>
             <div className="text-2xl text-yellow-400 font-bold mb-2">
-              {modalData.titulo}
+              {modalData.title || modalData.titulo}
             </div>
-            <div className="text-md mb-2">{modalData.descricao}</div>
             <div className="text-md mb-2">
-              <strong>Responsável:</strong> {modalData.pessoa}
+              {modalData.description || modalData.descricao}
+            </div>
+            <div className="text-md mb-2">
+              <strong>Responsável:</strong>{" "}
+              {modalData.person || modalData.pessoa}
             </div>
             <div className="text-md mb-2">
               <strong>Área:</strong> {modalData.area}
             </div>
             <div className="text-md mb-2">
-              <strong>Descrição:</strong> {modalData.descricaoCompleta}
+              <strong>Descrição:</strong>{" "}
+              {modalData.fullDescription || modalData.descricaoCompleta}
             </div>
             <div className="text-md">
-              <strong>Data de conclusão:</strong> {modalData.data}
+              <strong>Data de conclusão:</strong>{" "}
+              {modalData.dueDate
+                ? new Intl.DateTimeFormat("pt-BR", {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                  }).format(new Date(modalData.dueDate))
+                : modalData.data}
             </div>
           </div>
         </div>

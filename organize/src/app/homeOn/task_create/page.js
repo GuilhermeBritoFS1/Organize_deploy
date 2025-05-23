@@ -80,7 +80,7 @@ export default function Task_create() {
     } catch (error) {
       console.log("Erro ao criar tarefa", error);
       alert(error.response.data.msg);
-      console.log(date, priority, teamId)
+      console.log(date, priority, teamId);
     }
   };
 
@@ -127,13 +127,13 @@ export default function Task_create() {
               className="lg:w-1/2 md:w-1/2 sm:w-full w-full"
             >
               {teamId
-                ? teams.find((team) => team.id === teamId)?.name
+                ? teams.find((team) => team._id === teamId)?.name
                 : "Equipe responsável"}
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
                 {teams.map((team, index) => (
-                  <SelectItem key={index} value={team.id}>
+                  <SelectItem key={index} value={team._id}>
                     {team.name}
                   </SelectItem>
                 ))}
@@ -156,7 +156,7 @@ export default function Task_create() {
                 <SelectItem value="baixa">Baixa</SelectItem>
               </SelectGroup>
               <SelectGroup>
-                <SelectItem value="média">Média</SelectItem>
+                <SelectItem value="media">Média</SelectItem>
               </SelectGroup>
               <SelectGroup>
                 <SelectItem value="alta">Alta</SelectItem>
