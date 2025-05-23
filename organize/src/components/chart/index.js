@@ -83,7 +83,7 @@ export function ChartOverview() {
   }, []);
 
   return (
-    <Card className="w-full md:w-1/1">
+    <Card className="w-full md:w-1/2">
       <CardHeader>
         <div className="flex items-center justify-center">
           <CardTitle className="text-lg sm:text-xl text-gray-800">
@@ -96,7 +96,7 @@ export function ChartOverview() {
       <CardContent>
         <ChartContainer
           config={chartConfig}
-          className="min-h-[200px] max-h-[500px] w-full"
+          className="min-h-[200px] w-full"
         >
           <BarChart data={chartData}>
             <CartesianGrid vertical={false} />
