@@ -98,8 +98,7 @@ Content-Type: application/json
 ### GET ALL tarefas USUARIO logado
 
 GET  http://localhost:3000/organize/tasks
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2Y0NTc2YmJmNDEyMGFkMTgwOGY2ZjAiLCJpYXQiOjE3NDQwNjc4OTgsImV4cCI6MTc0NDA3MTQ5OH0.H-evELS7qnmwpx3RyZhJFU2UjozKcwpv5ZnLGIwXcFc
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODFhOThmNjA4OTIwMGU1YWY2MjlmZWEiLCJpYXQiOjE3NDc5NjUzNjIsImV4cCI6MTc0Nzk2ODk2Mn0.-uT4tLZH_5n577tgCXkYH_2f82DLitb-aS4Iqvnegrg
 ###GET ALL tarefas USUARIO logado por prioridade, passar "?status=[pendente,andamento ou concluida]"
 ### se passar sem o "?..." ele busca todas as tarefas
 

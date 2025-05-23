@@ -132,11 +132,9 @@ const taskController = {
         );
 
         if (!userIsAdminOrEditor) {
-          return res
-            .status(403)
-            .json({
-              msg: "Você precisa ser admin ou editor do grupo para mover a tarefa.",
-            });
+          return res.status(403).json({
+            msg: "Você precisa ser admin ou editor do grupo para mover a tarefa.",
+          });
         }
 
         // Se a tarefa pertence ao grupo atual, removemos ela deste grupo
@@ -261,100 +259,108 @@ const taskController = {
     }
   },
 
-  getTasksByStatus: async (req,res) => {
-    const token = req.headers.authorization?.split(' ')[1];
+  getTasksByStatus: async (req, res) => {
+    const token = req.headers.authorization?.split(" ")[1];
     if (!token) {
-        return res.status(401).json({ msg: 'Token de autenticação não fornecido.' });
+      return res
+        .status(401)
+        .json({ msg: "Token de autenticação não fornecido." });
     }
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    const userId = decoded.userId; 
+    const userId = decoded.userId;
     const { status } = req.query;
 
     try {
-        const filter = { createdBy: userId };
-        if (status) {
-            if (!["pendente", "andamento", "concluida"].includes(status)) {
-                return res.status(400).json({ msg: "Status inválido." });
-            }
-            filter.status = status; // Filtra pelo status
+      const filter = { createdBy: userId };
+      if (status) {
+        if (!["pendente", "andamento", "concluido"].includes(status)) {
+          return res.status(400).json({ msg: "Status inválido." });
         }
+        filter.status = status; // Filtra pelo status
+      }
 
-        const tasks = await Task.find(filter)
-            .sort({ dueDate: 1 }) 
-            .lean();  
-            
-        res.status(200).json(tasks);
+      const tasks = await Task.find(filter).sort({ dueDate: 1 }).lean();
+
+      res.status(200).json(tasks);
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ msg: "Erro ao buscar tarefas.", error: error.message });
+      console.error(error);
+      res
+        .status(500)
+        .json({ msg: "Erro ao buscar tarefas.", error: error.message });
     }
-
-},
-getTasksByPriority: async (req,res) =>{
-    const token = req.headers.authorization?.split(' ')[1];
+  },
+  getTasksByPriority: async (req, res) => {
+    const token = req.headers.authorization?.split(" ")[1];
     if (!token) {
-        return res.status(401).json({ msg: 'Token de autenticação não fornecido.' });
+      return res
+        .status(401)
+        .json({ msg: "Token de autenticação não fornecido." });
     }
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    const userId = decoded.userId; 
+    const userId = decoded.userId;
     const { priority } = req.query;
     try {
-        const filter = { createdBy: userId };
-        if (priority) {
-            if (!["alta", "media", "baixa"].includes(priority)) {
-                return res.status(400).json({ msg: "Prioridade inválida." });
-            }
-            filter.priority = priority;
+      const filter = { createdBy: userId };
+      if (priority) {
+        if (!["alta", "media", "baixa"].includes(priority)) {
+          return res.status(400).json({ msg: "Prioridade inválida." });
         }
+        filter.priority = priority;
+      }
 
-        const priorityOrder = {
-            alta: 1,   
-            media: 2,  
-            baixa: 3    
-        };
+      const priorityOrder = {
+        alta: 1,
+        media: 2,
+        baixa: 3,
+      };
 
-        const tasks = await Task.find(filter)
-            .sort({ priority: 1 })  
-            .lean();  
-        res.status(200).json(tasks);
+      const tasks = await Task.find(filter).sort({ priority: 1 }).lean();
+      res.status(200).json(tasks);
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ msg: "Erro ao buscar tarefas.", error: error.message });
+      console.error(error);
+      res
+        .status(500)
+        .json({ msg: "Erro ao buscar tarefas.", error: error.message });
     }
-},
-deleteTask: async (req,res) => {
-    const token = req.headers.authorization?.split(' ')[1];
+  },
+  deleteTask: async (req, res) => {
+    const token = req.headers.authorization?.split(" ")[1];
     if (!token) {
-        return res.status(401).json({ msg: 'Token de autenticação não fornecido.' });
+      return res
+        .status(401)
+        .json({ msg: "Token de autenticação não fornecido." });
     }
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    const userId = decoded.userId; 
+    const userId = decoded.userId;
     const { taskId } = req.params;
 
     try {
-        // Busca a tarefa pelo ID
-        const task = await Task.findById(taskId);
+      // Busca a tarefa pelo ID
+      const task = await Task.findById(taskId);
 
-        if (!task) {
-            return res.status(404).json({ msg: "Tarefa não encontrada." });
-        }
+      if (!task) {
+        return res.status(404).json({ msg: "Tarefa não encontrada." });
+      }
 
-        // Verifica se o usuário autenticado é o criador da tarefa
-        if (task.createdBy.toString() !== userId) {
-            return res.status(403).json({ msg: "Apenas o criador da tarefa pode excluí-la." });
-        }
+      // Verifica se o usuário autenticado é o criador da tarefa
+      if (task.createdBy.toString() !== userId) {
+        return res
+          .status(403)
+          .json({ msg: "Apenas o criador da tarefa pode excluí-la." });
+      }
 
-        // Exclui a tarefa
-        await Task.findByIdAndDelete(taskId);
+      // Exclui a tarefa
+      await Task.findByIdAndDelete(taskId);
 
-        res.status(200).json({ msg: "Tarefa excluída com sucesso." });
-
+      res.status(200).json({ msg: "Tarefa excluída com sucesso." });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ msg: "Erro ao excluir a tarefa", error: error.message });
+      console.error(error);
+      res
+        .status(500)
+        .json({ msg: "Erro ao excluir a tarefa", error: error.message });
     }
   },
 };
