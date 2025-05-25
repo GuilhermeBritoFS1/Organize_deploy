@@ -1,87 +1,38 @@
 # Testes de Sistema no Backend
 
-## O que são Testes de Sistema?
+## Teste de Criação de Usuário
 
-Testes de sistema são testes automatizados que verificam o comportamento completo de um sistema, validando que ele funciona conforme esperado em um ambiente real ou próximo do real. Eles englobam a verificação de todas as funcionalidades do sistema, desde a interface do usuário até a integração com bancos de dados, APIs externas e outros serviços.
+> - RF-001 - Permitir que os usuários criem uma conta na plataforma.
+> - Responsável: Helbert Miranda Benício
 
-## Por que são Importantes?
+[![Assista ao vídeo](https://img.youtube.com/vi/5y8lEMDnDJ8/0.jpg)](https://youtu.be/5y8lEMDnDJ8)
 
-Testes de sistema ajudam a:
+### Resultado Esperado
 
-- Garantir que o sistema como um todo atende aos requisitos especificados.
-- Identificar problemas que surgem em interações complexas entre componentes.
-- Validar a funcionalidade completa em um ambiente que simula o uso real.
-- Garantir que as mudanças no código não causem regressões em áreas não diretamente relacionadas.
+O sistema deverá permitir que o usuário realize o cadastro com sucesso, armazenando os dados informados e confirmando a criação da conta.
 
-## Configuração do Ambiente
+---
 
-Para começar a escrever testes de sistema em um projeto backend utilizando C#, siga os passos abaixo:
+## Teste de Login de Usuário
 
-1. **Instale o .NET SDK**: Certifique-se de ter o [.NET SDK](https://dotnet.microsoft.com/download) instalado.
+> - RF-002 - Permitir a autenticação dos usuários na plataforma via e-mail e senha.
+> - Responsável: Helbert Miranda Benício
 
-2. **Crie um projeto de testes de sistema**: No terminal, navegue até o diretório do seu projeto e execute o seguinte comando para criar um projeto de testes:
+[![Assista ao vídeo](https://img.youtube.com/vi/51JLg2r09R4/0.jpg)](https://youtu.be/51JLg2r09R4)
 
-    ```bash
-    dotnet new xunit -o tests
-    ```
+### Resultado Esperado
 
-3. **Adicione uma referência ao seu projeto principal**: No diretório do projeto de testes, adicione uma referência ao seu projeto principal:
+O sistema deverá autenticar o usuário com as credenciais fornecidas e permitir o acesso à plataforma, redirecionando-o para a área apropriada após o login.
 
-    ```bash
-    dotnet add reference ../src/MyProject.csproj
-    ```
+---
 
-4. **Configure o ambiente de teste**: Isso pode incluir a configuração de servidores, bancos de dados, e outros serviços necessários para que o sistema funcione como um todo.
+## Teste de Logout de Usuário
 
-5. **Organize sua estrutura de diretórios**: Uma estrutura comum de projeto é a seguinte:
+> - RF-003 - Permitir que os usuários façam logout na plataforma.
+> - Responsável: Helbert Miranda Benício
 
-    ```
-    MyProject/
-    ├── src/
-    │   └── MyProject.cs
-    └── tests/
-        └── MyProject.SystemTests.cs
-    ```
+[![Assista ao vídeo](https://img.youtube.com/vi/x8i4SKRX4GY/0.jpg)](https://youtu.be/x8i4SKRX4GY)
 
-## Exemplo de Teste de Sistema
+### Resultado Esperado
 
-Vamos supor que temos um serviço web que gerencia usuários e oferece uma API REST para adicionar e consultar usuários. Vamos criar um teste de sistema para garantir que a API funciona corretamente.
-
-### Código de Exemplo
-
-Aqui está uma implementação simplificada do serviço:
-
-```csharp
-// src/MyProject.cs
-
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-
-namespace MyProject
-{
-    [ApiController]
-    [Route("api/[controller]")]
-    public class UsersController : ControllerBase
-    {
-        private static List<User> Users = new List<User>();
-
-        [HttpPost]
-        public IActionResult AddUser(User user)
-        {
-            Users.Add(user);
-            return Ok();
-        }
-
-        [HttpGet]
-        public IActionResult GetUsers()
-        {
-            return Ok(Users);
-        }
-    }
-
-    public class User
-    {
-        public string Name { get; set; }
-        public string Email { get; set; }
-    }
-}
+O sistema deverá encerrar a sessão do usuário de forma segura, redirecionando-o para a tela de login ou página inicial, conforme definido.
