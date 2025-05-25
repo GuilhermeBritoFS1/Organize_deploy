@@ -10,139 +10,166 @@ Este documento descreve a implementação do sistema com base nos requisitos fun
 
 ### Requisito Funcional RF-001
 
-- Permitir que os usuários criem uma conta na plataforma.
+**Objetivo:** Permitir que os usuários criem uma conta na plataforma.
 
-> #### Responsável: Helbert Miranda Benício
+> **Responsável:** Helbert Miranda Benício
 
 #### Descrição
 
-Permitir que o usuário realize o cadastro no sistema preenchendo os dados obrigatórios.
+O sistema deve permitir que o usuário realize o cadastro preenchendo os dados obrigatórios.
 
 #### Artefatos Criados
 
-- Código-fonte Frontend: `src/app/create/page.js`
-- Código-fonte Backend: `controllers/UserController.js` (método `Create`)
-- Validação no frontend e backend
-- Banco de dados: coleção `users` no MongoDB
+- **Frontend:** `src/app/create/page.js`
+- **Backend:** `controllers/UserController.js` (método `Create`)
+- **Validações:** Implementadas tanto no frontend quanto no backend
+- **Banco de Dados:** Coleção `users` no MongoDB
 
-#### Estruturas de Dados Utilizadas
+#### Estrutura de Dados
 
 ```json
 {
-  "User": {
-    "_id": "string",
-    "name": "string",
-    "email": "string",
-    "password": "string",
-    "createdAt": "Date",
-    "__v": "Number"
-  }
+  "_id": "string",
+  "name": "string",
+  "email": "string",
+  "password": "string",
+  "createdAt": "Date",
+  "__v": "Number"
 }
-
 ```
 
-#### Comportamento Esperado
+#### ✅ Comportamento Esperado
 
-- O usuário acessa a rota /login e visualiza o formulário com campos de email e senha.
-- Ao preencher os campos e submeter o formulário:
-- É feita uma requisição POST para o endpoint /user/login com os dados do formulário.
-- Se as credenciais forem válidas:
+1. O usuário acessa a rota `/create` e visualiza o formulário de cadastro com os campos obrigatórios:
 
-> - O token JWT retornado é salvo no localStorage.
-> - A flag isAuthenticated é definida como true.
-> - O usuário é redirecionado para a página principal autenticada /homeOn.
-> - Após 1 segundo, a página recarrega para aplicar as mudanças de autenticação na UI.
+   - Nome
+   - Email
+   - Senha
 
-- Se as credenciais forem inválidas:
+2. Ao preencher e submeter o formulário:
 
-> - Um alerta é exibido: "Email ou senha inválidos."
+   - É feita uma requisição `POST` para o endpoint `/user/create` com os dados inseridos.
+
+3. Se os dados forem **válidos**:
+
+   - A conta do usuário é criada na coleção `users` no MongoDB.
+   - O sistema pode redirecionar o usuário para a tela de login (`/login`) ou autenticar automaticamente, conforme a lógica de negócio.
+   - Uma mensagem de sucesso é exibida: `"Cadastro realizado com sucesso."`
+
+4. Se os dados forem **inválidos**:
+   - As validações do frontend impedem o envio se campos obrigatórios estiverem vazios ou incorretos.
+   - Caso o backend rejeite os dados (ex: email já existente), uma mensagem de erro é exibida: `"Erro ao criar conta. Verifique os dados e tente novamente."`
+
+---
 
 ### Requisito Funcional RF-002
 
-- Permitir a autenticação dos usuários na plataforma via e-mail e senha.
+**Objetivo:** Permitir a autenticação dos usuários na plataforma via e-mail e senha.
 
-> #### Responsável: Helbert Miranda Benício
+> **Responsável:** Helbert Miranda Benício
 
 #### Descrição
 
-Permitir que o usuário realize o login no sistema informando seu e-mail e senha. O sistema deve validar as credenciais e, em caso de sucesso, conceder acesso ao ambiente autenticado armazenando o token JWT localmente.
+O sistema deve permitir que o usuário realize o login informando seu e-mail e senha. As credenciais devem ser validadas no backend e, em caso de sucesso, um token JWT deve ser gerado e armazenado localmente para conceder acesso ao ambiente autenticado.
 
 #### Artefatos Criados
 
-- **Código-fonte Frontend**: `src/app/login/page.js`
-- **Código-fonte Backend**: `controllers/UserController.js` (método `Login`)
->
-> - Validação no frontend e backend
->
-- **Banco de dados**: coleção `users` no MongoDB
+- **Frontend:** `src/app/login/page.js`
+- **Backend:** `controllers/UserController.js` (método `Login`)
+  - Validações implementadas no frontend e backend
+- **Banco de Dados:** Coleção `users` no MongoDB
 
-#### Estruturas de Dados Utilizadas
+#### Estrutura de Dados (Erro Comum Capturado)
 
 ```json
 {
-  "User": {
-    "LoginRequest": {
-    "email": "string",
-    "password": "string"
-    },
-    "LoginResponse": {
-    "token": "string"
-  }
-}
+  "stringValue": "\"login\"",
+  "valueType": "string",
+  "kind": "ObjectId",
+  "value": "login",
+  "path": "_id",
+  "reason": {},
+  "name": "CastError",
+  "message": "Cast to ObjectId failed for value \"login\" (type string) at path \"_id\" for model \"User\""
 }
 ```
 
 #### Comportamento Esperado
 
-- O usuário preenche os campos obrigatórios (email e senha).
-- Ao enviar o formulário:
+1. O usuário acessa a rota `/login` e visualiza o formulário com os seguintes campos obrigatórios:
 
-> - Uma requisição POST é feita para /user/login.
-> - O backend valida as credenciais.
-> - Se válidas, retorna um token JWT.
-> - O token é armazenado no localStorage.
-> - O usuário é redirecionado para a rota /homeOn.
+   - **Email**
+   - **Senha**
 
-- Caso as credenciais sejam inválidas, uma mensagem de erro é exibida.
+2. Ao preencher os campos e submeter o formulário:
+
+   - Uma requisição `POST` é enviada para o endpoint `/user/login` com os dados fornecidos.
+
+3. Se as credenciais forem **válidas**:
+
+   - O backend valida os dados e gera um **token JWT**.
+   - O token JWT é armazenado no `localStorage`.
+   - A flag `isAuthenticated` é definida como `true`.
+   - O usuário é redirecionado automaticamente para a rota protegida `/homeOn`.
+   - A interface é recarregada (opcionalmente após 1 segundo) para aplicar as mudanças de autenticação na UI.
+
+4. Se as credenciais forem **inválidas**:
+   - O backend retorna uma mensagem de erro.
+   - O frontend exibe um alerta ou mensagem de erro: `"Email ou senha inválidos."`
+   - O formulário permanece visível para nova tentativa de login.
+
+---
 
 ### Requisito Funcional RF-003
 
-- Permitir que os usuários façam logout na plataforma.
+**Objetivo:** Permitir que os usuários façam logout na plataforma.
 
-> #### Responsável: Helbert Miranda Benício
+> **Responsável:** Helbert Miranda Benício
 
-#### Descrição
+#### 📝 Descrição
 
-Permitir que o usuário encerre sua sessão no sistema por meio da interface da barra lateral (Sidebar), garantindo que os dados de autenticação local sejam limpos e o acesso a áreas restritas seja bloqueado.
+O sistema deve permitir que o usuário encerre sua sessão por meio da interface (barra lateral), garantindo a remoção dos dados de autenticação local e bloqueando o acesso a áreas restritas.
 
-#### Artefatos Criados
+#### 🧩 Artefatos Criados
 
-- **Código-fonte Frontend**: `src/components/sidebar/index.js`
-- **Função de logout**: handleLogout()
-- **Armazenamento**: remoção da flag de autenticação do localStorage
-- **Redirecionamento**: window.location.href = "/"
+- **Frontend:** `src/components/sidebar/index.js`
+- **Função de Logout:** `handleLogout()`
+- **Armazenamento:** Remoção do token/flag de autenticação no `localStorage`
+- **Redirecionamento:** `window.location.href = "/"`
 
-#### Estruturas de Dados Utilizadas
+#### 📦 Estrutura de Dados (Erro Comum Capturado)
 
 ```json
 {
-  "User": {
-     "localStorage": {
-    "token": "string (removido ou ignorado)",
-    "isAuthenticated": "false"
-  }
-}
+  "stringValue": "\"logout\"",
+  "valueType": "string",
+  "kind": "ObjectId",
+  "value": "logout",
+  "path": "_id",
+  "reason": {},
+  "name": "CastError",
+  "message": "Cast to ObjectId failed for value \"logout\" (type string) at path \"_id\" for model \"User\""
 }
 ```
 
 #### Comportamento Esperado
 
-- A interface exibe um ícone de Log out (ícone LogOutIcon) se o usuário estiver autenticado (isAuthenticated).
-- Ao clicar em Log out, a função handleLogout é executada:
+1. Quando o usuário estiver **autenticado** (`isAuthenticated = true`), a interface da barra lateral (Sidebar) exibe o botão ou ícone de logout (ex: `LogOutIcon`).
 
-> - Define isAuthenticated como "false" no localStorage.
-> - Atualiza o estado local de autenticação (setAuthenticated(false)).
-> - Redireciona o usuário para a página inicial (/).
+2. Ao clicar no botão de logout:
 
-- Após o logout, a interface não exibe mais opções acessíveis apenas a usuários autenticados (ex: "Início", "Perfil").
-- O botão de login é exibido novamente.
+   - A função `handleLogout()` é executada.
+   - Os seguintes passos são realizados:
+     - A flag `isAuthenticated` é removida ou definida como `"false"` no `localStorage`.
+     - O estado de autenticação no frontend é atualizado com `setAuthenticated(false)`.
+     - O usuário é redirecionado para a rota pública `/` (página inicial).
+
+3. Após o logout:
+   - A interface é atualizada para ocultar os menus e funcionalidades acessíveis apenas a usuários autenticados, como:
+     - "Início"
+     - "Perfil"
+     - Outras páginas restritas
+   - O botão ou link de **Login** volta a ser exibido na interface.
+   - O acesso a rotas protegidas é bloqueado, redirecionando o usuário não autenticado para a página de login ou inicial, conforme a regra de navegação definida.
+
+---
