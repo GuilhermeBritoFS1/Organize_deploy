@@ -38,7 +38,7 @@ O sistema deve permitir que o usuário realize o cadastro preenchendo os dados o
 }
 ```
 
-#### ✅ Comportamento Esperado
+#### Comportamento Esperado
 
 1. O usuário acessa a rota `/create` e visualiza o formulário de cadastro com os campos obrigatórios:
 
@@ -126,18 +126,18 @@ O sistema deve permitir que o usuário realize o login informando seu e-mail e s
 
 > **Responsável:** Helbert Miranda Benício
 
-#### 📝 Descrição
+#### Descrição
 
 O sistema deve permitir que o usuário encerre sua sessão por meio da interface (barra lateral), garantindo a remoção dos dados de autenticação local e bloqueando o acesso a áreas restritas.
 
-#### 🧩 Artefatos Criados
+#### Artefatos Criados
 
 - **Frontend:** `src/components/sidebar/index.js`
 - **Função de Logout:** `handleLogout()`
 - **Armazenamento:** Remoção do token/flag de autenticação no `localStorage`
 - **Redirecionamento:** `window.location.href = "/"`
 
-#### 📦 Estrutura de Dados (Erro Comum Capturado)
+#### Estrutura de Dados (Erro Comum Capturado)
 
 ```json
 {
