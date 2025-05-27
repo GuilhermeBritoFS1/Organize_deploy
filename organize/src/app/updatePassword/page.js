@@ -28,21 +28,26 @@ export default function UpdatePassword() {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/organize/user/password-update", {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ oldPassword, newPassword }),
-      });
+      const response = await fetch(
+        "http://localhost:3000/organize/user/password-update",
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ oldPassword, newPassword }),
+        }
+      );
 
       if (response.ok) {
         alert("Senha atualizada com sucesso!");
         router.push("/login");
       } else {
         const data = await response.json();
-        alert(`Erro ao atualizar a senha: ${data.message || "verifique os dados"}`);
+        alert(
+          `Erro ao atualizar a senha: ${data.message || "verifique os dados"}`
+        );
       }
     } catch (error) {
       console.error("Erro:", error);
@@ -52,7 +57,9 @@ export default function UpdatePassword() {
 
   return (
     <main
-      className={`sm:ml-14 p-4 ${theme === "dark" ? "bg-gray-900" : "bg-amber-100"}`}
+      className={`sm:ml-14 p-4 ${
+        theme === "dark" ? "bg-gray-900" : "bg-amber-100"
+      }`}
     >
       <div
         className={`min-h-screen ${
@@ -80,7 +87,9 @@ export default function UpdatePassword() {
 
           <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
             <div>
-              <label className="block text-lg text-black mb-2">Senha Atual</label>
+              <label className="block text-lg text-black mb-2">
+                Senha Atual
+              </label>
               <input
                 type="password"
                 className="w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400"
@@ -92,7 +101,9 @@ export default function UpdatePassword() {
             </div>
 
             <div>
-              <label className="block text-lg text-black mb-2">Nova Senha</label>
+              <label className="block text-lg text-black mb-2">
+                Nova Senha
+              </label>
               <input
                 type="password"
                 className="w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400"
@@ -113,10 +124,10 @@ export default function UpdatePassword() {
 
           <div className="mt-6 text-center relative z-10">
             <a
-              href="/dashboard"
+              href="/login"
               className="text-blue-600 hover:text-blue-400 text-lg font-semibold"
             >
-              Voltar para o painel
+              Voltar para o Login
             </a>
           </div>
         </div>

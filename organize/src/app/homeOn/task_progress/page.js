@@ -9,6 +9,7 @@ export default function TaskList() {
   const [mounted, setMounted] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [filterDate, setFilterDate] = useState(""); // formato yyyy-mm-dd
+  const [filterPriority, setFilterPriority] = useState(""); // nova prioridade
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -70,16 +71,18 @@ export default function TaskList() {
     }
   };
 
-  // Filtrar tarefas pelo filtro de data: dueDate >= filterDate
-  // E remover as que tiverem status "concluido"
+  // Filtrar tarefas ativas (não concluídas), por data e prioridade
   const filteredTasks = tasks
     .filter((task) => task.status !== "concluido")
     .filter((task) => {
       if (!filterDate) return true;
       if (!task.dueDate) return false;
-      // comparando strings yyyy-mm-dd para simplicidade
       const taskDate = task.dueDate.slice(0, 10);
       return taskDate >= filterDate;
+    })
+    .filter((task) => {
+      if (!filterPriority) return true;
+      return task.priority?.toLowerCase() === filterPriority.toLowerCase();
     });
 
   if (!mounted) return null;
@@ -98,35 +101,74 @@ export default function TaskList() {
           Tarefas em Execução
         </h1>
 
-        {/* Filtro de data */}
-        <div className="mb-6">
-          <label htmlFor="filterDate" className="mr-2 font-semibold text-sm">
-            <h1 className="text-2xl font-bold mb-4 text-amber-400">
-              DATA DE ENTREGA
-            </h1>
-          </label>
-          <input
-            id="filterDate"
-            type="date"
-            value={filterDate}
-            onChange={(e) => setFilterDate(e.target.value)}
-            className="border border-gray-300 rounded px-2 py-1"
-          />
-          {filterDate && (
-            <button
-              onClick={() => setFilterDate("")}
-              className="ml-3 text-xs text-red-600 hover:underline"
-              aria-label="Limpar filtro de data"
+        {/* Filtros lado a lado */}
+        <div className="mb-6 flex flex-col sm:flex-row items-center justify-center gap-6 w-full">
+          {/* Filtro de data */}
+          <div className="flex flex-col items-center">
+            <label
+              htmlFor="filterDate"
+              className="text-amber-400 text-xl font-bold mb-2"
             >
-              Limpar filtro
-            </button>
-          )}
+              Data de Entrega
+            </label>
+            <div className="flex items-center">
+              <input
+                id="filterDate"
+                type="date"
+                value={filterDate}
+                onChange={(e) => setFilterDate(e.target.value)}
+                className="border border-gray-300 rounded px-2 py-1"
+              />
+              {filterDate && (
+                <button
+                  onClick={() => setFilterDate("")}
+                  className="ml-2 text-xs text-red-600 hover:underline"
+                  aria-label="Limpar filtro de data"
+                >
+                  Limpar
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Filtro de prioridade */}
+          <div className="flex flex-col items-center">
+            <label
+              htmlFor="filterPriority"
+              className="text-amber-400 text-xl font-bold mb-2"
+            >
+              Prioridade
+            </label>
+            <div className="flex items-center">
+              <select
+                id="filterPriority"
+                value={filterPriority}
+                onChange={(e) => setFilterPriority(e.target.value)}
+                className="border border-gray-300 rounded px-2 py-1"
+              >
+                <option value="">Todas</option>
+                <option value="alta">Alta</option>
+                <option value="média">Média</option>
+                <option value="baixa">Baixa</option>
+              </select>
+              {filterPriority && (
+                <button
+                  onClick={() => setFilterPriority("")}
+                  className="ml-2 text-xs text-red-600 hover:underline"
+                  aria-label="Limpar filtro de prioridade"
+                >
+                  Limpar
+                </button>
+              )}
+            </div>
+          </div>
         </div>
 
+        {/* Lista de tarefas */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
           {filteredTasks.length === 0 && (
             <p className="col-span-full text-center text-gray-500">
-              Nenhuma tarefa encontrada para a data selecionada.
+              Nenhuma tarefa encontrada para os filtros selecionados.
             </p>
           )}
 
@@ -159,6 +201,10 @@ export default function TaskList() {
                             year: "numeric",
                           }).format(new Date(task.dueDate))
                         : "-"}
+                    </p>
+                    <p>
+                      <strong>Prioridade:</strong>{" "}
+                      {task.priority || "Não definida"}
                     </p>
                     <p>
                       <strong>Status:</strong>{" "}
