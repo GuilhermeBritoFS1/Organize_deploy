@@ -173,3 +173,60 @@ O sistema deve permitir que o usuário encerre sua sessão por meio da interface
    - O acesso a rotas protegidas é bloqueado, redirecionando o usuário não autenticado para a página de login ou inicial, conforme a regra de navegação definida.
 
 ---
+### Requisito Funcional RF-004
+
+**Objetivo:** Permitir a redefinição de senha dos usuários na plataforma.	
+
+> **Responsável:** Jonatas de Carvalho Brum
+
+#### Descrição
+
+O sistema deve permitir que o usuário redefina a sua senha.
+
+#### Artefatos Criados
+
+- **Frontend:** `src/app/password-update`
+- **Backend:** `userController.passwordUpdate.js` 
+- **Validações:** Implementadas tanto no frontend quanto no backend
+- **Banco de Dados:** Coleção `users` no MongoDB
+
+#### Estrutura de Dados
+
+```json
+{
+  "stringValue": "\"password-update\"",
+  "valueType": "string",
+  "kind": "ObjectId",
+  "value": "password-update",
+  "path": "_id",
+  "reason": {},
+  "name": "CastError",
+  "message": "Cast to ObjectId failed for value \"password-update\" (type string) at path \"_id\" for model \"User\""
+}
+```
+
+#### Comportamento Esperado
+
+1. O usuário acessa a rota `/create` e visualiza o formulário de cadastro com os campos obrigatórios:
+
+
+   - Email
+   - Senha 
+   - Nova Senha
+
+2. Ao preencher e submeter o formulário:
+
+   - É feita uma requisição `POST` para o endpoint `/user/password-update` com os dados inseridos.
+
+3. Se os dados forem **válidos**:
+
+   - A conta do usuário é criada na coleção `users` no MongoDB.
+   - O sistema pode redirecionar o usuário para a tela de login (`/login`) ou autenticar automaticamente, conforme a lógica de negócio.
+   - Uma mensagem de sucesso é exibida: `""Senha atualizada com sucesso!"`
+
+4. Se os dados forem **inválidos**:
+   - As validações do frontend impedem o envio se campos obrigatórios estiverem vazios ou incorretos.
+   - Caso o backend rejeite os dados (ex: email já existente), uma mensagem de erro é exibida: `"Erro ao conectar com o servidor."`
+
+---
+
