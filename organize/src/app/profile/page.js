@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useTheme } from "next-themes";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -9,6 +10,13 @@ import { Card } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
 export default function ProfilePage() {
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const [form, setForm] = useState({
     name: "Jefferson Wagner",
     bio: "Especialista em infraestrutura e redes.",
@@ -53,18 +61,33 @@ export default function ProfilePage() {
     }, 1000);
   };
 
+  if (!mounted) return null;
+
   return (
-    <div className="relative min-h-screen flex items-start justify-center px-4 py-8 bg-gray-50">
-      <div className="relative w-full max-w-6xl bg-white/90 backdrop-blur-md rounded-xl shadow-2xl overflow-hidden z-10">
-        <Tabs defaultValue="profile" className="flex flex-col md:flex-row min-h-[600px]">
+    <main
+      className={`min-h-screen flex items-center justify-center px-4 py-8 ${
+        theme === "dark" ? "bg-gray-900 text-black" : "bg-amber-100 text-black"
+      }`}
+    >
+      <div className="w-full max-w-6xl bg-amber-50 backdrop-blur-md rounded-xl shadow-2xl overflow-hidden">
+        <Tabs
+          defaultValue="profile"
+          className="flex flex-col md:flex-row min-h-[600px]"
+        >
           {/* Lado esquerdo */}
           <div className="md:w-1/4 flex flex-col items-center p-6 space-y-4">
             {/* Foto e Upload */}
             <div className="h-28 w-28 rounded-full bg-gray-300 overflow-hidden flex items-center justify-center">
               {imagePreview ? (
-                <img src={imagePreview} alt="Preview" className="object-cover h-full w-full" />
+                <img
+                  src={imagePreview}
+                  alt="Preview"
+                  className="object-cover h-full w-full"
+                />
               ) : (
-                <span className="text-gray-600 text-sm font-medium select-none">Foto</span>
+                <span className="text-gray-600 text-sm font-medium select-none">
+                  Foto
+                </span>
               )}
             </div>
             <Input
@@ -76,17 +99,22 @@ export default function ProfilePage() {
 
             {/* Card com imagem do post-it */}
             <Card
-              className="w-full max-w-xs flex flex-col items-center justify-center space-y-4 py-6 px-4 mt-4 rounded-lg shadow-md text-center"
+              className="w-full max-w-xs flex flex-col items-center justify-center mt-4 rounded-lg shadow-md text-center"
               style={{
-                backgroundImage: 'url("/postit2.png")',
-                backgroundSize: "contain",
+                backgroundImage: 'url("/postit.png")',
+                backgroundSize: "cover", // Alterado de "contain" para "cover"
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
                 minHeight: "250px",
+                padding: "1rem", // Ajusta o padding manualmente (ou remova se quiser que ocupe tudo mesmo)
               }}
             >
-              <p className="text-xl font-bold text-gray-800 mt-6">Jefferson Wagner</p>
-              <p className="text-md text-gray-700">Analista de Infraestrutura</p>
+              <p className="text-xl font-bold text-gray-800 mt-6">
+                Jefferson Wagner
+              </p>
+              <p className="text-md text-gray-700">
+                Analista de Infraestrutura
+              </p>
 
               <TabsList className="flex flex-col items-center mt-2 space-y-2 bg-transparent shadow-none">
                 <TabsTrigger value="profile" className="text-center">
@@ -106,17 +134,31 @@ export default function ProfilePage() {
                 <h2 className="text-2xl font-bold text-gray-800 mb-4">
                   Informações Pessoais
                 </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="text-gray-600 grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="name">Nome</Label>
-                    <Input id="name" value={form.name} onChange={handleChange} />
+                    <Label className="text-gray-800" htmlFor="name">
+                      Nome
+                    </Label>
+                    <Input
+                      id="name"
+                      value={form.name}
+                      onChange={handleChange}
+                    />
                   </div>
                   <div>
-                    <Label htmlFor="role">Cargo</Label>
-                    <Input id="role" value={form.role} onChange={handleChange} />
+                    <Label className="text-gray-800" htmlFor="role">
+                      Cargo
+                    </Label>
+                    <Input
+                      id="role"
+                      value={form.role}
+                      onChange={handleChange}
+                    />
                   </div>
                   <div>
-                    <Label htmlFor="birthdate">Nascimento</Label>
+                    <Label className="text-gray-800" htmlFor="birthdate">
+                      Nascimento
+                    </Label>
                     <Input
                       id="birthdate"
                       type="date"
@@ -125,18 +167,28 @@ export default function ProfilePage() {
                     />
                   </div>
                   <div>
-                    <Label htmlFor="email">E-mail Atual</Label>
-                    <Input id="email" value={form.email} readOnly className="bg-gray-100" />
+                    <Label className="text-gray-800" htmlFor="email">
+                      E-mail Atual
+                    </Label>
+                    <Input
+                      id="email"
+                      value={form.email}
+                      readOnly
+                      className="bg-gray-100"
+                    />
                   </div>
                 </div>
                 <div>
-                  <Label htmlFor="bio">Biografia</Label>
+                  <Label className="text-gray-800" htmlFor="bio">
+                    Biografia
+                  </Label>
                   <Textarea
                     id="bio"
                     value={form.bio}
                     onChange={handleChange}
                     placeholder="Conte um pouco sobre você..."
                     rows={3}
+                    className="text-gray-600"
                   />
                 </div>
                 <Button
@@ -155,7 +207,7 @@ export default function ProfilePage() {
                   Segurança da Conta
                 </h2>
                 <div className="space-y-4">
-                  <Label>Novo E-mail</Label>
+                  <Label className="text-gray-800">Novo E-mail</Label>
                   <Input
                     id="newEmail"
                     value={form.newEmail}
@@ -171,7 +223,7 @@ export default function ProfilePage() {
                 </div>
 
                 <div className="space-y-4">
-                  <Label>Alterar Senha</Label>
+                  <Label className="text-gray-800">Alterar Senha</Label>
                   <Input
                     id="currentPassword"
                     type="password"
@@ -195,7 +247,7 @@ export default function ProfilePage() {
                   />
                 </div>
                 <Button
-                  className="mt-4 bg-blue-500 hover:bg-blue-600 text-white"
+                  className="mt-4 bg-amber-400 hover:bg-amber-300 text-gray-800"
                   onClick={handleUpdateSecurity}
                   disabled={isUpdating}
                 >
@@ -206,6 +258,6 @@ export default function ProfilePage() {
           </div>
         </Tabs>
       </div>
-    </div>
+    </main>
   );
 }
