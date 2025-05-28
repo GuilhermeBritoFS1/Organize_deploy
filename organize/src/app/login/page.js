@@ -118,7 +118,7 @@ export default function Login() {
                 href="/updatePassword"
                 className="text-blue-600 hover:text-blue-400 text-lg font-semibold"
               >
-                Esqueceu a senha?
+                Redefinir a senha?
               </a>
             </div>
 

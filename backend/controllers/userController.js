@@ -1,4 +1,4 @@
-const {User : UserModel, User} = require("../models/user");
+const { User: UserModel, User } = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const blacklist = require("../middlewares/blacklist");
@@ -14,7 +14,8 @@ const userController = {
         return res.status(400).json({ msg: "Email já cadastrado!" });
       }
 
-      const passwordStrengthRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+      const passwordStrengthRegex =
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
       if (!passwordStrengthRegex.test(password)) {
         return res.status(400).json({
           msg: "A senha deve ter pelo menos 6 caracteres, 1 letra, 1 número e 1 caractere especial",
