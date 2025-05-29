@@ -1,258 +1,203 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import SelectMulti from "react-select";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
-import * as React from "react";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
+import Link from "next/link";
+import Select from "react-select";
+import { api } from "../../../Services/page";
+import { Button } from "@/components/ui/button";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select as MuiSelect,
+} from "@mui/material";
 
-export default function Task_assignment() {
-  const tasks = [
-    {
-      id: 1,
-      Título: "Tarefa 1",
-      task_Group: "Equipe 1",
-      dateDue: "24/06/2025",
-      members: ["Guilherme", "Pedro", "Jefferson"],
-      status: "Em andamento",
-      priority: "Alta",
-    },
-    {
-      id: 2,
-      Título: "Tarefa 2",
-      task_Group: "Equipe 2",
-      dateDue: "30/06/2025",
-      members: ["Guilherme", "Pedro", "Jefferson"],
-      status: "Em andamento",
-      priority: "Alta",
-    },
-    {
-      id: 3,
-      Título: "Tarefa 3",
-      task_Group: "Equipe 3",
-      dateDue: "22/06/2025",
-      members: ["Guilherme", "Pedro", "Jefferson"],
-      status: "Em andamento",
-      priority: "Alta",
-    },
-    {
-      id: 4,
-      Título: "Tarefa 4",
-      task_Group: "Equipe 4",
-      dateDue: "20/06/2025",
-      members: ["Guilherme", "Pedro", "Jefferson"],
-      status: "Em andamento",
-      priority: "Alta",
-    },
-    {
-      id: 5,
-      Título: "Tarefa 5",
-      task_Group: "Equipe 5",
-      dateDue: "20/06/2025",
-      members: ["Guilherme", "Pedro", "Jefferson"],
-      status: "Em andamento",
-      priority: "Alta",
-    },
-    {
-      id: 6,
-      Título: "Tarefa 6",
-      task_Group: "Equipe 6",
-      dateDue: "20/06/2025",
-      members: ["Guilherme", "Pedro", "Jefferson"],
-      status: "Em andamento",
-      priority: "Média",
-    },
-  ];
-
-  // Alterando para armazenar as seleções de cada tarefa individualmente
-  const [selectedOptions, setSelectedOptions] = useState(
-    tasks.map(() => []) // Inicializando o estado com uma lista vazia para cada tarefa
-  );
-
-  // Controle do tema
+export default function TaskAssignment() {
   const { theme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+  const [tasks, setTasks] = useState([]);
+  const [teams, setTeams] = useState([]);
+  const [selectedOptions, setSelectedOptions] = useState({});
 
   useEffect(() => {
-    setMounted(true);
+    const token = localStorage.getItem("token");
+
+    const fetchTasksAndTeams = async () => {
+      try {
+        const [tasksRes, teamsRes] = await Promise.all([
+          api.get("/tasks", {
+            headers: { Authorization: `Bearer ${token}` },
+          }),
+          api.get("/task-groups?created=true", {
+            headers: { Authorization: `Bearer ${token}` },
+          }),
+        ]);
+
+        setTasks(tasksRes.data);
+        setTeams(teamsRes.data);
+      } catch (error) {
+        console.error("Erro ao buscar dados", error);
+        alert(error.response?.data?.msg || "Erro ao buscar tarefas ou equipes");
+      }
+    };
+
+    fetchTasksAndTeams();
   }, []);
 
-  const handleSelectChange = (index, options) => {
-    const updatedSelections = [...selectedOptions];
-    updatedSelections[index] = options;
-    setSelectedOptions(updatedSelections);
+  const handleSelectChange = (taskId, options) => {
+    setSelectedOptions((prev) => ({ ...prev, [taskId]: options }));
   };
 
-  // Estilos personalizados para o react-select
-  const customStyles = {
-    option: (provided, state) => ({
-      ...provided,
-      color: state.isSelected
-        ? "#ffbf00"
-        : theme === "dark"
-        ? "white"
-        : "black",
-      backgroundColor: state.isSelected ? "#ffbf00" : "transparent",
-      padding: "10px",
-    }),
-    control: (provided) => ({
-      ...provided,
-      backgroundColor: "transparent",
-    }),
-    multiValue: (provided) => ({
-      ...provided,
-      backgroundColor: "#ffbf00",
-      color: "black",
-    }),
-    multiValueLabel: (provided) => ({
-      ...provided,
-      color: "black",
-      fontWeight: "bold",
-    }),
-    multiValueRemove: (provided) => ({
-      ...provided,
-      color: "black",
-      ":hover": {
-        backgroundColor: "red",
-        color: "white",
-      },
-    }),
+  const updatePriority = async (taskId, newPriority) => {
+    const token = localStorage.getItem("token");
+    try {
+      await api.put(
+        `/tasks/${taskId}`,
+        { priority: newPriority },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setTasks((prev) =>
+        prev.map((task) =>
+          task._id === taskId ? { ...task, priority: newPriority } : task
+        )
+      );
+    } catch (error) {
+      alert("Erro ao atualizar prioridade");
+    }
   };
 
-  if (!mounted) return null;
+  const updateStatus = async (taskId, newStatus) => {
+    const token = localStorage.getItem("token");
+    try {
+      await api.put(
+        `/tasks/${taskId}`,
+        { status: newStatus },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setTasks((prev) =>
+        prev.map((task) =>
+          task._id === taskId ? { ...task, status: newStatus } : task
+        )
+      );
+    } catch (error) {
+      alert("Erro ao atualizar status");
+    }
+  };
+
+  const handleDeleteTask = async (taskId) => {
+    if (!confirm("Tem certeza que deseja deletar esta tarefa?")) return;
+    const token = localStorage.getItem("token");
+    try {
+      await api.delete(`/tasks/${taskId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setTasks((prev) => prev.filter((task) => task._id !== taskId));
+    } catch (error) {
+      alert("Erro ao deletar tarefa");
+    }
+  };
+
+  const assignTeam = (taskId) => {
+    const selected = selectedOptions[taskId];
+    if (!selected || selected.length === 0) {
+      alert("Selecione ao menos uma equipe para atribuir.");
+      return;
+    }
+
+    const teamNames = selected.map((opt) => opt.value);
+    console.log(`Atribuir ${taskId} para equipes:`, teamNames);
+    // Aqui você pode chamar uma rota da API para salvar essa atribuição no backend.
+  };
+
+  const teamOptions = teams.map((team) => ({
+    value: team.name,
+    label: team.name,
+  }));
 
   return (
     <main
-      className={`sm:ml-14 p-4 h-screen ${
-        theme === "dark"
-          ? "bg-gray-900 text-gray-600"
-          : "bg-amber-100 text-black"
+      className={`sm:ml-14 p-4 flex flex-col items-center justify-start min-h-screen ${
+        theme === "dark" ? "bg-gray-900 text-gray-600" : "bg-amber-100 text-black"
       }`}
     >
-      <div>
-        <h1
-          className={`font-bold lg:text-4xl ${
-            theme === "dark" ? "text-yellow-500" : "text-black"
-          }`}
-        >
+      <div className="flex flex-col items-center text-center w-full max-w-6xl p-4">
+        <img src="/logo.png" alt="Logo" className="mb-4 w-32 sm:w-40 h-auto" />
+        <h1 className="text-3xl sm:text-5xl font-bold mb-4 text-slate-500">
           Atribuição de Tarefas
         </h1>
-        <p className="italic lg:text-base">Distribua tarefas por integrantes</p>
-      </div>
-      <hr />
-      <ul className="flex md:flex-row flex-wrap sm:flex-col flex-col gap-5 justify-center my-5">
-        {tasks.map((task) => {
-          // Convertendo os membros em objetos no formato { value: "nome", label: "nome" }
-          const membersOptions = task.members.map((member) => ({
-            value: member,
-            label: member,
-          }));
 
-          return (
+        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
+          {tasks.map((task) => (
             <li
-              key={task.id}
-              className={`lg:w-[23%] md:w-[25%] sm:w-[100%] w-[100%] opacity-50 hover:opacity-100`}
+              key={task._id}
+              className="w-full aspect-square transform hover:scale-105 transition-all duration-200"
             >
-              <Accordion>
-                <AccordionSummary
-                  expandIcon={<ArrowDownwardIcon />}
-                  aria-controls="panel1-content"
-                  id="panel1-header"
-                >
-                  <Typography component="span">{task.Título}</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <div
-                    className={`flex flex-col rounded-md border ${
-                      theme === "dark" ? "bg-gray-800" : "bg-white"
-                    } p-2 w-[100%]`}
+              <div
+                className={`rounded-xl shadow-lg p-4 flex flex-col gap-3 border-2 border-yellow-300 ${
+                  theme === "dark" ? "bg-yellow-600/80 text-black" : "bg-yellow-200"
+                }`}
+                style={{
+                  backgroundImage: `url('/postit2.png')`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
+              >
+                <h2 className="text-lg font-bold">{task.title}</h2>
+                <p className="text-sm italic">
+                  {task.description || "Sem descrição"}
+                </p>
+
+                <Select
+                  isMulti
+                  options={teamOptions}
+                  value={selectedOptions[task._id] || []}
+                  onChange={(options) => handleSelectChange(task._id, options)}
+                  classNamePrefix="custom-select"
+                />
+
+                <FormControl variant="filled" fullWidth>
+                  <InputLabel>Prioridade</InputLabel>
+                  <MuiSelect
+                    value={task.priority || ""}
+                    onChange={(e) => updatePriority(task._id, e.target.value)}
                   >
-                    <SelectMulti
-                      isMulti
-                      options={membersOptions} // Passando as opções dos membros
-                      value={selectedOptions[task.id]} // Vinculando a seleção à tarefa específica
-                      onChange={(membersOptions) =>
-                        handleSelectChange(task.id, membersOptions)
-                      } // Passando o índice da tarefa
-                      classNamePrefix="custom-select"
-                      styles={customStyles} // Aplica os estilos personalizados
-                    />
-                  </div>
-                </AccordionDetails>
-                <div className="flex flex-col jusitfy-center p-2">
-                  <FormControl variant="filled" sx={{ m: 1, minWidth: "80%" }}>
-                    <InputLabel id="demo-simple-select-filled-label">
-                      Prioridade
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-filled-label"
-                      id="demo-simple-select-filled"
-                      className={
-                        theme === "dark"
-                          ? "bg-gray-700 text-white"
-                          : "bg-white text-black"
-                      }
-                    >
-                      {task.priority === "Alta" ? (
-                        <MenuItem value="Alta">Alta (valor atual)</MenuItem>
-                      ) : (
-                        <MenuItem value="Alta">Alta</MenuItem>
-                      )}
-                      {task.priority === "Média" ? (
-                        <MenuItem value="Média">Média (valor atual)</MenuItem>
-                      ) : (
-                        <MenuItem value="Média">Média</MenuItem>
-                      )}
-                      {task.priority === "Baixa" ? (
-                        <MenuItem value="Baixa">Baixa (valor atual)</MenuItem>
-                      ) : (
-                        <MenuItem value="Baixa">Baixa</MenuItem>
-                      )}
-                    </Select>
-                  </FormControl>
-                  <FormControl variant="filled" sx={{ m: 1, minWidth: "80%" }}>
-                    <InputLabel id="demo-simple-select-filled-label">
-                      Status
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-filled-label"
-                      id="demo-simple-select-filled"
-                      className={
-                        theme === "dark"
-                          ? "bg-gray-700 text-white"
-                          : "bg-white text-black"
-                      }
-                    >
-                      <MenuItem value="Pedente">Pendente</MenuItem>
-                      <MenuItem value="Em andamento">Em andamento</MenuItem>
-                      <MenuItem value="Concluída">Concluída</MenuItem>
-                    </Select>
-                  </FormControl>
-                </div>
-                <div className="flex flex-row justify-evenly items-center p-2">
-                  <Button variant="secondary">Atribuir</Button>
+                    <MenuItem value="Alta">Alta</MenuItem>
+                    <MenuItem value="Média">Média</MenuItem>
+                    <MenuItem value="Baixa">Baixa</MenuItem>
+                  </MuiSelect>
+                </FormControl>
 
-                  <Button variant="secondary">
-                    <Link href="./task_Edit">Editar</Link>
+                <FormControl variant="filled" fullWidth>
+                  <InputLabel>Status</InputLabel>
+                  <MuiSelect
+                    value={task.status}
+                    onChange={(e) => updateStatus(task._id, e.target.value)}
+                  >
+                    <MenuItem value="pendente">Pendente</MenuItem>
+                    <MenuItem value="andamento">Andamento</MenuItem>
+                    <MenuItem value="concluido">Concluído</MenuItem>
+                  </MuiSelect>
+                </FormControl>
+
+                <div className="flex flex-row justify-evenly items-center pt-2">
+                  <Button variant="secondary" onClick={() => assignTeam(task._id)}>
+                    Atribuir
                   </Button>
-
-                  <Button variant="secondary">Deletar</Button>
+                  <Button variant="secondary">
+                    <Link href={`./task_Edit?id=${task._id}`}>Editar</Link>
+                  </Button>
+                  <Button
+                    variant="secondary"
+                    onClick={() => handleDeleteTask(task._id)}
+                  >
+                    Deletar
+                  </Button>
                 </div>
-              </Accordion>
+              </div>
             </li>
-          );
-        })}
-      </ul>
+          ))}
+        </ul>
+      </div>
     </main>
   );
 }
