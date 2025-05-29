@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
 import { ChartOverview } from "@/components/chart";
 import { Teams } from "@/components/teams";
 import {
@@ -15,6 +16,8 @@ import { LayoutList, ListTodo, ListChecks, Logs } from "lucide-react";
 import { api } from "@/Services/page";
 
 export default function Report() {
+  const { theme } = useTheme();
+
   const [total, setTotal] = useState(0);
   const [andamento, setAndamento] = useState(0);
   const [concluidas, setConcluidas] = useState(0);
@@ -55,7 +58,9 @@ export default function Report() {
     );
 
   return (
-    <main className="sm:ml-14 p-4">
+    <main className={`sm:ml-14 p-4 ${
+      theme === "light" ? "bg-amber-100" : ""
+    }`}>
       <h1 className="text-3xl font-bold mb-4 text-center">
         Relatório de Tarefas
       </h1>

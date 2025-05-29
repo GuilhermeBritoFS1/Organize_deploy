@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation"; // Import para redirecionamento
 import { api } from "../../Services/page";
 import { Plus } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
@@ -13,8 +14,12 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { useTheme } from "next-themes";
 
 export default function Create() {
+  const router = useRouter(); // Hook para navegação
+  const { theme } = useTheme();
+
   const [users, setUsers] = useState([]);
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
@@ -28,29 +33,15 @@ export default function Create() {
   const [Password2, setPassword2] = useState("");
 
   const handleClickShowPassword1 = () => setShowPassword1((show) => !show);
-
-  const handleMouseDownPassword1 = (event) => {
-    event.preventDefault();
-  };
-
-  const handleMouseUpPassword1 = (event) => {
-    event.preventDefault();
-  };
-
+  const handleMouseDownPassword1 = (event) => event.preventDefault();
+  const handleMouseUpPassword1 = (event) => event.preventDefault();
   const handleClickShowPassword2 = () => setShowPassword2((show) => !show);
-
-  const handleMouseDownPassword2 = (event) => {
-    event.preventDefault();
-  };
-
-  const handleMouseUpPassword2 = (event) => {
-    event.preventDefault();
-  };
+  const handleMouseDownPassword2 = (event) => event.preventDefault();
+  const handleMouseUpPassword2 = (event) => event.preventDefault();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Verificação de campos obrigatórios
     if (
       Name === "" ||
       Email === "" ||
@@ -60,12 +51,10 @@ export default function Create() {
     ) {
       setResEmpty(false);
       return;
-    }
-    if (Name && Email && Email2 && Password && Password2) {
+    } else {
       setResEmpty(true);
     }
 
-    // Validação de emails
     if (Email !== Email2) {
       setResEmail(false);
       return;
@@ -73,7 +62,6 @@ export default function Create() {
       setResEmail(true);
     }
 
-    // Validação de senhas
     if (Password !== Password2) {
       setRespassword(false);
       return;
@@ -81,7 +69,6 @@ export default function Create() {
       setRespassword(true);
     }
 
-    // Cadastro de usuário
     try {
       const response = await api.post("/user", {
         name: Name,
@@ -90,21 +77,26 @@ export default function Create() {
       });
 
       if (response.status === 201) {
-        alert("Usuário cadastrado com sucesso!"); // Notificação de sucesso
+        alert("Usuário cadastrado com sucesso!");
+
+        // Limpa os inputs
         setName("");
         setEmail("");
         setEmail2("");
         setPassword("");
         setPassword2("");
+
+        // Redireciona para página de login
+        router.push("/login");
       }
     } catch (error) {
       console.log("Erro ao cadastrar o usuário", error);
-      alert(error.response.data.msg);
+      alert(error.response?.data?.msg || "Erro ao cadastrar.");
     }
   };
 
   return (
-    <main className="text-amber-400 h-screen flex flex-col">
+    <main className={`text-amber-400 h-screen flex flex-col ${theme === "light" ? "bg-amber-100" : ""}`}>
       <div className="flex lg:flex-row md:flex-row sm:flex-col flex-col md:w-3/4 sm:w-3/4 w-3/4 h-4/5 sm:w-3/4 md:w-2/3 m-auto">
         <div className="bg-gradient-to-r from-amber-400 to-gray-3500 text-bg-white flex flex-col items-center justify-center text-center mx-auto md:w-[50%] sm:w-[30%] rounded-l-lg">
           <div className="flex flex-wrap justify-center gap-2 p-2">
@@ -174,6 +166,7 @@ export default function Create() {
               name="name"
               className="bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 p-2 text-sm/5"
               onChange={(e) => setName(e.target.value)}
+              value={Name}
             />
             <Input
               autoComplete="off"
@@ -183,6 +176,7 @@ export default function Create() {
               name="email"
               className="bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 p-2 text-sm/5"
               onChange={(e) => setEmail(e.target.value)}
+              value={Email}
             />
             <Input
               autoComplete="off"
@@ -192,6 +186,7 @@ export default function Create() {
               name="confirmEmail"
               className="bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 p-2 text-sm/5"
               onChange={(e) => setEmail2(e.target.value)}
+              value={Email2}
             />
             <div className="flex lg:flex-row md:flex-row sm:flex-col flex-col gap-2">
               <OutlinedInput
@@ -200,19 +195,19 @@ export default function Create() {
                 )}
                 placeholder="Digite sua senha"
                 type={showPassword1 ? "text" : "password"}
+                id="password1"
+                name="password1"
                 onChange={(e) => setPassword(e.target.value)}
                 value={Password}
+                autoComplete="off"
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
-                      aria-label={
-                        showPassword1
-                          ? "hide the password"
-                          : "display the password"
-                      }
+                      aria-label="toggle password visibility"
                       onClick={handleClickShowPassword1}
                       onMouseDown={handleMouseDownPassword1}
                       onMouseUp={handleMouseUpPassword1}
+                      edge="end"
                     >
                       {showPassword1 ? <VisibilityOff /> : <Visibility />}
                     </IconButton>
@@ -225,19 +220,19 @@ export default function Create() {
                 )}
                 placeholder="Confirme sua senha"
                 type={showPassword2 ? "text" : "password"}
+                id="password2"
+                name="password2"
                 onChange={(e) => setPassword2(e.target.value)}
                 value={Password2}
+                autoComplete="off"
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
-                      aria-label={
-                        showPassword2
-                          ? "hide the password"
-                          : "display the password"
-                      }
+                      aria-label="toggle password visibility"
                       onClick={handleClickShowPassword2}
                       onMouseDown={handleMouseDownPassword2}
                       onMouseUp={handleMouseUpPassword2}
+                      edge="end"
                     >
                       {showPassword2 ? <VisibilityOff /> : <Visibility />}
                     </IconButton>
@@ -246,27 +241,20 @@ export default function Create() {
               />
             </div>
 
-            <div className="flex flex-row justify-center items-center mt-3">
-              <button
-                type="submit"
-                className="bg-[#ffbf00] hover:bg-[#ffd191] transition py-2 px-4 w-[70%] sm:w-[70%] md:w-[30%] rounded-md text-black font-bold"
-              >
-                CADASTRAR
-              </button>
-            </div>
-
-            {/* Mensagens de erro */}
             {!resEmpty && (
-              <p className="block text-red-500">
-                Todos os campos devem ser preenchidos!
-              </p>
+              <p className="text-red-500">Por favor, preencha todos os campos.</p>
             )}
-            {!resEmail && (
-              <p className="block text-red-500">Os emails estão diferentes!</p>
-            )}
+            {!resEmail && <p className="text-red-500">Os emails não coincidem.</p>}
             {!resPassword && (
-              <p className="block text-red-500">As senhas estão diferentes!</p>
+              <p className="text-red-500">As senhas não coincidem.</p>
             )}
+
+            <button
+              className="p-2 rounded bg-amber-400 text-gray-800 font-bold hover:bg-amber-500 transition-colors"
+              type="submit"
+            >
+              Cadastrar
+            </button>
           </form>
         </div>
       </div>

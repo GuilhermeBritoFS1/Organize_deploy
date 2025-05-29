@@ -26,7 +26,7 @@ export default function ConfiguracoesTabs() {
   const { setTheme, theme } = useTheme();
 
   return (
-    <main className="sm:ml-14 p-6 space-y-6">
+    <main className={`sm:ml-14 p-6 space-y-6 ${theme === "light" ? "bg-amber-100" : ""}`}>
       <h1 className="text-3xl font-bold">Configurações do Sistema</h1>
       <p className="text-muted-foreground text-sm">
         Navegue entre as categorias para ajustar suas preferências.
