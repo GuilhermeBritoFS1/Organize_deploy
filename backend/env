@@ -1,2 +1,0 @@
-DATABASE_URL = mongodb+srv://bolinhx:12345@organize.y1bmj.mongodb.net/?retryWrites=true&w=majority&appName=organize
-JWT_SECRET = 232ea307960708c2ae060fcaf8eef0e123bf9f400522b27a4aff9ddc3ead835934a85ea8eb9f0b441068fe820c33046edbad752dc0421d9a722eb2fca958a6c1

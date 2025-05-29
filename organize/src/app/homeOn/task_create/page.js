@@ -97,19 +97,23 @@ export default function Task_create() {
     theme === "dark" ? "bg-gray-700 text-white" : "bg-[#ffbf00] text-black";
 
   return (
-    <main className="sm:ml-14 p-4 h-screen">
+    <main
+      className={`sm:ml-14 p-4 h-screen ${
+        theme === "light" ? "bg-amber-100" : ""
+      }`}
+    >
       <form
         onSubmit={createTask}
         className={`flex flex-col justify-center items-center rounded-xl lg:w-1/2 md:w-3/4 mx-auto my-auto md:h-2/3 sm:h-2/3 h-2/3 bg-[url('/postit2.png')] bg-center bg-cover relative`}
       >
-        <fieldset className="md:text-4xl sm:text-[25px] text-[25px] font-bold md:mb-2 text-start">
+        <fieldset className="md:text-4xl sm:text-[25px] text-[25px] font-bold md:mb-2 text-start text-black">
           Criar tarefa
         </fieldset>
         <hr className="w-1/2" />
         <Input
           placeholder="Título"
           type="text"
-          className={`my-5 lg:w-2/3 md:w-1/2 sm:w-1/2 w-1/2 md:text-base ${inputStyle}`}
+          className={`my-5 lg:w-2/3 md:w-1/2 sm:w-1/2 w-1/2 md:text-base bg-amber-50 ${inputStyle}`}
           style={styles}
           value={title}
           onChange={(e) => setTitle(e.target.value)}
@@ -117,11 +121,12 @@ export default function Task_create() {
         <Textarea
           placeholder="Descrição"
           type="text"
-          className={`mb-5 lg:w-2/3 md:w-1/2 sm:w-1/2 w-1/2 md:text-base ${inputStyle}`}
+          className={`mb-5 lg:w-2/3 md:w-1/2 sm:w-1/2 w-1/2 md:text-base bg-amber-50 ${inputStyle}`}
           style={styles}
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
+
         <div className="flex md:flex-row gap-5 sm:flex-col flex-col">
           <Select onValueChange={(value) => setTeamId(value)} value={teamId}>
             <SelectTrigger
@@ -168,7 +173,9 @@ export default function Task_create() {
             onChange={(date) => setDate(date)}
             dateFormat="yyyy/MM/dd"
             placeholderText="Data de vencimento"
-            className={`file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-full min-w-0 rounded-md border bg-[#ffbf00] px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive`}
+            className={`file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground border-input flex h-9 w-full min-w-0 rounded-md border px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive ${
+              theme === "dark" ? "bg-[#444] text-white" : "bg-[#ffbf00] text-black"
+            }`}
           />
         </div>
 
