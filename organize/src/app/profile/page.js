@@ -12,17 +12,15 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 export default function ProfilePage() {
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const [imagePreview, setImagePreview] = useState(null);
+  const [isUpdating, setIsUpdating] = useState(false);
 
   const [form, setForm] = useState({
-    name: "Jefferson Wagner",
-    bio: "Especialista em infraestrutura e redes.",
-    role: "Analista de Infraestrutura",
-    birthdate: "1995-01-01",
-    email: "jefferson@example.com",
+    name: "",
+    bio: "",
+    role: "",
+    birthdate: "",
+    email: "",
     newEmail: "",
     confirmEmail: "",
     currentPassword: "",
@@ -30,8 +28,41 @@ export default function ProfilePage() {
     confirmPassword: "",
   });
 
-  const [isUpdating, setIsUpdating] = useState(false);
-  const [imagePreview, setImagePreview] = useState(null);
+  useEffect(() => {
+    setMounted(true);
+
+    const fetchUserProfile = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      try {
+        const response = await fetch("http://localhost:3001/organize/user/me", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Erro ao carregar perfil");
+        }
+
+        const user = await response.json();
+
+        setForm((prev) => ({
+          ...prev,
+          name: user.name || "",
+          email: user.email || "",
+          role: user.role || "",
+          bio: user.bio || "",
+          birthdate: user.birthdate ? user.birthdate.slice(0, 10) : "",
+        }));
+      } catch (error) {
+        console.error("Erro ao carregar perfil:", error);
+      }
+    };
+
+    fetchUserProfile();
+  }, []);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -102,19 +133,17 @@ export default function ProfilePage() {
               className="w-full max-w-xs flex flex-col items-center justify-center mt-4 rounded-lg shadow-md text-center"
               style={{
                 backgroundImage: 'url("/postit.png")',
-                backgroundSize: "cover", // Alterado de "contain" para "cover"
+                backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
                 minHeight: "250px",
-                padding: "1rem", // Ajusta o padding manualmente (ou remova se quiser que ocupe tudo mesmo)
+                padding: "1rem",
               }}
             >
               <p className="text-xl font-bold text-gray-800 mt-6">
-                Jefferson Wagner
+                {form.name || "Seu nome"}
               </p>
-              <p className="text-md text-gray-700">
-                Analista de Infraestrutura
-              </p>
+              <p className="text-md text-gray-700">{form.role || "Cargo"}</p>
 
               <TabsList className="flex flex-col items-center mt-2 space-y-2 bg-transparent shadow-none">
                 <TabsTrigger value="profile" className="text-center">

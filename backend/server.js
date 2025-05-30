@@ -1,20 +1,27 @@
-require('dotenv').config();
+require("dotenv").config();
 
-const express = require('express')
-const app = express()
-const mongoose = require('mongoose')
+const express = require("express");
+const mongoose = require("mongoose");
 
-mongoose.connect(process.env.DATABASE_URL)
-const db = mongoose.connection;
+const app = express();
 
-db.on('error', (error)=> console.error(error));
-db.once('open', (error)=> console.log('Connected to database'));
+// Usa a variável DATABASE_URL para conexão com o MongoDB
+const mongoUri = process.env.DATABASE_URL || process.env.MONGO_URI;
 
-app.use(express.json())
+mongoose
+  .connect(mongoUri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log("MongoDB conectado"))
+  .catch((err) => console.error("Erro ao conectar no MongoDB:", err));
 
-const usersRouter = require('./routes/users')
-app.use('/organize/user', usersRouter)
+app.use(express.json());
 
+// Importa e usa as rotas de usuário
+const usersRouter = require("./routes/userRoutes");
+app.use("/organize/user", usersRouter);
 
-app.listen(3000, () => console.log('Server Started'));
-
+// Porta configurável via variável de ambiente, padrão 3000
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));

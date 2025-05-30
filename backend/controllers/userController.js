@@ -1,8 +1,7 @@
-const { User: UserModel, User } = require("../models/user");
+const { User: UserModel } = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const blacklist = require("../middlewares/blacklist");
-const authMiddleware = require("../middlewares/authMiddleware");
 
 const userController = {
   create: async (req, res) => {
@@ -34,10 +33,11 @@ const userController = {
 
       res.status(201).json({ response, msg: "Usuário criado com sucesso!" });
     } catch (err) {
-      console.log(err);
+      console.error(err);
       res.status(500).json({ msg: "Erro interno do servidor." });
     }
   },
+
   login: async (req, res) => {
     try {
       const user = await UserModel.findOne({ email: req.body.email }).select(
@@ -45,7 +45,7 @@ const userController = {
       );
 
       if (!user) {
-        return res.status(400).json({ error: "Dados Invalidos" });
+        return res.status(400).json({ error: "Dados inválidos" });
       }
 
       const isPasswordValid = await bcrypt.compare(
@@ -53,7 +53,7 @@ const userController = {
         user.password
       );
       if (!isPasswordValid) {
-        return res.status(401).json({ error: "Dados Invalidos" });
+        return res.status(401).json({ error: "Dados inválidos" });
       }
 
       const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
@@ -66,6 +66,7 @@ const userController = {
       res.status(500).json({ error: "Erro interno no servidor" });
     }
   },
+
   logout: (req, res) => {
     const token = req.header("Authorization")?.split(" ")[1];
 
@@ -77,67 +78,88 @@ const userController = {
 
     res.json({ message: "Logout realizado com sucesso." });
   },
+
   getAll: async (req, res) => {
     try {
       const users = await UserModel.find();
-      res.send(users);
+      res.json(users);
     } catch (err) {
       res.status(500).json({ message: err.message });
     }
   },
+
   get: async (req, res) => {
     try {
       const id = req.params.id;
       const user = await UserModel.findById(id);
 
       if (!user) {
-        res.status(404).json({ msg: "User nao encontrado" });
-        return;
+        return res.status(404).json({ msg: "Usuário não encontrado" });
       }
+
       res.json(user);
     } catch (err) {
-      res.json(err);
+      res
+        .status(500)
+        .json({ message: "Erro ao buscar usuário", error: err.message });
     }
   },
+
   delete: async (req, res) => {
     try {
       const id = req.params.id;
       const user = await UserModel.findById(id);
 
       if (!user) {
-        res.status(404).json({ msg: "User nao encontrado" });
-        return;
+        return res.status(404).json({ msg: "Usuário não encontrado" });
       }
+
       const deletedUser = await UserModel.findByIdAndDelete(id);
 
-      res.status(200).json({ deletedUser, msg: "User excluido com sucesso" });
+      res
+        .status(200)
+        .json({ deletedUser, msg: "Usuário excluído com sucesso" });
     } catch (err) {
-      res.json(err);
+      res
+        .status(500)
+        .json({ message: "Erro ao excluir usuário", error: err.message });
     }
   },
+
   update: async (req, res) => {
-    const id = req.params.id;
+    try {
+      const id = req.params.id;
 
-    const user = {
-      name: req.body.name,
-      email: req.body.email,
-    };
+      const user = {
+        name: req.body.name,
+        email: req.body.email,
+      };
 
-    const updatedUser = await UserModel.findByIdAndUpdate(id, user);
+      const updatedUser = await UserModel.findByIdAndUpdate(id, user, {
+        new: true,
+      });
 
-    if (!updatedUser) {
-      res.status(404).json({ msg: "Usuario nao encontrado" });
-      return;
+      if (!updatedUser) {
+        return res.status(404).json({ msg: "Usuário não encontrado" });
+      }
+
+      res
+        .status(200)
+        .json({ updatedUser, msg: "Usuário atualizado com sucesso" });
+    } catch (err) {
+      res
+        .status(500)
+        .json({ msg: "Erro ao atualizar usuário", error: err.message });
     }
-    res.status(201).json({ user, msg: "Usuario atualizado com sucesso" });
   },
+
   passwordUpdate: async (req, res) => {
     const { oldPassword, newPassword } = req.body;
 
-    // Validações de senha aqui...
-
     try {
-      const user = await UserModel.findById(req.user.userId); // Usando o ID do usuário do token
+      const user = await UserModel.findById(req.user.userId).select(
+        "+password"
+      );
 
       if (!user) {
         return res.status(404).json({ msg: "Usuário não encontrado" });
@@ -154,7 +176,27 @@ const userController = {
       await user.save();
       res.status(200).json({ msg: "Senha atualizada com sucesso" });
     } catch (err) {
-      res.status(500).json({ msg: "Erro ao atualizar a senha" });
+      res
+        .status(500)
+        .json({ msg: "Erro ao atualizar a senha", error: err.message });
+    }
+  },
+
+  getLoggedInUser: async (req, res) => {
+    try {
+      const user = await UserModel.findById(req.user.userId).select(
+        "-password"
+      );
+
+      if (!user) {
+        return res.status(404).json({ message: "Usuário não encontrado" });
+      }
+
+      res.json(user);
+    } catch (err) {
+      res
+        .status(500)
+        .json({ message: "Erro ao buscar usuário", error: err.message });
     }
   },
 };
