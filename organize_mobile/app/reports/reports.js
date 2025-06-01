@@ -12,6 +12,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 // Import padrão das imagens
 import Logo from "../../assets/images/Logo.png";
 import PostitBg from "../../assets/images/postit2.png";
+import { Stack } from "expo-router";
 
 export default function StatisticsScreen() {
   const totalTarefas = 20;
@@ -20,46 +21,49 @@ export default function StatisticsScreen() {
   const tarefasNaoIniciadas = 7;
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Image source={Logo} style={styles.logo} />
-      <Text style={styles.title}>Estatísticas</Text>
-      <Text style={styles.subtitle}>
-        Visualize o status geral das suas tarefas
-      </Text>
+    <>
+      <Stack.Screen options={{ title: "Relatório" }} />
+      <ScrollView contentContainerStyle={styles.container}>
+        <Image source={Logo} style={styles.logo} />
+        <Text style={styles.title}>Estatísticas</Text>
+        <Text style={styles.subtitle}>
+          Visualize o status geral das suas tarefas
+        </Text>
 
-      <ImageBackground
-        source={PostitBg}
-        style={styles.card}
-        imageStyle={styles.cardImage}
-      >
-        <View style={styles.cardContent}>
-          <StatBox
-            icon="clipboard-list"
-            label="Tarefas Criadas"
-            value={totalTarefas}
-            color="#4B5563"
-          />
-          <StatBox
-            icon="check-circle"
-            label="Concluídas"
-            value={tarefasConcluidas}
-            color="#10B981"
-          />
-          <StatBox
-            icon="spinner"
-            label="Em Andamento"
-            value={tarefasAndamento}
-            color="#F59E0B"
-          />
-          <StatBox
-            icon="pause-circle"
-            label="Não Iniciadas"
-            value={tarefasNaoIniciadas}
-            color="#EF4444"
-          />
-        </View>
-      </ImageBackground>
-    </ScrollView>
+        <ImageBackground
+          source={PostitBg}
+          style={styles.card}
+          imageStyle={styles.cardImage}
+        >
+          <View style={styles.cardContent}>
+            <StatBox
+              icon="clipboard-list"
+              label="Tarefas Criadas"
+              value={totalTarefas}
+              color="#4B5563"
+            />
+            <StatBox
+              icon="check-circle"
+              label="Concluídas"
+              value={tarefasConcluidas}
+              color="#10B981"
+            />
+            <StatBox
+              icon="spinner"
+              label="Em Andamento"
+              value={tarefasAndamento}
+              color="#F59E0B"
+            />
+            <StatBox
+              icon="pause-circle"
+              label="Não Iniciadas"
+              value={tarefasNaoIniciadas}
+              color="#EF4444"
+            />
+          </View>
+        </ImageBackground>
+      </ScrollView>
+    </>
   );
 }
 
