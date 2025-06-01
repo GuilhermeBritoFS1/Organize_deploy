@@ -8,10 +8,11 @@ import {
   TouchableOpacity,
   Alert,
   Image,
-  Picker,
 } from "react-native";
 import { Stack } from "expo-router";
-import axios from "axios";
+import * as SecureStore from "expo-secure-store";
+import RNPickerSelect from "react-native-picker-select";
+import { api } from "../../services/api";
 
 export default function TaskListScreen() {
   const [tasks, setTasks] = useState([]);
@@ -23,24 +24,25 @@ export default function TaskListScreen() {
   }, []);
 
   const getAllTasks = async () => {
-    const token = await localStorage.getItem("token"); // Troque por SecureStore se necessário
+    const token = await SecureStore.getItemAsync("token");
     try {
-      const response = await axios.get("https://seu_backend_url/tasks", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+      const response = await api.get("/tasks", {
+        headers: { Authorization: `Bearer ${token}` },
       });
       setTasks(response.data);
     } catch (error) {
-      Alert.alert("Erro", error.response?.data?.msg || "Erro ao buscar tarefas");
+      Alert.alert(
+        "Erro",
+        error.response?.data?.msg || "Erro ao buscar tarefas"
+      );
     }
   };
 
   const handleStatusChange = async (taskId, newStatus) => {
-    const token = await localStorage.getItem("token");
+    const token = await SecureStore.getItemAsync("token");
     try {
-      await axios.put(
-        `https://seu_backend_url/tasks/${taskId}`,
+      await api.put(
+        `/tasks/${taskId}`,
         { status: newStatus },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -57,28 +59,24 @@ export default function TaskListScreen() {
   };
 
   const handleDeleteTask = async (taskId) => {
-    Alert.alert(
-      "Confirmação",
-      "Tem certeza que deseja deletar esta tarefa?",
-      [
-        { text: "Cancelar", style: "cancel" },
-        {
-          text: "Deletar",
-          style: "destructive",
-          onPress: async () => {
-            const token = await localStorage.getItem("token");
-            try {
-              await axios.delete(`https://seu_backend_url/tasks/${taskId}`, {
-                headers: { Authorization: `Bearer ${token}` },
-              });
-              setTasks((prev) => prev.filter((task) => task._id !== taskId));
-            } catch {
-              Alert.alert("Erro", "Erro ao deletar tarefa.");
-            }
-          },
+    Alert.alert("Confirmação", "Tem certeza que deseja deletar esta tarefa?", [
+      { text: "Cancelar", style: "cancel" },
+      {
+        text: "Deletar",
+        style: "destructive",
+        onPress: async () => {
+          const token = await SecureStore.getItemAsync("token");
+          try {
+            await api.delete(`/tasks/${taskId}`, {
+              headers: { Authorization: `Bearer ${token}` },
+            });
+            setTasks((prev) => prev.filter((task) => task._id !== taskId));
+          } catch {
+            Alert.alert("Erro", "Erro ao deletar tarefa.");
+          }
         },
-      ]
-    );
+      },
+    ]);
   };
 
   const filteredTasks = tasks
@@ -97,7 +95,10 @@ export default function TaskListScreen() {
     <>
       <Stack.Screen options={{ title: "Tarefas em Execução" }} />
       <View style={styles.container}>
-        <Image source={require("../../assets/images/Logo.png")} style={styles.logo} />
+        <Image
+          source={require("../../assets/images/Logo.png")}
+          style={styles.logo}
+        />
         <Text style={styles.title}>Tarefas em Execução</Text>
 
         {/* Filtros */}
@@ -133,7 +134,7 @@ export default function TaskListScreen() {
           </View>
         </View>
 
-        {/* Lista de tarefas */}
+        {/* Lista */}
         {filteredTasks.length === 0 ? (
           <Text style={styles.noTask}>Nenhuma tarefa encontrada.</Text>
         ) : (
@@ -150,11 +151,9 @@ export default function TaskListScreen() {
                 />
                 <View style={styles.taskContent}>
                   <Text style={styles.taskTitle}>{item.title}</Text>
-                  <Text style={styles.taskDescription}>
-                    {item.description}
-                  </Text>
+                  <Text style={styles.taskDescription}>{item.description}</Text>
                   <Text style={styles.taskInfo}>
-                    Responsável: {item.taskGroupId}
+                    Equipe: {item.taskGroupId?.name || "N/D"}
                   </Text>
                   <Text style={styles.taskInfo}>
                     Entrega:{" "}
@@ -163,22 +162,25 @@ export default function TaskListScreen() {
                       : "-"}
                   </Text>
                   <Text style={styles.taskInfo}>
-                    Prioridade: {item.priority || "Não definida"}
+                    Prioridade: {item.priority || "N/D"}
                   </Text>
 
                   <View style={styles.statusRow}>
                     <Text>Status: </Text>
-                    <Picker
-                      selectedValue={item.status}
-                      style={styles.picker}
-                      onValueChange={(value) =>
-                        handleStatusChange(item._id, value)
-                      }
-                    >
-                      <Picker.Item label="Pendente" value="pendente" />
-                      <Picker.Item label="Andamento" value="andamento" />
-                      <Picker.Item label="Concluído" value="concluido" />
-                    </Picker>
+                    <View style={styles.selectContainer}>
+                      <RNPickerSelect
+                        onValueChange={(value) =>
+                          handleStatusChange(item._id, value)
+                        }
+                        value={item.status}
+                        items={[
+                          { label: "Pendente", value: "pendente" },
+                          { label: "Andamento", value: "andamento" },
+                          { label: "Concluído", value: "concluido" },
+                        ]}
+                        style={pickerSelectStyles}
+                      />
+                    </View>
                   </View>
 
                   <TouchableOpacity
@@ -200,7 +202,7 @@ export default function TaskListScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fef3c7", // cor semelhante ao bg-amber-100
+    backgroundColor: "#fef3c7",
     alignItems: "center",
     padding: 10,
   },
@@ -288,9 +290,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 6,
   },
-  picker: {
-    height: 30,
-    width: 120,
+  selectContainer: {
+    flex: 1,
+    backgroundColor: "#ffbf00",
+    borderRadius: 8,
+    paddingHorizontal: 8,
+    justifyContent: "center",
   },
   deleteButton: {
     backgroundColor: "#ef4444",
@@ -304,3 +309,19 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
 });
+
+const pickerSelectStyles = {
+  inputIOS: {
+    fontSize: 14,
+    paddingVertical: 6,
+    color: "#000",
+  },
+  inputAndroid: {
+    fontSize: 14,
+    paddingVertical: 6,
+    color: "#000",
+  },
+  placeholder: {
+    color: "#333",
+  },
+};

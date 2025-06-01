@@ -11,6 +11,8 @@ import {
 } from "react-native";
 import { Stack, useRouter } from "expo-router";
 import { MaterialIcons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { api } from "../../services/api"; // ajuste se necessário
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
@@ -18,24 +20,40 @@ export default function LoginScreen() {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
-  const accessReset = async () => {
+  const accessReset = () => {
     router.push("/resetPass/resetPass");
   };
 
-  const accessCreate = async () => {
+  const accessCreate = () => {
     router.push("/create/create");
   };
 
   const handleLogin = async () => {
     try {
-      if (email && password) {
-        Alert.alert("Login bem-sucedido!");
-        router.replace("/homeOn");
-      } else {
+      if (!email || !password) {
         Alert.alert("Erro", "Preencha todos os campos.");
+        return;
       }
+
+      const response = await api.post("/user/login", {
+        email,
+        password,
+      });
+
+      const { token } = response.data;
+
+      if (!token) {
+        Alert.alert("Erro", "Token não retornado.");
+        return;
+      }
+
+      await AsyncStorage.setItem("token", token);
+
+      Alert.alert("Login bem-sucedido!");
+      router.replace("/homeOn");
     } catch (error) {
-      Alert.alert("Erro", "Falha ao conectar.");
+      console.error("Erro no login:", error?.response?.data || error.message);
+      Alert.alert("Erro", "Email ou senha incorretos ou falha na conexão.");
     }
   };
 
@@ -115,7 +133,7 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff8dc", // amarelo claro
+    backgroundColor: "#fff8dc",
     alignItems: "center",
     padding: 20,
     paddingTop: 60,
@@ -129,7 +147,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 36,
     fontWeight: "bold",
-    color: "#64748b", // slate-500
+    color: "#64748b",
   },
   subtitle: {
     fontSize: 18,
@@ -140,7 +158,7 @@ const styles = StyleSheet.create({
   card: {
     width: "100%",
     maxWidth: 380,
-    aspectRatio: 360 / 360, // Aumenta visualmente o tamanho
+    aspectRatio: 360 / 360,
     alignItems: "center",
     justifyContent: "center",
     marginTop: 20,

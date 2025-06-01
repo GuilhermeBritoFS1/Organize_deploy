@@ -12,10 +12,7 @@ import {
 import { Stack } from "expo-router";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import RNPickerSelect from "react-native-picker-select";
-import axios from "axios";
-
-// 🔥 Adapte a URL da sua API
-const API_URL = "https://sua-api-aqui.com";
+import { api } from "../../services/api"; // agora unificado
 
 export default function Task_createScreen() {
   const [date, setDate] = useState(new Date());
@@ -27,17 +24,16 @@ export default function Task_createScreen() {
   const [teamId, setTeamId] = useState("");
 
   useEffect(() => {
-    const token = "SEU_TOKEN_AQUI"; // Substituir pela lógica de autenticação
-
     const getAllTeams = async () => {
       try {
-        const response = await axios.get(`${API_URL}/task-groups?created=true`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await api.get("/task-groups?created=true");
         setTeams(response.data);
       } catch (error) {
         console.log("Erro ao buscar equipes", error);
-        Alert.alert("Erro", error.response?.data?.msg || "Erro ao buscar equipes");
+        Alert.alert(
+          "Erro",
+          error.response?.data?.msg || "Erro ao buscar equipes"
+        );
       }
     };
 
@@ -53,21 +49,14 @@ export default function Task_createScreen() {
   };
 
   const createTask = async () => {
-    const token = "SEU_TOKEN_AQUI"; // Substituir pela lógica de autenticação
     try {
-      const response = await axios.post(
-        `${API_URL}/tasks`,
-        {
-          title,
-          description,
-          dueDate: date,
-          priority,
-          taskGroupId: teamId,
-        },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const response = await api.post("/tasks", {
+        title,
+        description,
+        dueDate: date,
+        priority,
+        taskGroupId: teamId,
+      });
 
       if (response.status === 201) {
         Alert.alert("Sucesso", "Tarefa criada com sucesso!");
