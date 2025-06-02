@@ -26,7 +26,13 @@ Além disso, há caminhos auxiliares como a Tela de Redefinir Senha acessada pel
 
 O fluxo termina se o login falhar ou se o usuário sair. O sistema é visualmente estruturado para guiar o usuário por um processo lógico desde a entrada até a gestão completa de tarefas e equipes.
 
+### Diagrama de Fluxo - Web
+
 ![Diagrama de Fluxo](img/img_doc04/DiagramaFluxo_Organize.png)
+
+### Diagrama de Fluxo - Mobile
+
+![Diagrama de Fluxo](img/img_doc04/DiagramaFluxo_Organize_mobile.png)
 
 ## Wireframes
 
