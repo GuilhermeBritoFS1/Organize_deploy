@@ -9,11 +9,12 @@ import {
 } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { PieChart } from "react-native-svg-charts";
-import { Text } from "react-native-svg"; // <-- CORRETO para rótulos SVG
+import { Text } from "react-native-svg"; // para rótulos SVG
 
 // Imagens
 import Logo from "../../assets/images/Logo.png";
 import PostitBg from "../../assets/images/postit2.png";
+import { Stack } from "expo-router";
 
 export default function StatisticsScreen() {
   const totalTarefas = 20;
@@ -61,51 +62,56 @@ export default function StatisticsScreen() {
 
   return (
     <>
-      <ScrollView contentContainerStyle={styles.container}>
-        <Image source={Logo} style={styles.logo} />
-        <RNText style={styles.title}>Estatísticas</RNText>
-        <RNText style={styles.subtitle}>
-          Visualize o status geral das suas tarefas
-        </RNText>
+      {" "}
+      <Stack.Screen options={{ title: "Relatórios" }} />
+      <View style={{ flex: 1, backgroundColor: "#fff8dc" }}>
+        <ScrollView contentContainerStyle={styles.container}>
+          <Image source={Logo} style={styles.logo} />
+          <RNText style={styles.title}>Estatísticas</RNText>
+          <RNText style={styles.subtitle}>
+            Visualize o status geral das suas tarefas
+          </RNText>
 
-        <ImageBackground
-          source={PostitBg}
-          style={styles.card}
-          imageStyle={styles.cardImage}
-        >
-          <View style={styles.cardContent}>
-            <StatBox
-              icon="clipboard-list"
-              label="Tarefas Criadas"
-              value={totalTarefas}
-              color="#4B5563"
-            />
-            <StatBox
-              icon="check-circle"
-              label="Concluídas"
-              value={tarefasConcluidas}
-              color="#10B981"
-            />
-            <StatBox
-              icon="spinner"
-              label="Em Andamento"
-              value={tarefasAndamento}
-              color="#F59E0B"
-            />
-            <StatBox
-              icon="pause-circle"
-              label="Não Iniciadas"
-              value={tarefasNaoIniciadas}
-              color="#EF4444"
-            />
+          <ImageBackground
+            source={PostitBg}
+            style={styles.card}
+            imageStyle={styles.cardImage}
+          >
+            <View style={styles.cardContent}>
+              <StatBox
+                icon="clipboard-list"
+                label="Tarefas Criadas"
+                value={totalTarefas}
+                color="#4B5563"
+              />
+              <StatBox
+                icon="check-circle"
+                label="Concluídas"
+                value={tarefasConcluidas}
+                color="#10B981"
+              />
+              <StatBox
+                icon="spinner"
+                label="Em Andamento"
+                value={tarefasAndamento}
+                color="#F59E0B"
+              />
+              <StatBox
+                icon="pause-circle"
+                label="Não Iniciadas"
+                value={tarefasNaoIniciadas}
+                color="#EF4444"
+              />
+            </View>
+          </ImageBackground>
+
+          <View style={styles.chartContainer}>
+            <PieChart style={{ height: 200, width: 200 }} data={pieData}>
+              <Label />
+            </PieChart>
           </View>
-        </ImageBackground>
-        <View style={styles.chartContainer}>
-          <PieChart style={{ height: 200, width: 200 }} data={pieData}>
-            <Label />
-          </PieChart>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </View>
     </>
   );
 }
@@ -122,10 +128,8 @@ function StatBox({ icon, label, value, color }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#fff8dc",
     padding: 20,
     alignItems: "center",
-    height: "100%",
   },
   logo: {
     width: 100,

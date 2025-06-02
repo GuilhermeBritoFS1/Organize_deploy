@@ -5,51 +5,58 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
-  StyleSheet,
   Alert,
   ImageBackground,
+  StyleSheet,
 } from "react-native";
 import { Stack, useRouter } from "expo-router";
-import axios from "axios";
+import { api } from "../../services/api"; // caminho ajustável conforme sua estrutura
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function ResetPasswordScreen() {
-  const [email, setEmail] = useState("");
+export default function UpdatePasswordScreen() {
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const router = useRouter();
-
   const accessLogin = async () => {
-    router.push("/login/login");
+    router.push("/(tabs)/login");
   };
 
-  const handleResetPassword = async () => {
+  const handleUpdatePassword = async () => {
     try {
-      const response = await axios.post(
-        "https://seu-backend.com/user/reset-password",
-        { email }
-      );
+      const response = await api.patch("/user/password-update", {
+        oldPassword,
+        newPassword,
+      });
 
       if (response.status === 200) {
-        Alert.alert("Sucesso", "Instruções enviadas para seu email.");
+        Alert.alert("Sucesso", "Senha atualizada com sucesso!");
         router.push("/login");
       } else {
-        Alert.alert("Erro", "Não foi possível enviar o email.");
+        Alert.alert(
+          "Erro",
+          response.data?.message || "Erro ao atualizar senha."
+        );
       }
     } catch (error) {
       console.error("Erro:", error);
-      Alert.alert("Erro", "Falha ao solicitar redefinição de senha.");
+      Alert.alert(
+        "Erro",
+        error?.response?.data?.message || "Erro ao conectar com o servidor."
+      );
     }
   };
 
   return (
     <>
-      <Stack.Screen options={{ title: "Redefinir Senha" }} />
+      <Stack.Screen options={{ title: "Atualizar Senha" }} />
       <View style={styles.container}>
         <Image
           source={require("../../assets/images/Logo.png")}
           style={styles.logo}
         />
-        <Text style={styles.title}>Redefinir Senha</Text>
+        <Text style={styles.title}>Atualizar Senha</Text>
         <Text style={styles.subtitle}>
-          Insira seu e-mail para receber instruções
+          Digite sua senha atual e a nova senha
         </Text>
 
         <ImageBackground
@@ -58,26 +65,35 @@ export default function ResetPasswordScreen() {
           imageStyle={styles.cardImage}
         >
           <View style={styles.cardContent}>
-            <Text style={styles.label}>Email</Text>
+            <Text style={styles.label}>Senha Atual</Text>
             <TextInput
               style={styles.input}
-              placeholder="Digite seu email"
-              placeholderTextColor="#ddd"
-              keyboardType="email-address"
-              autoCapitalize="none"
-              onChangeText={setEmail}
-              value={email}
+              placeholder="Digite sua senha atual"
+              placeholderTextColor="#ccc"
+              secureTextEntry
+              value={oldPassword}
+              onChangeText={setOldPassword}
+            />
+
+            <Text style={styles.label}>Nova Senha</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Digite a nova senha"
+              placeholderTextColor="#ccc"
+              secureTextEntry
+              value={newPassword}
+              onChangeText={setNewPassword}
             />
 
             <TouchableOpacity
               style={styles.button}
-              onPress={handleResetPassword}
+              onPress={handleUpdatePassword}
             >
-              <Text style={styles.buttonText}>Enviar</Text>
+              <Text style={styles.buttonText}>Atualizar Senha</Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={accessLogin}>
-              <Text style={styles.link}>Voltar para o login</Text>
+              <Text style={styles.link}>Voltar para o Login</Text>
             </TouchableOpacity>
           </View>
         </ImageBackground>
@@ -95,19 +111,19 @@ const styles = StyleSheet.create({
     paddingTop: 60,
   },
   logo: {
-    width: 120,
-    height: 120,
+    width: 140,
+    height: 140,
     resizeMode: "contain",
     marginBottom: 10,
   },
   title: {
-    fontSize: 36,
+    fontSize: 32,
     fontWeight: "bold",
-    color: "#64748b",
+    color: "#94a3b8",
   },
   subtitle: {
     fontSize: 18,
-    color: "#64748b",
+    color: "#94a3b8",
     marginBottom: 20,
     textAlign: "center",
   },
@@ -122,6 +138,7 @@ const styles = StyleSheet.create({
   cardImage: {
     resizeMode: "stretch",
     borderRadius: 16,
+    opacity: 0.85,
   },
   cardContent: {
     flex: 1,

@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TextInput, Button, StyleSheet, Alert, Appearance } from "react-native";
-import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+  Alert,
+  Appearance,
+} from "react-native";
+import { api } from "../../services/api"; // ajuste o caminho conforme sua estrutura
 import { Stack } from "expo-router";
 
 export default function TeamRegistrationScreen() {
   const [teamName, setTeamName] = useState("");
   const [description, setDescription] = useState("");
   const [mounted, setMounted] = useState(false);
-  const colorScheme = Appearance.getColorScheme(); // 'light' ou 'dark'
+  const colorScheme = Appearance.getColorScheme();
 
   useEffect(() => {
     setMounted(true);
@@ -17,29 +24,26 @@ export default function TeamRegistrationScreen() {
   if (!mounted) return null;
 
   const handleSubmit = async () => {
-    try {
-      const token = await AsyncStorage.getItem("token");
-      const response = await axios.post(
-        "https://seu-backend.com/task-groups", // Atualize com sua URL real
-        {
-          name: teamName,
-          description,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+    if (!teamName.trim()) {
+      return Alert.alert("Atenção", "O nome da equipe é obrigatório.");
+    }
 
-      if (response.status === 201) {
-        Alert.alert("Sucesso", "Equipe cadastrada com sucesso!");
-        setTeamName("");
-        setDescription("");
-      }
+    try {
+      const response = await api.post("/group", {
+        name: teamName,
+        description,
+      });
+
+      Alert.alert("Sucesso", "Equipe cadastrada com sucesso!");
+      setTeamName("");
+      setDescription("");
     } catch (error) {
       console.log("Erro ao cadastrar equipe:", error);
-      Alert.alert("Erro", error.response?.data?.msg || "Erro inesperado.");
+      const msg =
+        error.response?.data?.msg ||
+        error.response?.data?.message ||
+        "Erro inesperado ao cadastrar equipe.";
+      Alert.alert("Erro", msg);
     }
   };
 
@@ -49,22 +53,35 @@ export default function TeamRegistrationScreen() {
       <View
         style={[
           styles.container,
-          colorScheme === "dark" ? styles.darkBackground : styles.lightBackground,
+          colorScheme === "dark"
+            ? styles.darkBackground
+            : styles.lightBackground,
         ]}
       >
-        <Text style={[styles.title, colorScheme === "dark" ? styles.textDark : styles.textLight]}>
+        <Text
+          style={[
+            styles.title,
+            colorScheme === "dark" ? styles.textDark : styles.textLight,
+          ]}
+        >
           Cadastre sua Equipe
         </Text>
         <TextInput
           placeholder="Nome da Equipe"
-          style={[styles.input, colorScheme === "dark" ? styles.inputDark : styles.inputLight]}
+          style={[
+            styles.input,
+            colorScheme === "dark" ? styles.inputDark : styles.inputLight,
+          ]}
           value={teamName}
           onChangeText={setTeamName}
           placeholderTextColor={colorScheme === "dark" ? "#ccc" : "#555"}
         />
         <TextInput
           placeholder="Descrição da Equipe"
-          style={[styles.textarea, colorScheme === "dark" ? styles.inputDark : styles.inputLight]}
+          style={[
+            styles.textarea,
+            colorScheme === "dark" ? styles.inputDark : styles.inputLight,
+          ]}
           value={description}
           onChangeText={setDescription}
           multiline
@@ -75,7 +92,7 @@ export default function TeamRegistrationScreen() {
           <Button
             title="CADASTRAR EQUIPE"
             onPress={handleSubmit}
-            color={colorScheme === "dark" ? "#facc15" : "#fbbf24"} // amarelo estilo tailwind
+            color={colorScheme === "dark" ? "#facc15" : "#fbbf24"}
           />
         </View>
       </View>
