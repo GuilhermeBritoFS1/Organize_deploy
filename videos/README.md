@@ -13,3 +13,7 @@
 ## Apresentação da 3ª etapa - Entrega 11/05/2025
 
 [Vídeo da 3ª etapa - Apresentação](https://www.youtube.com/watch?v=FcB3F7NuUz8)
+
+## Apresentação da 4ª etapa - Entrega 01/06/2025
+
+[Vídeo da 3ª etapa - Apresentação](https://www.youtube.com/watch?v=zPWTaudsoZw)
