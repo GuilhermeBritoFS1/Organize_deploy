@@ -32,7 +32,7 @@ O fluxo termina se o login falhar ou se o usuário sair. O sistema é visualment
 
 ### Diagrama de Fluxo - Mobile
 
-![Diagrama de Fluxo](img/img_doc04/DiagramaFluxo_Organize_mobile.png)
+![Diagrama de Fluxo](img/img_doc04/DiagramaFluxo_Organize_Mobile.png)
 
 ## Wireframes
 
