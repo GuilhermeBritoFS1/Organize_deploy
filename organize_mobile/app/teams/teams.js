@@ -9,54 +9,49 @@ import {
   StyleSheet,
   ActivityIndicator,
 } from "react-native";
+import { api } from "../../services/api"; // instância axios com interceptor configurado
 import { Stack } from "expo-router";
-import axios from "axios";
 import { Picker } from "@react-native-picker/picker";
 
 export default function TeamsScreen() {
   const [teams, setTeams] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const getToken = async () => {
-    return "SEU_TOKEN_AQUI"; // Substitua pelo token real usando SecureStore ou AsyncStorage
-  };
-
-  useEffect(() => {
-    const fetchTeams = async () => {
-      const token = await getToken();
-      try {
-        const response = await axios.get(
-          "https://sua-api.com/task-groups?created=true",
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
-        setTeams(response.data);
-      } catch (error) {
-        Alert.alert("Erro", error.response?.data?.msg || "Erro ao buscar equipes");
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchTeams();
-  }, []);
-
-  const handleUpdateMembers = async (teamId, members) => {
-    const token = await getToken();
+  // Busca as equipes do backend
+  const fetchTeams = async () => {
     try {
-      await axios.post(
-        `https://sua-api.com/task-groups/${teamId}/members`,
-        { members },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      Alert.alert("Sucesso", "Membros atualizados com sucesso!");
+      const response = await api.get("/task-groups?created=true");
+      setTeams(response.data);
     } catch (error) {
-      Alert.alert("Erro", error.response?.data?.msg || "Erro ao atualizar membros");
+      Alert.alert(
+        "Erro",
+        error.response?.data?.msg || "Erro ao buscar equipes"
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleDeleteTeam = async (teamId) => {
-    const token = await getToken();
+  useEffect(() => {
+    fetchTeams();
+  }, []);
+
+  // Atualiza membros da equipe no backend
+  const handleUpdateMembers = async (teamId, members) => {
+    try {
+      await api.post(`/task-groups/${teamId}/members`, { members });
+      Alert.alert("Sucesso", "Membros atualizados com sucesso!");
+      fetchTeams(); // Atualiza a lista após salvar
+    } catch (error) {
+      Alert.alert(
+        "Erro",
+        error.response?.data?.msg || "Erro ao atualizar membros"
+      );
+    }
+  };
+
+  // Deleta a equipe
+  const handleDeleteTeam = (teamId) => {
     Alert.alert("Confirmação", "Deseja deletar esta equipe?", [
       { text: "Cancelar", style: "cancel" },
       {
@@ -64,12 +59,13 @@ export default function TeamsScreen() {
         style: "destructive",
         onPress: async () => {
           try {
-            await axios.delete(`https://sua-api.com/task-groups/${teamId}`, {
-              headers: { Authorization: `Bearer ${token}` },
-            });
+            await api.delete(`/task-groups/${teamId}`);
             setTeams((prev) => prev.filter((team) => team._id !== teamId));
           } catch (error) {
-            Alert.alert("Erro", error.response?.data?.msg || "Erro ao deletar equipe");
+            Alert.alert(
+              "Erro",
+              error.response?.data?.msg || "Erro ao deletar equipe"
+            );
           }
         },
       },
@@ -100,8 +96,8 @@ export default function TeamsScreen() {
                 <TextInput
                   value={member.name}
                   onChangeText={(text) => {
-                    const updated = [...team.members];
-                    updated[index].name = text;
+                    const updated = [...(team.members || [])];
+                    updated[index] = { ...updated[index], name: text };
                     setTeams((prev) =>
                       prev.map((t) =>
                         t._id === team._id ? { ...t, members: updated } : t
@@ -116,8 +112,8 @@ export default function TeamsScreen() {
                   <Picker
                     selectedValue={member.role}
                     onValueChange={(role) => {
-                      const updated = [...team.members];
-                      updated[index].role = role;
+                      const updated = [...(team.members || [])];
+                      updated[index] = { ...updated[index], role };
                       setTeams((prev) =>
                         prev.map((t) =>
                           t._id === team._id ? { ...t, members: updated } : t
@@ -134,7 +130,9 @@ export default function TeamsScreen() {
 
                 <TouchableOpacity
                   onPress={() => {
-                    const updated = team.members.filter((_, i) => i !== index);
+                    const updated = (team.members || []).filter(
+                      (_, i) => i !== index
+                    );
                     setTeams((prev) =>
                       prev.map((t) =>
                         t._id === team._id ? { ...t, members: updated } : t

@@ -1,47 +1,73 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
-  StyleSheet,
-  Image,
-  ImageBackground,
-  ScrollView,
   Text as RNText,
+  StyleSheet,
+  ScrollView,
+  ActivityIndicator,
 } from "react-native";
-import { FontAwesome5 } from "@expo/vector-icons";
-import { PieChart } from "react-native-svg-charts";
-import { Text } from "react-native-svg"; // para rótulos SVG
-
-// Imagens
-import Logo from "../../assets/images/Logo.png";
-import PostitBg from "../../assets/images/postit2.png";
 import { Stack } from "expo-router";
+import { PieChart } from "react-native-svg-charts";
+import { Text } from "react-native-svg";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import { api } from "../../services/api";
 
-export default function StatisticsScreen() {
-  const totalTarefas = 20;
-  const tarefasConcluidas = 8;
-  const tarefasAndamento = 5;
-  const tarefasNaoIniciadas = 7;
+export default function ReportScreen() {
+  const [total, setTotal] = useState(0);
+  const [andamento, setAndamento] = useState(0);
+  const [concluidas, setConcluidas] = useState(0);
+  const [naoIniciadas, setNaoIniciadas] = useState(0);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    const fetchTasks = async () => {
+      const token = "";
+      try {
+        const response = await api.get("/tasks", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        const tasks = response.data;
+        setTotal(tasks.length);
+        setAndamento(tasks.filter((t) => t.status === "andamento").length);
+        setConcluidas(tasks.filter((t) => t.status === "concluido").length);
+        setNaoIniciadas(tasks.filter((t) => t.status === "pendente").length);
+      } catch (error) {
+        console.error("Erro ao buscar tarefas", error);
+        alert("Erro ao buscar tarefas.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTasks();
+  }, []);
+
+  // Cálculo de porcentagens para o gráfico
+  const calcPercent = (value) =>
+    total ? ((value / total) * 100).toFixed(1) + "%" : "0%";
+
+  // Dados para o gráfico
   const data = [
-    totalTarefas,
-    tarefasConcluidas,
-    tarefasAndamento,
-    tarefasNaoIniciadas,
-  ];
-  const labels = ["Criadas", "Concluídas", "Em Andamento", "Não Iniciadas"];
-  const colors = ["#4B5563", "#10B981", "#F59E0B", "#EF4444"];
+    { key: "Criadas", value: total, color: "#4B5563" },
+    { key: "Andamento", value: andamento, color: "#F59E0B" },
+    { key: "Concluídas", value: concluidas, color: "#10B981" },
+    { key: "Não iniciadas", value: naoIniciadas, color: "#EF4444" },
+  ].filter((item) => item.value > 0); // Remove categorias sem dados
 
-  const pieData = data.map((value, index) => ({
-    value,
-    key: `pie-${index}`,
+  // Dados formatados para PieChart
+  const pieData = data.map((item, index) => ({
+    value: item.value,
     svg: {
-      fill: colors[index],
+      fill: item.color,
     },
+    key: `pie-${index}`,
     arc: { outerRadius: "100%", cornerRadius: 5 },
-    label: labels[index],
+    label: `${calcPercent(item.value)}`,
   }));
 
-  const Label = ({ slices }) =>
+  // Componente para mostrar os labels no gráfico com porcentagem
+  const Labels = ({ slices }) =>
     slices.map((slice, index) => {
       const { pieCentroid, data } = slice;
       return (
@@ -55,63 +81,59 @@ export default function StatisticsScreen() {
           fontSize={14}
           fontWeight="bold"
         >
-          {data.value}
+          {data.label}
         </Text>
       );
     });
 
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#ffbf00" />
+        <RNText style={{ marginTop: 10 }}>Carregando dados...</RNText>
+      </View>
+    );
+  }
+
   return (
     <>
-      {" "}
       <Stack.Screen options={{ title: "Relatórios" }} />
-      <View style={{ flex: 1, backgroundColor: "#fff8dc" }}>
-        <ScrollView contentContainerStyle={styles.container}>
-          <Image source={Logo} style={styles.logo} />
-          <RNText style={styles.title}>Estatísticas</RNText>
-          <RNText style={styles.subtitle}>
-            Visualize o status geral das suas tarefas
-          </RNText>
+      <ScrollView contentContainerStyle={styles.container}>
+        <RNText style={styles.title}>Relatório de Tarefas</RNText>
 
-          <ImageBackground
-            source={PostitBg}
-            style={styles.card}
-            imageStyle={styles.cardImage}
-          >
-            <View style={styles.cardContent}>
-              <StatBox
-                icon="clipboard-list"
-                label="Tarefas Criadas"
-                value={totalTarefas}
-                color="#4B5563"
-              />
-              <StatBox
-                icon="check-circle"
-                label="Concluídas"
-                value={tarefasConcluidas}
-                color="#10B981"
-              />
-              <StatBox
-                icon="spinner"
-                label="Em Andamento"
-                value={tarefasAndamento}
-                color="#F59E0B"
-              />
-              <StatBox
-                icon="pause-circle"
-                label="Não Iniciadas"
-                value={tarefasNaoIniciadas}
-                color="#EF4444"
-              />
-            </View>
-          </ImageBackground>
+        <View style={styles.statsContainer}>
+          <StatBox
+            icon="clipboard-list"
+            label="Criadas"
+            value={total}
+            color="#4B5563"
+          />
+          <StatBox
+            icon="spinner"
+            label="Andamento"
+            value={andamento}
+            color="#F59E0B"
+          />
+          <StatBox
+            icon="check-circle"
+            label="Concluídas"
+            value={concluidas}
+            color="#10B981"
+          />
+          <StatBox
+            icon="pause-circle"
+            label="Não iniciadas"
+            value={naoIniciadas}
+            color="#EF4444"
+          />
+        </View>
 
-          <View style={styles.chartContainer}>
-            <PieChart style={{ height: 200, width: 200 }} data={pieData}>
-              <Label />
-            </PieChart>
-          </View>
-        </ScrollView>
-      </View>
+        <View style={styles.chartContainer}>
+          <PieChart style={{ height: 220, width: 220 }} data={pieData}>
+            <Labels />
+          </PieChart>
+        </View>
+      </ScrollView>
     </>
   );
 }
@@ -119,7 +141,7 @@ export default function StatisticsScreen() {
 function StatBox({ icon, label, value, color }) {
   return (
     <View style={[styles.box, { borderColor: color }]}>
-      <FontAwesome5 name={icon} size={20} color={color} />
+      <FontAwesome5 name={icon} size={24} color={color} />
       <RNText style={[styles.boxLabel, { color }]}>{label}</RNText>
       <RNText style={styles.boxValue}>{value}</RNText>
     </View>
@@ -128,64 +150,52 @@ function StatBox({ icon, label, value, color }) {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    paddingVertical: 20,
+    paddingHorizontal: 15,
     alignItems: "center",
-  },
-  logo: {
-    width: 100,
-    height: 100,
-    resizeMode: "contain",
-    marginBottom: 10,
+    backgroundColor: "#fff8dc",
   },
   title: {
-    fontSize: 32,
+    fontSize: 28,
     fontWeight: "bold",
     color: "#64748b",
-  },
-  subtitle: {
-    fontSize: 16,
-    color: "#64748b",
-    textAlign: "center",
     marginBottom: 20,
   },
-  card: {
-    width: "100%",
+  statsContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
     maxWidth: 380,
-    aspectRatio: 360 / 500,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  cardImage: {
-    resizeMode: "stretch",
-    borderRadius: 16,
-  },
-  cardContent: {
-    width: "100%",
-    paddingHorizontal: 24,
-    paddingVertical: 28,
-    justifyContent: "flex-start",
   },
   box: {
     borderWidth: 2,
     borderRadius: 10,
     padding: 16,
-    marginBottom: 16,
+    margin: 6,
     backgroundColor: "#fff",
+    width: 170,
     alignItems: "center",
   },
   boxLabel: {
     fontSize: 16,
     fontWeight: "600",
-    marginTop: 6,
+    marginTop: 8,
   },
   boxValue: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: "bold",
     color: "#111827",
     marginTop: 4,
   },
   chartContainer: {
-    marginTop: 20,
+    marginTop: 30,
     alignItems: "center",
+    justifyContent: "center",
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: 50,
   },
 });

@@ -27,6 +27,10 @@ export default function CreateScreen() {
   const [resEmail, setResEmail] = useState(true);
   const [resPassword, setRespassword] = useState(true);
 
+  const accessLogin = async () => {
+    router.push("/login/login");
+  };
+
   const handleSubmit = async () => {
     if (!Name || !Email || !Email2 || !Password || !Password2) {
       setResEmpty(false);
@@ -50,7 +54,7 @@ export default function CreateScreen() {
     }
 
     try {
-      const response = await axios.post("http://localhost:3000/organize/user", {
+      const response = await axios.post("http://10.0.2.2:3000/organize/user", {
         name: Name,
         email: Email,
         password: Password,
@@ -63,7 +67,7 @@ export default function CreateScreen() {
         setEmail2("");
         setPassword("");
         setPassword2("");
-        router.push("/login");
+        router.push("login/login");
       }
     } catch (error) {
       console.log("Erro ao cadastrar:", error);
@@ -165,6 +169,9 @@ export default function CreateScreen() {
         <TouchableOpacity style={styles.button} onPress={handleSubmit}>
           <Text style={styles.buttonText}>Cadastrar</Text>
         </TouchableOpacity>
+        <TouchableOpacity onPress={accessLogin}>
+          <Text style={styles.link}>Voltar para o Login</Text>
+        </TouchableOpacity>
       </ScrollView>
     </>
   );
@@ -233,5 +240,12 @@ const styles = StyleSheet.create({
     color: "#000",
     fontWeight: "bold",
     fontSize: 16,
+  },
+  link: {
+    color: "#1d4ed8",
+    fontSize: 16,
+    fontWeight: "500",
+    marginTop: 12,
+    textAlign: "center",
   },
 });

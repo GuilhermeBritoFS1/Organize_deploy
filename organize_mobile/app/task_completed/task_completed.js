@@ -93,7 +93,7 @@ export default function TarefasConcluidasScreen() {
 
   return (
     <>
-      <Stack.Screen options={{ title: "Tarefas em Execução" }} />
+      <Stack.Screen options={{ title: "Tarefas Concluídas" }} />
       <View style={styles.container}>
         <Image
           source={require("../../assets/images/Logo.png")}
