@@ -8,7 +8,8 @@ import {
   Alert,
   Appearance,
 } from "react-native";
-import { api } from "../../services/api"; // ajuste o caminho conforme sua estrutura
+import { api } from "../../services/api"; // deve ter interceptor configurado
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Stack } from "expo-router";
 
 export default function TeamRegistrationScreen() {
@@ -29,7 +30,8 @@ export default function TeamRegistrationScreen() {
     }
 
     try {
-      const response = await api.post("/group", {
+      // Token já será incluído automaticamente se seu interceptor estiver certo
+      const response = await api.post("/task-groups", {
         name: teamName,
         description,
       });
@@ -40,8 +42,8 @@ export default function TeamRegistrationScreen() {
     } catch (error) {
       console.log("Erro ao cadastrar equipe:", error);
       const msg =
-        error.response?.data?.msg ||
-        error.response?.data?.message ||
+        error?.response?.data?.msg ||
+        error?.response?.data?.message ||
         "Erro inesperado ao cadastrar equipe.";
       Alert.alert("Erro", msg);
     }

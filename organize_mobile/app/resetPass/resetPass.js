@@ -18,7 +18,7 @@ export default function UpdatePasswordScreen() {
   const [newPassword, setNewPassword] = useState("");
   const router = useRouter();
   const accessLogin = async () => {
-    router.push("/(tabs)/login");
+    router.push("/login/login");
   };
 
   const handleUpdatePassword = async () => {
@@ -30,7 +30,7 @@ export default function UpdatePasswordScreen() {
 
       if (response.status === 200) {
         Alert.alert("Sucesso", "Senha atualizada com sucesso!");
-        router.push("/login");
+        router.push("login/login");
       } else {
         Alert.alert(
           "Erro",

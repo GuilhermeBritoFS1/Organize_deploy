@@ -136,33 +136,38 @@ export default function TaskListScreen() {
 
         {/* Lista */}
         {filteredTasks.length === 0 ? (
-          <Text style={styles.noTask}>Nenhuma tarefa encontrada.</Text>
+          <Text style={styles.emptyText}>Nenhuma tarefa encontrada.</Text>
         ) : (
           <FlatList
             data={filteredTasks}
             keyExtractor={(item) => item._id}
             numColumns={2}
+            columnWrapperStyle={{ justifyContent: "space-between" }}
             contentContainerStyle={{ paddingBottom: 20 }}
             renderItem={({ item }) => (
-              <View style={styles.taskCard}>
+              <View style={styles.postitContainer}>
                 <Image
                   source={require("../../assets/images/postit2.png")}
-                  style={styles.postit}
+                  style={styles.postitImage}
                 />
-                <View style={styles.taskContent}>
-                  <Text style={styles.taskTitle}>{item.title}</Text>
-                  <Text style={styles.taskDescription}>{item.description}</Text>
-                  <Text style={styles.taskInfo}>
-                    Equipe: {item.taskGroupId?.name || "N/D"}
+                <View style={styles.postitContent}>
+                  <Text style={styles.postitTitle}>{item.title}</Text>
+                  <Text style={styles.postitDescription}>
+                    {item.description}
                   </Text>
-                  <Text style={styles.taskInfo}>
-                    Entrega:{" "}
+                  <Text style={styles.postitMeta}>
+                    <Text style={styles.bold}>Equipe:</Text>{" "}
+                    {item.taskGroupId?.name || "N/D"}
+                  </Text>
+                  <Text style={styles.postitMeta}>
+                    <Text style={styles.bold}>Entrega:</Text>{" "}
                     {item.dueDate
                       ? new Date(item.dueDate).toLocaleDateString("pt-BR")
                       : "-"}
                   </Text>
-                  <Text style={styles.taskInfo}>
-                    Prioridade: {item.priority || "N/D"}
+                  <Text style={styles.postitMeta}>
+                    <Text style={styles.bold}>Prioridade:</Text>{" "}
+                    {item.priority || "N/D"}
                   </Text>
 
                   <View style={styles.statusRow}>
@@ -203,29 +208,30 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fef3c7",
-    alignItems: "center",
-    padding: 10,
+    padding: 16,
   },
   logo: {
-    width: 100,
-    height: 100,
-    marginTop: 10,
-    resizeMode: "contain",
+    width: 120,
+    height: 60,
+    alignSelf: "center",
+    marginBottom: 10,
   },
   title: {
-    fontSize: 28,
+    fontSize: 26,
     fontWeight: "bold",
-    color: "#475569",
-    marginVertical: 10,
+    textAlign: "center",
+    color: "#888",
+    marginBottom: 16,
   },
   filters: {
     flexDirection: "row",
     justifyContent: "space-between",
-    gap: 10,
     marginBottom: 10,
+    gap: 10,
   },
   filterItem: {
     alignItems: "center",
+    flex: 1,
   },
   filterLabel: {
     fontSize: 16,
@@ -238,53 +244,55 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     borderRadius: 6,
     padding: 6,
-    minWidth: 100,
     textAlign: "center",
+    width: "100%",
   },
   clear: {
     color: "red",
     fontSize: 12,
     marginTop: 2,
   },
-  noTask: {
-    marginTop: 50,
-    color: "#9ca3af",
+  emptyText: {
+    textAlign: "center",
+    color: "#999",
     fontSize: 16,
+    marginTop: 40,
   },
-  taskCard: {
-    backgroundColor: "#fff",
-    borderRadius: 10,
-    margin: 8,
-    overflow: "hidden",
-    width: "45%",
-    elevation: 3,
+  postitContainer: {
+    width: "48%",
+    aspectRatio: 1,
+    marginBottom: 16,
+    position: "relative",
   },
-  postit: {
+  postitImage: {
     width: "100%",
-    height: 120,
-    resizeMode: "cover",
+    height: "100%",
+    borderRadius: 10,
+    position: "absolute",
   },
-  taskContent: {
-    padding: 8,
-    alignItems: "center",
+  postitContent: {
+    padding: 10,
+    zIndex: 1,
+    flex: 1,
+    justifyContent: "center",
   },
-  taskTitle: {
-    fontWeight: "bold",
+  postitTitle: {
     fontSize: 16,
-    textAlign: "center",
+    fontWeight: "bold",
     marginBottom: 4,
+    textAlign: "center",
   },
-  taskDescription: {
+  postitDescription: {
+    fontSize: 13,
+    textAlign: "center",
+    marginBottom: 6,
+  },
+  postitMeta: {
     fontSize: 12,
-    color: "#4b5563",
-    textAlign: "center",
-    marginBottom: 4,
-  },
-  taskInfo: {
-    fontSize: 10,
-    color: "#334155",
+    marginTop: 4,
     textAlign: "center",
   },
+  bold: { fontWeight: "bold" },
   statusRow: {
     flexDirection: "row",
     alignItems: "center",
@@ -292,6 +300,7 @@ const styles = StyleSheet.create({
   },
   selectContainer: {
     flex: 1,
+    height: 20,
     backgroundColor: "#ffbf00",
     borderRadius: 8,
     paddingHorizontal: 8,
@@ -303,6 +312,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 4,
     marginTop: 6,
+    alignSelf: "center",
   },
   deleteText: {
     color: "white",

@@ -2,7 +2,7 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const api = axios.create({
-  baseURL: "http://localhost:3000/organize", // use IP real no dispositivo físico
+  baseURL: "http://10.0.2.2:3000/organize", // use IP real no dispositivo físico
 });
 
 api.interceptors.request.use(async (config) => {

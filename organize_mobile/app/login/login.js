@@ -12,7 +12,7 @@ import {
 import { Stack, useRouter } from "expo-router";
 import { MaterialIcons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { api } from "../../services/api"; // ajuste se necessário
+import { api } from "../../services/api"; // ajuste o caminho conforme necessário
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
@@ -21,11 +21,11 @@ export default function LoginScreen() {
   const router = useRouter();
 
   const accessReset = () => {
-    router.push("/resetPass/resetPass");
+    router.push("resetPass/resetPass");
   };
 
   const accessCreate = () => {
-    router.push("/create/create");
+    router.push("create/create");
   };
 
   const handleLogin = async () => {
@@ -47,13 +47,20 @@ export default function LoginScreen() {
         return;
       }
 
+      await AsyncStorage.setItem("isAuthenticated", "true");
       await AsyncStorage.setItem("token", token);
 
       Alert.alert("Login bem-sucedido!");
-      router.replace("/homeOn");
+
+      // Redireciona e recarrega
+      router.replace("(tabs)/menu");
     } catch (error) {
       console.error("Erro no login:", error?.response?.data || error.message);
-      Alert.alert("Erro", "Email ou senha incorretos ou falha na conexão.");
+      Alert.alert(
+        "Erro",
+        error?.response?.data?.message ||
+          "Email ou senha incorretos ou falha na conexão."
+      );
     }
   };
 
