@@ -10,23 +10,39 @@ import {
   StyleSheet,
 } from "react-native";
 import { Stack, useRouter } from "expo-router";
-import { api } from "../../services/api"; // caminho ajustável conforme sua estrutura
+import { api } from "../../services/api"; // ajuste conforme sua estrutura
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function UpdatePasswordScreen() {
+export default function ResetPassScreen() {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const router = useRouter();
+
   const accessLogin = async () => {
     router.push("/login/login");
   };
 
   const handleUpdatePassword = async () => {
     try {
-      const response = await api.patch("/user/password-update", {
-        oldPassword,
-        newPassword,
-      });
+      const token = await AsyncStorage.getItem("token");
+
+      if (!token) {
+        Alert.alert(
+          "Erro",
+          "Você precisa estar autenticado para atualizar a senha."
+        );
+        return;
+      }
+
+      const response = await api.patch(
+        "/user/password-update",
+        { oldPassword, newPassword },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (response.status === 200) {
         Alert.alert("Sucesso", "Senha atualizada com sucesso!");

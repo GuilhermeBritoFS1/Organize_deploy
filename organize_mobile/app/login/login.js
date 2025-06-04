@@ -117,7 +117,7 @@ export default function LoginScreen() {
             </View>
 
             <TouchableOpacity onPress={accessReset}>
-              <Text style={styles.link}>Esqueceu a senha?</Text>
+              <Text style={styles.link}>Redefinir a senha?</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.button} onPress={handleLogin}>
